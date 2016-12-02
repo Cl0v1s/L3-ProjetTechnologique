@@ -17,8 +17,7 @@ php5-mysql \
 php5-mcrypt \
 mcrypt \
 mysql-server \
-mysql-client \
-phpmyadmin
+mysql-client
 
 
 # on veut une machine de dev qui affiche toutes les erreurs PHP
@@ -27,4 +26,5 @@ RUN sed -i -e 's/^display_errors\s*=.*/display_errors = On/' /etc/php5/apache2/p
 
 # commandes à exécuter au démarrage de l'instance de l'image
 # ici on démarrera Apache
-CMD ["/usr/sbin/apache2ctl","-DFOREGROUND"]
+
+ENTRYPOINT service mysql start && service apache2 start && bash
