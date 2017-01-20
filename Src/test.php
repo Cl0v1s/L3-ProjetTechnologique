@@ -8,4 +8,6 @@
 
 include_once ("Core/Template.php");
 
-Template::prepare("test.html", NULL);
+$data = array();
+$data["Caca"] = "salut";
+Template::prepare("test.html", $data);
