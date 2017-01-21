@@ -45,7 +45,7 @@ class Template
 
         // recherche et expansion des boucles
 
-        $reg = "/<#(.*?)>\s*?(.*?)\s*?<\/#(.*?)>/";
+        $reg = "/<#(.*?)>\s*?((.|\s)*?)\s*?<\/#(.*?)>/";
         preg_match_all($reg, $content, $matches);
         for($i = 0; $i!= count($matches[1]); $i++)
         {
@@ -64,7 +64,7 @@ class Template
                 $body = $body.$matches[2][$i];
                 $body = Template::prepare($body, $data[$array_name][$u], false);
             }
-            $content = preg_replace("/<#(.*?)>\s*?(.*?)\s*?<\/#(.*?)>/", $body, $content, 1);
+            $content = preg_replace("/<#(.*?)>\s*?((.|\s)*?)\s*?<\/#(.*?)>/", $body, $content, 1);
 
         }
 
