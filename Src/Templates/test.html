@@ -1,14 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1>Salut</h1>
-    <% popo %>
+<@header>
+    <h1><=name2></h1>
 
-    <% Caca %>
-    <% POPO %>
-</body>
-</html>
+    <=name><br>
+    <=name1><br>
+    <=name2><br>
+
+    <table border="1">
+        <tr>
+            <td>Name</td><td>Surname</td>
+        </tr>
+        <#people>
+            <tr><td><=name></td><td><=surname></td><td><=name2></td></tr>
+        </#people>
+    </table>
+
+<@footer>
