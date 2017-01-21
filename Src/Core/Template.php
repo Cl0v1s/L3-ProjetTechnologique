@@ -34,18 +34,18 @@ class Template
         $matches = array();
 
         // recherche et concaténation des includes
-        preg_match_all("/<@(.*?)>/", $content, $matches);
+        preg_match_all("/{{@(.*?)}}/", $content, $matches);
         foreach($matches[1] as $match)
         {
             $key = str_replace(" ", "", $match).".html";
             $inner_content = Template::open($key);
             $inner_content = Template::prepare($inner_content, $data);
-            $content = preg_replace("/(<@".$match.">)/", $inner_content, $content, 1);
+            $content = preg_replace("/{{@".$match."}}/", $inner_content, $content, 1);
         }
 
         // recherche et expansion des boucles
 
-        $reg = "/<#(.*?)>\s*?((.|\s)*?)\s*?<\/#(.*?)>/";
+        $reg = "/{{#(.*?)}}\s*?((.|\s)*?)\s*?{{\/\g1}}/";
         preg_match_all($reg, $content, $matches);
         for($i = 0; $i!= count($matches[1]); $i++)
         {
@@ -53,10 +53,10 @@ class Template
 
             if(isset($data[$array_name]) == false)
             {
-                throw new Exception($array_name." not specified in data.");
+                throw new Exception("'".$array_name."' not specified in data.");
             }
             if(is_array($data[$array_name]) == false)
-                continue;
+                throw new Exception($array_name." is not an array.");
             $body = "";
 
             for($u = 0; $u != count($data[$array_name]); $u++)
@@ -64,13 +64,40 @@ class Template
                 $body = $body.$matches[2][$i];
                 $body = Template::prepare($body, $data[$array_name][$u], false);
             }
-            $content = preg_replace("/<#(.*?)>\s*?((.|\s)*?)\s*?<\/#(.*?)>/", $body, $content, 1);
+            $content = preg_replace("/{{#(.*?)}}\s*?((.|\s)*?)\s*?{{\/\g1}}/", $body, $content, 1);
 
         }
 
+        // recherche et remplacement des conditions
+        preg_match_all("/{{=(.*?)}}\s*?((.|\s)*?)\s*?{{\/\g1}}/", $content, $matches);
+        for($i = 0; $i!= count($matches[1]); $i++)
+        {
+            $match = $matches[1][$i];
+
+            $key = str_replace(" ", "", $match);
+            if(isset($data[$key]) == false && $fatal == true)
+            {
+                throw new Exception($key." not specified in data.");
+            }
+            else if(isset($data[$key]) == false && $fatal == false)
+                continue;
+            else if(is_bool($data[$key]) == false)
+                continue;
+            if($data[$key] == false)
+            {
+                $content = preg_replace("/{{=(.*?)}}\s*?((.|\s)*?)\s*?{{\/\g1}}/", "", $content, 1);
+                continue;
+            }
+            $body = $matches[2][$i];
+            $body = Template::prepare($body, $data);
+            $content = preg_replace("/{{=(.*?)}}\s*?((.|\s)*?)\s*?{{\/\g1}}/", $body, $content, 1);
+        }
+
+
+
         // recherche et remplacement des données
         //recherche des variables
-        preg_match_all("/<=(.*?)>/", $content, $matches);
+        preg_match_all("/{{([^=\/#]*?)}}/", $content, $matches);
         foreach($matches[1] as $match)
         {
             $key = str_replace(" ", "", $match);
@@ -80,7 +107,7 @@ class Template
             }
             else if(isset($data[$key]) == false && $fatal == false)
                 continue;
-            $content = preg_replace("/<=".$match.">/", $data[$key], $content, 1);
+            $content = preg_replace("/{{".$match."}}/", $data[$key], $content, 1);
         }
 
         return $content;
