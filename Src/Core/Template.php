@@ -10,6 +10,17 @@ class Template
 {
 
     /**
+     * Execute et affiche un template
+     * @param $name Nom du template
+     * @param $data Données à insérer
+     */
+    public static function process($name, $data)
+    {
+        $content = Template::open($name.".html");
+        echo Template::prepare($content, $data);
+    }
+
+    /**
      * Lit un fichier de template $file et retourne son contenu
      * @param string $file fichier de template à lire
      * @return string Contenu du fichier

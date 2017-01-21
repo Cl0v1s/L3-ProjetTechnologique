@@ -23,5 +23,4 @@ $data["people"][1]["name"] = "Clovis";
 $data["people"][1]["surname"] = "Portron";
 
 
-$content = Template::open("test.html");
-echo Template::prepare($content, $data);
+Template::process("test", $data);
