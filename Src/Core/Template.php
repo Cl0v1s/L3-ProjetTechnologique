@@ -27,6 +27,8 @@ class Template
      */
     public static function open($file)
     {
+        if(file_exists("Templates/".$file) == false)
+            throw new Exception("Unable to find the template ".$file.".");
         $content = file_get_contents("Templates/".$file);
         return $content;
     }
