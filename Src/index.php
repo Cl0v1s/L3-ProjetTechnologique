@@ -1,6 +1,7 @@
 <?php
 
 include_once 'Core/Engine.php';
+include_once 'Model/DatabaseStorage.php';
 
 /**
  * Created by PhpStorm.
@@ -9,6 +10,8 @@ include_once 'Core/Engine.php';
  * Time: 16:12
  */
 
+
+Engine::Instance()->setPersistence(new DatabaseStorage());
 Engine::Instance()->run();
 
 

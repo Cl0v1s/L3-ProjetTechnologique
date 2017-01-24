@@ -21,10 +21,26 @@ class Engine
         return Engine::$instance;
     }
 
+    private $persistence;
+
 
     function __construct()
     {
 
+    }
+
+    public function setPersistence($storage)
+    {
+        if(isset($this->persistence))
+            throw new Exception("you cant change persistence if already set.");
+        if(get_parent_class($storage) != "Storage")
+            throw new Exception("Must be a child class of Storage");
+        $this->persistence = $storage;
+    }
+
+    public function Persistence()
+    {
+        return $this->persistence;
     }
 
     public function run()
