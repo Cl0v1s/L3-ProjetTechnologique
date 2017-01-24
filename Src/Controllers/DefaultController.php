@@ -14,12 +14,12 @@ class DefaultController extends Controller
     function __construct()
     {
        parent::__construct();
-       $this->setTitle("Index");
     }
 
     public function run($ctx)
     {
-
-        Template::process("test", $this->data);
+        $view = new View("test");
+        $view->setTitle("Test");
+        $view->show();
     }
 }

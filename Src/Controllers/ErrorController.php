@@ -11,12 +11,14 @@ class ErrorController extends Controller
 {
     public function run($ctx)
     {
-        $this->data["code"] = $ctx["code"];
-
-        $this->setTitle("Erreur ".$ctx["code"]);
+        $data = array();
+        $data["code"] = $ctx["code"];
 
         $tpl = "Error/".$ctx["code"];
 
-        Template::process($tpl, $this->data);
+        $view = new View($tpl, $data);
+        $view->setTitle("Erreur ".$ctx["code"]);
+
+        $view->show();
     }
 }
