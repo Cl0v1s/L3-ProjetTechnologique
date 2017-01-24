@@ -5,9 +5,10 @@ Il consiste en un ensemble de balises supplémentaires, à utiliser en suppléme
 
 ## Balises 
 
-| Balise | Effet | 
-|-|-|
+
+| Balise | Effet |
+|------|----|
 | {{data}} | Est remplacé par le contenu de la variable `data` |
-| {{=data}} html {{/data}} | html est affiché seulement si le contenu de la variable `data` est vrai. | 
+| {{=data}} html {{/data}} | html est affiché seulement si le contenu de la variable `data` est vrai. |
 | {{#array}} html {{data1}} html {{data2} html {{/array}} | Itère dans le tableau de tableau  `array` et affiche `html ... html` autant de fois qu'il y a d'entrées dans `array`. Si `data1` et `data2` sont des entrées de tableaux contenus dans `array` leurs valeurs seront affichées` |
 
