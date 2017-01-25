@@ -69,5 +69,8 @@ class Engine
 
 function __autoload($class)
 {
-    include_once 'Controllers/'.$class.'.php';
+    if(file_exists('Controllers/'.$class.'.php'))
+        include_once 'Controllers/'.$class.'.php';
+    else if(file_exists('Model/'.$class.'.php'))
+        include_once 'Model/'.$class.'.php';
 }
