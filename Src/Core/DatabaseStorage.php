@@ -1,6 +1,7 @@
 <?php
 
 include_once 'Core/Storage.php';
+include_once  'Core/StorageItem.php';
 
 /**
  * Created by PhpStorm.
@@ -21,14 +22,15 @@ class DatabaseStorage implements Storage
 
     /**
      * Insert object into table for persistence
-     * @param $table Table in which insert.
-     * @param $object
+     * @param $object StorageItem object to insert
      * @throws Exception
      */
-    public function put($table, $object)
+    public function put($object)
     {
+        if(get_parent_class($object) != "StorageItem")
+            throw new Exception("$object must be StorageItem.");
         $data = array();
-        $sqlstart = "INSERT INTO ".$table."(";
+        $sqlstart = "INSERT INTO ".get_class($object)."(";
         $sqlend = "VALUES (";
         foreach ($object as $key => $value)
         {
@@ -49,13 +51,19 @@ class DatabaseStorage implements Storage
         }
     }
 
-    public function get($spec)
+    /**
+     * Récupềre un objet depuis une table de la base de données en fonction de son id
+     * @param $object StorageItem objet vide à initialiser
+     * @return null|mixed L'objet issu de la base de données
+     * @throws Exception
+     */
+    public function get($object)
     {
-        if(is_array($spec) ==  false)
-            throw new Exception("$spec needs to be an array[2]{table/type name, id to get}");
+        if(get_parent_class($object) != "StorageItem")
+            throw new Exception("$object must be StorageItem.");
         $data = array();
-        $data[":table"] = $spec[0];
-        $data[":id"] = $spec[1];
+        $data[":table"] = get_class($object);
+        $data[":id"] = $object["id"];
         $sql = "SELECT * from :table WHERE id=:id";
         $request = $this->pdo->prepare($sql);
         $results = $request->execute($data);
@@ -74,13 +82,39 @@ class DatabaseStorage implements Storage
         return $object;
     }
 
-    public function remove($key)
+    /**
+     * Supprime l'objet en paramètre de la persistance
+     * @param $object StorageItem Objet à supprimer de la persistance
+     * @return null
+     * @throws Exception
+     */
+    public function remove($object)
     {
-        // TODO: Implement remove() method.
+        if(get_parent_class($object) != "StorageItem")
+            throw new Exception("$object must be StorageItem.");
+        $data = array();
+        $data[":table"] = get_class($object);
+        $data[":id"] = $object["id"];
+        $sql = "DELETE FROM :table WHERE id=:id";
+        $request = $this->pdo->prepare($sql);
+        $results = $request->execute($data);
+        if($results != true)
+            throw new Exception("The get operation failed.");
+        return NULL;
     }
 
-    public function has($value)
+    /**
+     * Vérifie si la persistance dispose de l'objet en mémoire
+     * @param $object StorageItem Objet dont il faut tester la présence
+     * @return bool
+     * @throws Exception
+     */
+    public function has($object)
     {
-        // TODO: Implement has() method.
+        if(get_parent_class($object) != "StorageItem")
+            throw new Exception("$object must be StorageItem.");
+        if($this->get($object) != NULL)
+            return true;
+        return false;
     }
 }

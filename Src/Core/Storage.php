@@ -8,11 +8,11 @@
  */
 interface Storage
 {
-    public function put($key, $value);
+    public function put($object);
 
-    public function get($key);
+    public function get($object);
 
-    public function remove($key);
+    public function remove($object);
 
-    public function has($value);
+    public function has($object);
 }

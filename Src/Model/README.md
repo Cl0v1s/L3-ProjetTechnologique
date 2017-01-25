@@ -1,0 +1,1 @@
+All Files here must extend Core/StorageItem.
