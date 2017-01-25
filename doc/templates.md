@@ -12,3 +12,11 @@ Il consiste en un ensemble de balises supplémentaires, à utiliser en suppléme
 | {{=data}} html {{/data}} | html est affiché seulement si le contenu de la variable `data` est vrai. |
 | {{#array}} html {{data1}} html {{data2} html {{/array}} | Itère dans le tableau de tableau  `array` et affiche `html ... html` autant de fois qu'il y a d'entrées dans `array`. Si `data1` et `data2` sont des entrées de tableaux contenus dans `array` leurs valeurs seront affichées` |
 
+## Utilisation dans le code 
+
+Core/Template est une classe statique exposant trois méthodes différentes:
+
+- Template::open, ouvre le fichier de template précisé
+- Template::prepare, traite le template et le prépare à l'affichage 
+- Template::process, effectue un open, un prepare et affiche le template précisé.
+
