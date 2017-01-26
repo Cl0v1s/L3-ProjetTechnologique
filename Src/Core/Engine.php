@@ -26,21 +26,24 @@ class Engine
 
     function __construct()
     {
-
+        $this->persistence = array();
     }
 
     public function setPersistence($storage)
     {
-        if(isset($this->persistence))
+        $key = get_class($storage);
+        if(isset($this->persistence[$key]))
             throw new Exception("you cant change persistence if already set.");
-        if(get_parent_class($storage) != "Storage")
+        if(!is_subclass_of($storage, "Storage"))
             throw new Exception("Must be a child class of Storage");
-        $this->persistence = $storage;
+        $this->persistence[$key] = $storage;
     }
 
-    public function Persistence()
+    public function Persistence($class)
     {
-        return $this->persistence;
+        if(!isset($this->persistence[$class]))
+            throw new Exception($class." not registered as Persistent Storage");
+        return $this->persistence[$class];
     }
 
     public function run()

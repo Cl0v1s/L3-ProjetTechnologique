@@ -2,6 +2,7 @@
 
 include_once 'Core/Engine.php';
 include_once 'Model/DatabaseStorage.php';
+include_once 'Model/SessionStorage.php';
 
 /**
  * Created by PhpStorm.
@@ -12,6 +13,7 @@ include_once 'Model/DatabaseStorage.php';
 
 
 Engine::Instance()->setPersistence(new DatabaseStorage());
+Engine::Instance()->setPersistence(new SessionStorage());
 Engine::Instance()->run();
 
 
