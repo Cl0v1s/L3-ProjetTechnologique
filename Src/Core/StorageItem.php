@@ -9,4 +9,10 @@
 abstract class StorageItem
 {
     public $id;
+
+    function __construct($id = NULL)
+    {
+        if($id != NULL)
+            $this->id = $id;
+    }
 }

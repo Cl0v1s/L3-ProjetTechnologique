@@ -19,8 +19,8 @@ class SessionStorage implements Storage
      */
     public function put($object)
     {
-        if(get_parent_class($object) != "StorageItem")
-            throw new Exception("$object must be StorageItem.");
+        if(get_class($object) != "SessionItem")
+            throw new Exception("$object must be SessionItem.");
         session_start();
         $_SESSION[$object["id"]] = $object;
     }
@@ -33,8 +33,8 @@ class SessionStorage implements Storage
      */
     public function get($object)
     {
-        if(get_parent_class($object) != "StorageItem")
-            throw new Exception("$object must be StorageItem.");
+        if(get_class($object) != "SessionItem")
+            throw new Exception("$object must be SessionItem.");
         session_start();
         $object = $_SESSION[$object["id"]];
         return $object;
@@ -47,8 +47,8 @@ class SessionStorage implements Storage
      */
     public function remove($object)
     {
-        if(get_parent_class($object) != "StorageItem")
-            throw new Exception("$object must be StorageItem.");
+        if(get_class($object) != "SessionItem")
+            throw new Exception("$object must be SessionItem.");
         session_start();
         unset($_SESSION[$object["id"]]);
     }
@@ -61,8 +61,8 @@ class SessionStorage implements Storage
      */
     public function has($object)
     {
-        if(get_parent_class($object) != "StorageItem")
-            throw new Exception("$object must be StorageItem.");
+        if(get_class($object) != "SessionItem")
+            throw new Exception("$object must be SessionItem.");
         if(!isset($_SESSION[$object["id"]]))
             return false;
         return true;
