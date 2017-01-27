@@ -18,8 +18,8 @@ class DefaultController extends Controller
 
     public function run($ctx)
     {
-        $view = new View("test");
-        $view->setTitle("Test");
+        $view = new View("index");
+        $view->setTitle("Index");
         $view->show();
     }
 }

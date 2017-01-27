@@ -1,5 +1,7 @@
 <?php
 
+require_once 'vendor/autoload.php';
+
 /**
  * Created by PhpStorm.
  * User: clovis
@@ -21,12 +23,23 @@ class Engine
         return Engine::$instance;
     }
 
+
+
+    public static function autoload($class)
+    {
+        if(file_exists('Controllers/'.$class.'.php'))
+            include_once 'Controllers/'.$class.'.php';
+        else if(file_exists('Model/'.$class.'.php'))
+            include_once 'Model/'.$class.'.php';
+    }
+
     private $persistence;
 
 
     function __construct()
     {
         $this->persistence = array();
+        spl_autoload_register('Engine::autoload');
     }
 
     public function setPersistence($storage)
@@ -51,10 +64,12 @@ class Engine
         $ctx = array();
 
         $class = NULL;
-        if(isset($_GET["p"]) == false)
+        if(isset($_GET["p"]) == false || strlen($_GET["p"]) <= 0)
             $class = "Default";
         else
             $class = $_GET["p"];
+
+        echo "p:'".$_GET["p"]."'";
 
         $uri = "Controllers/".$class."Controller.php";
 
@@ -68,12 +83,4 @@ class Engine
         $controller = new $class();
         $controller->run($ctx);
     }
-}
-
-function __autoload($class)
-{
-    if(file_exists('Controllers/'.$class.'.php'))
-        include_once 'Controllers/'.$class.'.php';
-    else if(file_exists('Model/'.$class.'.php'))
-        include_once 'Model/'.$class.'.php';
 }
