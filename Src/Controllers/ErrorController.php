@@ -9,15 +9,22 @@ include_once 'Core/Controller.php';
  */
 class ErrorController extends Controller
 {
+    private $code;
+
+    function __construct($params)
+    {
+        parent::__construct($params);
+        $this->code = $params[1];
+    }
+
     public function run($ctx)
     {
         $data = array();
-        $data["code"] = $ctx["code"];
+        $data["code"] = $this->code;
 
-        $tpl = "Error/".$ctx["code"];
 
-        $view = new View($tpl, $data);
-        $view->setTitle("Erreur ".$ctx["code"]);
+        $view = new View("Error/base", $data);
+        $view->setTitle("Erreur ".$this->code);
 
         $view->show();
     }
