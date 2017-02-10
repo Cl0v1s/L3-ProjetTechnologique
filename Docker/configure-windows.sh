@@ -1,4 +1,3 @@
-docker start
 docker build -t apache-php-dev .
 cd ..
 docker run -p 81:80 -v $(pwd)/Src:/var/www/html --name lamp -it -d apache-php-dev /bin/bash
