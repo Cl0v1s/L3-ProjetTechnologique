@@ -47,14 +47,18 @@ Ce repo contient le code réalisé dans le cadre du Projet Technologique prodigu
 
 * Créer une bête liste de services disponibles classés par catégories (loisir, aides à domicile, loisir)
 
-
 * Créer un espace permettant aux aministrés de poser leurs questions.
 	* étudier moteur de recherche versus liste exhaustive  
 	* Pour poser une question nécessaire d'effectuer une recherche auparavant (éviter redondance)
-	* --On affiche que les questions possédant une réponse (administration indirecte)--
 	* On affiche toutes les questions, en priorité celles sans réponse afin de permettre aux concitoyens.
 	* Regrouper par topic
 	* Page d'accueil affichant les questions les plus consultées. 
+
+* Créer un fil d'acualité personnalisé comportant 
+	* Inscription
+	* Connexion
+	* Les questions posées et leur réponses
+	* Les services qui me concernent
 
 
 * Administration 
@@ -70,7 +74,7 @@ Ce repo contient le code réalisé dans le cadre du Projet Technologique prodigu
 ## Workflow
 
 * Utilisation de GitFlow
-* 
+
 
 
 
