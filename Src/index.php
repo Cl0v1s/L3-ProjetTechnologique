@@ -1,8 +1,8 @@
 <?php
 
 include_once 'Core/Engine.php';
-include_once 'Model/DatabaseStorage.php';
-include_once 'Model/SessionStorage.php';
+include_once 'Core/DatabaseStorage.php';
+include_once 'Core/SessionStorage.php';
 
 /**
  * Created by PhpStorm.
@@ -12,7 +12,7 @@ include_once 'Model/SessionStorage.php';
  */
 
 
-Engine::Instance()->setPersistence(new DatabaseStorage());
+Engine::Instance()->setPersistence(new DatabaseStorage("localhost", "L3", "root", "root"));
 Engine::Instance()->setPersistence(new SessionStorage());
 Engine::Instance()->run();
 

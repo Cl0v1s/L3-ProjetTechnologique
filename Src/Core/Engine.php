@@ -1,5 +1,7 @@
 <?php
 
+require_once 'vendor/autoload.php';
+
 /**
  * Created by PhpStorm.
  * User: clovis
@@ -21,12 +23,23 @@ class Engine
         return Engine::$instance;
     }
 
+
+
+    public static function autoload($class)
+    {
+        if(file_exists('Controllers/'.$class.'.php'))
+            include_once 'Controllers/'.$class.'.php';
+        else if(file_exists('Model/'.$class.'.php'))
+            include_once 'Model/'.$class.'.php';
+    }
+
     private $persistence;
 
 
     function __construct()
     {
         $this->persistence = array();
+        spl_autoload_register('Engine::autoload');
     }
 
     public function setPersistence($storage)
@@ -49,9 +62,10 @@ class Engine
     public function run()
     {
         $ctx = array();
+        $matches = array();
 
         $class = NULL;
-        if(isset($_GET["p"]) == false)
+        if(isset($_GET["p"]) == false || strlen($_GET["p"]) <= 0)
             $class = "Default";
         else
             $class = $_GET["p"];
@@ -59,21 +73,15 @@ class Engine
         $uri = "Controllers/".$class."Controller.php";
 
         if(file_exists($uri) == false) {
-            $class = "Error";
-            $ctx["code"] = 404;
+            header("Location: /Error/404");
+            return;
         }
 
         $class = $class."Controller";
 
-        $controller = new $class();
+        preg_match_all("/([^\/]+)/", $_SERVER["REQUEST_URI"], $matches);
+
+        $controller = new $class($matches[0]);
         $controller->run($ctx);
     }
-}
-
-function __autoload($class)
-{
-    if(file_exists('Controllers/'.$class.'.php'))
-        include_once 'Controllers/'.$class.'.php';
-    else if(file_exists('Model/'.$class.'.php'))
-        include_once 'Model/'.$class.'.php';
 }

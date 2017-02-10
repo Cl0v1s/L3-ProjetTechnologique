@@ -11,15 +11,15 @@ include_once "Core/Controller.php";
 class DefaultController extends Controller
 {
 
-    function __construct()
+    function __construct($params)
     {
-       parent::__construct();
+       parent::__construct($params);
     }
 
     public function run($ctx)
     {
-        $view = new View("test");
-        $view->setTitle("Test");
+        $view = new View("index");
+        $view->setTitle("Index");
         $view->show();
     }
 }

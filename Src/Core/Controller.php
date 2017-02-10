@@ -12,7 +12,7 @@ include_once 'Core/View.php';
 abstract class Controller
 {
 
-    function __construct()
+    function __construct($params)
     {
     }
 
