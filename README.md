@@ -64,6 +64,7 @@ Ce repo contient le code réalisé dans le cadre du Projet Technologique prodigu
 * Administration 
 	* Gestion des questions 
 	* Gestions des comptes utilisateurs 
+	    * Gestion du ban
 	* Gestions des services (Ajout de lien dans les menus)
 
 ## TODO

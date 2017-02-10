@@ -11,7 +11,6 @@ include_once 'Core/SessionStorage.php';
  * Time: 16:12
  */
 
-
 Engine::Instance()->setPersistence(new DatabaseStorage("localhost", "L3", "root", "root"));
 Engine::Instance()->setPersistence(new SessionStorage());
 Engine::Instance()->run();
