@@ -10,6 +10,22 @@ abstract class StorageItem
 {
     public $id;
 
+    /**
+     * @return null
+     */
+    public function Id()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param null $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
     function __construct($id = NULL)
     {
         if($id != NULL)
