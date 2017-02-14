@@ -14,6 +14,8 @@ class User extends StorageItem
     public $password;
     public $ban_end;
 
+    public $Answers = array();
+
     /**
      * @return mixed
      */

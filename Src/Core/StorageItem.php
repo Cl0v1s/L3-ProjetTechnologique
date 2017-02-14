@@ -9,6 +9,8 @@
 abstract class StorageItem
 {
     public $id;
+    private $new;
+    private $modified;
 
     /**
      * @return null
@@ -23,12 +25,37 @@ abstract class StorageItem
      */
     public function setId($id)
     {
-        $this->id = $id;
+        if($this->id != NULL)
+            $this->id = $id;
+        else
+            throw new Error("Can't change StorageItem Id.");
+    }
+
+    /**
+     * Retourne si l'objet est nouveau ou provient de la base
+     * @return bool
+     */
+    public function isNew()
+    {
+        return $this->new;
+    }
+
+    /**
+     * Signale à l'objet qu'il a été modifié
+     */
+    protected function setModified()
+    {
+        $this->modified = true;
     }
 
     function __construct($id = NULL)
     {
-        if($id != NULL)
+        if($id != NULL) {
             $this->id = $id;
+            $this->new = false;
+        }
+        else
+            $this->new = true;
+        $this->modified = false;
     }
 }

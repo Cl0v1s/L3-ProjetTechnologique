@@ -29,6 +29,12 @@ class DatabaseStorage implements Storage
     {
         if(get_parent_class($object) != "StorageItem")
             throw new Exception("$object must be StorageItem.");
+        if($object->isNew())
+            $this->put_new($object);
+    }
+
+    private function put_new($object)
+    {
         $data = array();
         $sqlstart = "INSERT INTO ".get_class($object)."(";
         $sqlend = "VALUES (";
@@ -74,10 +80,43 @@ class DatabaseStorage implements Storage
             return NULL;
         else if(count($results) > 1)
             throw new Exception("Your database is inconsistent. Multiple entries have same id. Please correct it.");
-        $object =  new $data[":table"]();
+        $object =  new $data[":table"](-1);
+        $object = $this->build_object($object, $results[0]);
+        return $object;
+    }
+
+    /**
+     * Règles les attributs d'un objet à partir de resultats classés sous forme de tableau
+     * @param $object objet à régler
+     * @param $results données de la base
+     * @return mixed objet réglé
+     * @throws Exception
+     */
+    private function build_object($object, $results)
+    {
         foreach ($object as $key => $value)
         {
-            $object[$key] = $results[0][$key];
+            if(is_array($object[$key]) == false)
+                $object[$key] = $results[$key];
+            else
+            {
+                $data = array();
+                $data[":table"] = substr($key, 0, -1); //Suppression du -s
+                $data[":stranger_key"] = strtolower(get_class($object))."_id";
+                $data[":id"] = $object["id"];
+                $sql = "SELECT * from :table WHERE :stranger_key=:id";
+                $request = $this->pdo->prepare($sql);
+                $sub_results = $request->execute($data);
+                if($sub_results != true)
+                    throw new Exception("The get operation failed.");
+                $sub_results = $request->fetchAll();
+                foreach ($sub_results as $entry)
+                {
+                    $sub_object = new $data[":table"](-1);
+                    $sub_object = $this->build_object($sub_object, $entry);
+                    array_push($object[$key], $sub_object);
+                }
+            }
         }
         return $object;
     }
