@@ -18,6 +18,19 @@ class DefaultController extends Controller
 
     public function run($ctx)
     {
+        $s = new DatabaseStorage("localhost", "L3", "root", "root");
+        
+        $user = new User(37);
+        $s->find($user);
+        echo $user->lastname;
+        $user->setLastname("Teneur");
+        $s->find($user);
+        echo $user->lastname;
+
+        $s->flush();
+
+
+
         $view = new View("index");
         $view->setTitle("Index");
         $view->show();

@@ -23,6 +23,7 @@ class ErrorController extends Controller
         $data["code"] = $this->code;
 
 
+
         $view = new View("Error/base", $data);
         $view->setTitle("Erreur ".$this->code);
 

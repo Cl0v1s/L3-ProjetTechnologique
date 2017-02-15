@@ -1,6 +1,7 @@
 <?php
 
 require_once 'vendor/autoload.php';
+include_once 'DatabaseStorage.php';
 
 /**
  * Created by PhpStorm.
@@ -33,30 +34,10 @@ class Engine
             include_once 'Model/'.$class.'.php';
     }
 
-    private $persistence;
-
-
     function __construct()
     {
         $this->persistence = array();
         spl_autoload_register('Engine::autoload');
-    }
-
-    public function setPersistence($storage)
-    {
-        $key = get_class($storage);
-        if(isset($this->persistence[$key]))
-            throw new Exception("you cant change persistence if already set.");
-        if(!is_subclass_of($storage, "Storage"))
-            throw new Exception("Must be a child class of Storage");
-        $this->persistence[$key] = $storage;
-    }
-
-    public function Persistence($class)
-    {
-        if(!isset($this->persistence[$class]))
-            throw new Exception($class." not registered as Persistent Storage");
-        return $this->persistence[$class];
     }
 
     public function run()

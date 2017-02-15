@@ -1,20 +1,32 @@
 <?php
 
+include_once 'Core/StorageItem.php';
+
 /**
  * Created by PhpStorm.
  * User: clovis
- * Date: 12/02/17
- * Time: 13:48
+ * Date: 15/02/17
+ * Time: 15:08
  */
 class User extends StorageItem
 {
-    public $firstname;
     public $lastname;
-    public $username;
+    public $firstname;
     public $password;
-    public $ban_end;
 
-    public $Answers = array();
+    /**
+     * @return mixed
+     */
+    public function Lastname()
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname($value)
+    {
+        $this->setChanged();
+        $this->lastname = $value;
+    }
 
     /**
      * @return mixed
@@ -29,39 +41,8 @@ class User extends StorageItem
      */
     public function setFirstname($firstname)
     {
+        $this->setChanged();
         $this->firstname = $firstname;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function Lastname()
-    {
-        return $this->lastname;
-    }
-
-    /**
-     * @param mixed $lastname
-     */
-    public function setLastname($lastname)
-    {
-        $this->lastname = $lastname;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function Username()
-    {
-        return $this->username;
-    }
-
-    /**
-     * @param mixed $username
-     */
-    public function setUsername($username)
-    {
-        $this->username = $username;
     }
 
     /**
@@ -77,27 +58,9 @@ class User extends StorageItem
      */
     public function setPassword($password)
     {
+        $this->setChanged();
         $this->password = $password;
     }
-
-    /**
-     * @return mixed
-     */
-    public function BanEnd()
-    {
-        $date = new Date();
-        $date->setTimestamp($this->ban_end);
-        return $date;
-    }
-
-    /**
-     * @param mixed $ban_end
-     */
-    public function setBanEnd($ban_end)
-    {
-        $this->ban_end = $ban_end->getTimestamp();
-    }
-
 
 
 }
