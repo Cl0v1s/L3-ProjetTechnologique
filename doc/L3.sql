@@ -26,9 +26,9 @@ SET time_zone = "+00:00";
 -- Structure de la table `Categorie`
 --
 
-CREATE TABLE `Categorie` (
-  `id` int(2) NOT NULL,
-  `nom` varchar(30) CHARACTER SET utf8 NOT NULL
+CREATE TABLE `Category` (
+  `id` int(10) NOT NULL,
+  `name` varchar(30) CHARACTER SET utf8 NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -37,9 +37,9 @@ CREATE TABLE `Categorie` (
 -- Structure de la table `Concerne`
 --
 
-CREATE TABLE `Concerne` (
-  `id_service` int(2) NOT NULL,
-  `id_statut` int(2) NOT NULL
+CREATE TABLE `Related` (
+  `service_id` int(10) NOT NULL,
+  `statut_id` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -48,9 +48,9 @@ CREATE TABLE `Concerne` (
 -- Structure de la table `Possede`
 --
 
-CREATE TABLE `Possede` (
-  `id_user` int(5) NOT NULL,
-  `id_statut` int(2) NOT NULL
+CREATE TABLE `Is` (
+  `user_id` int(10) NOT NULL,
+  `statut_id` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -60,15 +60,15 @@ CREATE TABLE `Possede` (
 --
 
 CREATE TABLE `Question` (
-  `id` int(5) NOT NULL,
-  `titre` varchar(30) CHARACTER SET utf8 NOT NULL,
-  `contenu` text CHARACTER SET utf8 NOT NULL,
-  `points` int(1) NOT NULL,
+  `id` int(10) NOT NULL,
+  `title` varchar(30) CHARACTER SET utf8 NOT NULL,
+  `content` text CHARACTER SET utf8 NOT NULL,
+  `points` int(10) NOT NULL,
   `date` datetime NOT NULL,
-  `reporter` int(1) NOT NULL,
-  `id_sujet` int(2) NOT NULL,
-  `id_reponse` int(5) NOT NULL,
-  `id_user` int(5) NOT NULL
+  `reported` int(10) NOT NULL,
+  `subject_id` int(10) NOT NULL,
+  `response_id` int(10) NOT NULL,
+  `user_id` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -77,12 +77,12 @@ CREATE TABLE `Question` (
 -- Structure de la table `Reponse`
 --
 
-CREATE TABLE `Reponse` (
-  `id` int(5) NOT NULL,
-  `contenu` text CHARACTER SET utf8 NOT NULL,
-  `points` int(1) NOT NULL,
+CREATE TABLE `Response` (
+  `id` int(10) NOT NULL,
+  `content` text CHARACTER SET utf8 NOT NULL,
+  `points` int(10) NOT NULL,
   `date` datetime NOT NULL,
-  `id_user` int(5) NOT NULL
+  `user_id` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -92,13 +92,13 @@ CREATE TABLE `Reponse` (
 --
 
 CREATE TABLE `Service` (
-  `id` int(2) NOT NULL,
-  `nom` varchar(30) CHARACTER SET utf8 NOT NULL,
+  `id` int(10) NOT NULL,
+  `name` varchar(30) CHARACTER SET utf8 NOT NULL,
   `description` text CHARACTER SET utf8 NOT NULL,
-  `date_debut` datetime NOT NULL,
-  `date_fin` datetime NOT NULL,
-  `reporter` int(1) NOT NULL,
-  `id_cat` int(2) NOT NULL
+  `date_start` datetime NOT NULL,
+  `date_end` datetime NOT NULL,
+  `reported` int(10) NOT NULL,
+  `category_id` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -108,8 +108,8 @@ CREATE TABLE `Service` (
 --
 
 CREATE TABLE `Statut` (
-  `id` int(2) NOT NULL,
-  `nom` varchar(30) CHARACTER SET utf8 NOT NULL
+  `id` int(10) NOT NULL,
+  `name` varchar(30) CHARACTER SET utf8 NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -118,9 +118,9 @@ CREATE TABLE `Statut` (
 -- Structure de la table `Sujet`
 --
 
-CREATE TABLE `Sujet` (
-  `id` int(2) NOT NULL,
-  `nom` varchar(30) CHARACTER SET utf8 NOT NULL
+CREATE TABLE `Subject` (
+  `id` int(10) NOT NULL,
+  `name` varchar(30) CHARACTER SET utf8 NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -130,8 +130,8 @@ CREATE TABLE `Sujet` (
 --
 
 CREATE TABLE `UsedBy` (
-  `id_user` int(5) NOT NULL,
-  `id_service` int(2) NOT NULL
+  `user_id` int(10) NOT NULL,
+  `service_id` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -141,9 +141,9 @@ CREATE TABLE `UsedBy` (
 --
 
 CREATE TABLE `User` (
-  `id` int(5) NOT NULL,
-  `nom` varchar(30) CHARACTER SET utf8 NOT NULL,
-  `prenom` varchar(30) CHARACTER SET utf8 NOT NULL,
+  `id` int(10) NOT NULL,
+  `lastname` varchar(30) CHARACTER SET utf8 NOT NULL,
+  `firstname` varchar(30) CHARACTER SET utf8 NOT NULL,
   `password` varchar(16) CHARACTER SET utf8 NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -154,45 +154,45 @@ CREATE TABLE `User` (
 --
 -- Index pour la table `Categorie`
 --
-ALTER TABLE `Categorie`
+ALTER TABLE `Category`
   ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `Concerne`
 --
-ALTER TABLE `Concerne`
-  ADD PRIMARY KEY (`id_service`,`id_statut`),
-  ADD KEY `id_statut` (`id_statut`);
+ALTER TABLE `Related`
+  ADD PRIMARY KEY (`service_id`,`statut_id`),
+  ADD KEY `statut_id` (`statut_id`);
 
 --
 -- Index pour la table `Possede`
 --
-ALTER TABLE `Possede`
-  ADD PRIMARY KEY (`id_user`,`id_statut`),
-  ADD KEY `id_statut` (`id_statut`);
+ALTER TABLE `Is`
+  ADD PRIMARY KEY (`user_id`,`statut_id`),
+  ADD KEY `statut_id` (`statut_id`);
 
 --
 -- Index pour la table `Question`
 --
 ALTER TABLE `Question`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_sujet` (`id_sujet`),
-  ADD KEY `id_reponse` (`id_reponse`),
-  ADD KEY `id_user` (`id_user`);
+  ADD KEY `subject_id` (`subject_id`),
+  ADD KEY `response_id` (`response_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Index pour la table `Reponse`
 --
-ALTER TABLE `Reponse`
+ALTER TABLE `Response`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_user` (`id_user`);
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Index pour la table `Service`
 --
 ALTER TABLE `Service`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_cat` (`id_cat`);
+  ADD KEY `category_id` (`category_id`);
 
 --
 -- Index pour la table `Statut`
@@ -203,15 +203,15 @@ ALTER TABLE `Statut`
 --
 -- Index pour la table `Sujet`
 --
-ALTER TABLE `Sujet`
+ALTER TABLE `Subject`
   ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `UsedBy`
 --
 ALTER TABLE `UsedBy`
-  ADD PRIMARY KEY (`id_user`,`id_service`),
-  ADD KEY `id_service` (`id_service`);
+  ADD PRIMARY KEY (`user_id`,`service_id`),
+  ADD KEY `service_id` (`service_id`);
 
 --
 -- Index pour la table `User`
@@ -226,38 +226,38 @@ ALTER TABLE `User`
 --
 -- AUTO_INCREMENT pour la table `Categorie`
 --
-ALTER TABLE `Categorie`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `Category`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `Question`
 --
 ALTER TABLE `Question`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `Reponse`
 --
-ALTER TABLE `Reponse`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `Response`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `Service`
 --
 ALTER TABLE `Service`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `Statut`
 --
 ALTER TABLE `Statut`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `Sujet`
 --
-ALTER TABLE `Sujet`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `Subject`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `User`
 --
 ALTER TABLE `User`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 --
 -- Contraintes pour les tables exportées
 --
@@ -265,53 +265,53 @@ ALTER TABLE `User`
 --
 -- Contraintes pour la table `Concerne`
 --
-ALTER TABLE `Concerne`
-  ADD CONSTRAINT `Concerne_ibfk_1` FOREIGN KEY (`id_service`) REFERENCES `Service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `Concerne_ibfk_2` FOREIGN KEY (`id_statut`) REFERENCES `Statut` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `Related`
+  ADD CONSTRAINT `Concerne_ibfk_1` FOREIGN KEY (`service_id`) REFERENCES `Service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `Concerne_ibfk_2` FOREIGN KEY (`statut_id`) REFERENCES `Statut` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `Possede`
 --
-ALTER TABLE `Possede`
-  ADD CONSTRAINT `Possede_ibfk_1` FOREIGN KEY (`id_statut`) REFERENCES `Statut` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `Possede_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `User` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `Is`
+  ADD CONSTRAINT `Possede_ibfk_1` FOREIGN KEY (`statut_id`) REFERENCES `Statut` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `Possede_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `Question`
 --
 ALTER TABLE `Question`
-  ADD CONSTRAINT `Question_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `User` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `Question_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `Reponse`
 --
-ALTER TABLE `Reponse`
-  ADD CONSTRAINT `Reponse_ibfk_1` FOREIGN KEY (`id`) REFERENCES `Question` (`id_reponse`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `Response`
+  ADD CONSTRAINT `Reponse_ibfk_1` FOREIGN KEY (`id`) REFERENCES `Question` (`response_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `Service`
 --
 ALTER TABLE `Service`
-  ADD CONSTRAINT `Service_ibfk_1` FOREIGN KEY (`id_cat`) REFERENCES `Categorie` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `Service_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `Category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `Sujet`
 --
-ALTER TABLE `Sujet`
-  ADD CONSTRAINT `Sujet_ibfk_1` FOREIGN KEY (`id`) REFERENCES `Question` (`id_sujet`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `Subject`
+  ADD CONSTRAINT `Sujet_ibfk_1` FOREIGN KEY (`id`) REFERENCES `Question` (`subject_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `UsedBy`
 --
 ALTER TABLE `UsedBy`
-  ADD CONSTRAINT `UsedBy_ibfk_1` FOREIGN KEY (`id_service`) REFERENCES `Service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `UsedBy_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `User` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `UsedBy_ibfk_1` FOREIGN KEY (`service_id`) REFERENCES `Service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `UsedBy_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `User`
 --
 ALTER TABLE `User`
-  ADD CONSTRAINT `User_ibfk_1` FOREIGN KEY (`id`) REFERENCES `Reponse` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `User_ibfk_1` FOREIGN KEY (`id`) REFERENCES `Response` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
