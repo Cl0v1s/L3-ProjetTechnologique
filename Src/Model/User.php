@@ -23,7 +23,6 @@ class User extends StorageItem
     public function Questions()
     {
         if(!$this->isLoaded($this->questions)) {
-            echo "getiing";
             $this->storage->findAllRelated('Question', $this, $this->questions);
         }
         return $this->questions;
