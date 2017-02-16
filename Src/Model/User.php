@@ -14,6 +14,31 @@ class User extends StorageItem
     public $firstname;
     public $password;
 
+    public $questions = array([NULL]);
+
+    /**
+     * Retourne l'ensemble des questions associés à cet utilisateur
+     * @return array
+     */
+    public function Questions()
+    {
+        if(!$this->isLoaded($this->questions))
+            $this->storage->findAllRelated('Question', $this, $this->questions);
+        return $this->questions;
+    }
+
+    /**
+     * Ajoute une question à l'utilisateur
+     * @param $question
+     */
+    public function addQuestion($question)
+    {
+        $question->setUserId($this->id);
+        $this->storage->persist($question);
+        array_push($this->questions, $question);
+    }
+
+
     /**
      * @return mixed
      */

@@ -11,15 +11,26 @@ abstract class StorageItem
     public $id;
 
     private $state;
+    protected $storage;
 
 
-
-    public function __construct($id = NULL)
+    public function __construct($storage, $id = NULL)
     {
         if($id != NULL)
         {
             $this->id = $id;
         }
+        $this->state = StorageState::UpToDate;
+        $this->storage = $storage;
+    }
+
+    protected function isLoaded($value)
+    {
+        if(isset($value[0]) && $value[0] == NULL)
+        {
+            return false;
+        }
+        return true;
     }
 
     public function setState($state)

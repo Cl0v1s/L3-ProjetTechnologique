@@ -11,6 +11,7 @@
      const ToInsert = 1;
      const ToUpdate = 2;
      const UpToDate = 0;
+     const ToDelete = 3;
  }
 
 
@@ -23,6 +24,34 @@ class DatabaseStorage
     {
         $this->pdo = new PDO("mysql:host=".$host.";dbname=".$database, $username, $password);
         $this->objects = array();
+    }
+
+    public function findAllRelated($class, &$object, &$destination)
+    {
+        $sql = "SELECT * from :table WHERE :stranger_key=:id";
+        $data = array();
+        $data[":id"] = $object->id;
+        $sql = str_replace(":table", $class, $sql);
+        $sql = str_replace(":stranger_key", get_class($object)."_id", $sql);
+        echo $sql;
+        $request = $this->pdo->prepare($sql);
+        $results = $request->execute($data);
+        if($results != true)
+            throw new Exception("An error occured while retrieving from database.");
+        $results = $request->fetchAll();
+        $related = array();
+        foreach ($results as $result)
+        {
+            $inst = new $class();
+            foreach ($inst as $key => $value) {
+                if (is_array($value) == false)
+                    $inst->$key = $result[$key];
+
+            }
+            $this->persist($inst, StorageState::UpToDate);
+            array_push($related, $inst);
+        }
+        $destination = $related;
     }
 
     public function find(&$object)
@@ -39,6 +68,8 @@ class DatabaseStorage
         $sql = str_replace(":table", get_class($object), $sql);
         $request = $this->pdo->prepare($sql);
         $results = $request->execute($data);
+        if($results != true)
+            throw new Exception("An error occured while retrieving from database.");
         $results = $request->fetchAll();
         if(count($results) < 1)
             return NULL;
@@ -54,13 +85,18 @@ class DatabaseStorage
         return $object;
     }
 
+    public function remove(&$object)
+    {
+        if(isset($this->objects[get_class($object)]) && isset($this->objects[get_class($object)][$object->id]))
+            $object->setState(StorageState::ToDelete);
+    }
+
     public function persist(&$object, $state = StorageState::ToInsert)
     {
         if(isset($this->objects[get_class($object)]))
         {
-            if(isset($this->objects[get_class($object)][$object->id]))
-                return;
-            $object->setState($state);
+            if($state > $object->State())
+                $object->setState($state);
             $this->objects[get_class($object)][$object->id] = $object;
         }
         else
@@ -84,8 +120,24 @@ class DatabaseStorage
                 {
                     $this->update($entry);
                 }
+                else if($entry->State() == StorageState::ToDelete)
+                {
+                    $this->delete($entry);
+                }
             }
         }
+    }
+
+    private function delete(&$object)
+    {
+        $sql = "DELETE FROM ".get_class($object)." WHERE id=:id";
+        $data = array();
+        $data[":id"] = $object->id;
+        $request = $this->pdo->prepare($sql);
+        $results = $request->execute($data);
+        if($results != true)
+            throw new Exception("An error occured while deleting from database.");
+        unset($this->objects[get_class($object)][$object->id]);
     }
 
     private function update(&$object)
