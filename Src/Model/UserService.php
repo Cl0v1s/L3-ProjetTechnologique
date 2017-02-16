@@ -4,12 +4,12 @@
  * Created by PhpStorm.
  * User: clovis
  * Date: 16/02/17
- * Time: 11:48
+ * Time: 19:55
  */
-class Is extends StorageItem
+class UserService extends StorageItem
 {
     public $user_id;
-    public $statut_id;
+    public $service_id;
 
     /**
      * @return mixed
@@ -30,18 +30,19 @@ class Is extends StorageItem
     /**
      * @return mixed
      */
-    public function StatutId()
+    public function ServiceId()
     {
-        return $this->statut_id;
+        return $this->service_id;
     }
 
     /**
-     * @param mixed $statut_id
+     * @param mixed $service_id
      */
-    public function setStatutId($statut_id)
+    public function setServiceId($service_id)
     {
-        $this->statut_id = $statut_id;
+        $this->service_id = $service_id;
     }
     
     
+
 }

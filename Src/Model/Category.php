@@ -39,9 +39,9 @@ class Category extends StorageItem
     }
 
     /**
-     * @param array $services
+     * @param Service $service
      */
-    public function addService($service)
+    public function addService(Service $service)
     {
         $service->setCategoryId($this->id);
         $this->storage->persist($service);

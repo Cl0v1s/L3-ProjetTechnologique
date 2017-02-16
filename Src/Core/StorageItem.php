@@ -24,6 +24,11 @@ abstract class StorageItem
         $this->storage = $storage;
     }
 
+    public function Id()
+    {
+        return $this->id;
+    }
+
     public function unload(&$value)
     {
         $value = array(Null);

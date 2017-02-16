@@ -21,9 +21,11 @@ class DefaultController extends Controller
         $s = new DatabaseStorage("localhost", "L3", "root", "root");
 
         $user = new User($s, 37);
-        $s->find($user);
-        $subject = new Subject($s, 1);
-        $s->find($subject);
+        $user = $s->find($user);
+        $status = new Status($s,1);
+        $status = $s->find($status);
+        echo $status->Users()[0]->Lastname();
+        echo $user->Status()[0]->Name();
 
 
 

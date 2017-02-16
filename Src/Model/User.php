@@ -15,6 +15,7 @@ class User extends StorageItem
     public $password;
 
     public $questions = array(NULL);
+    public $status = array(NULL);
 
     /**
      * Retourne l'ensemble des questions associés à cet utilisateur
@@ -37,6 +38,26 @@ class User extends StorageItem
         $question->setUserId($this->id);
         $this->storage->persist($question);
         array_push($this->questions, $question);
+    }
+
+    /**
+     * @return array
+     */
+    public function Status()
+    {
+        if(!$this->isLoaded($this->status)) {
+            $is = array(NULL);
+            $this->storage->findAllRelated('UserStatus', $this, $is);
+            $this->status = array();
+            foreach ($is as $entry)
+            {
+                $u = $entry->Status();
+                if($u != NULL)
+                    array_push($this->status, $u);
+            }
+
+        }
+        return $this->status;
     }
 
 

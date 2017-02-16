@@ -16,12 +16,38 @@ class Question extends StorageItem
     public $subject_id;
     public $user_id;
 
+    public $responses = array(NULL);
+
     public function __construct($storage, $id = NULL)
     {
         parent::__construct($storage, $id);
         $date = new DateTime();
         $this->date = $date->getTimestamp();
     }
+
+    /**
+     * Retourne l'ensemble des responses associés à cet utilisateur
+     * @return array
+     */
+    public function Responses() : array
+    {
+        if(!$this->isLoaded($this->responses)) {
+            $this->storage->findAllRelated('Response', $this, $this->responses);
+        }
+        return $this->responses;
+    }
+
+    /**
+     * Ajoute une response à l'utilisateur
+     * @param $response
+     */
+    public function addResponse(Response $response)
+    {
+        $response->setQuestionId($this->id);
+        $this->storage->persist($response);
+        array_push($this->responses, $response);
+    }
+
 
     /**
      * @return mixed

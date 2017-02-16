@@ -23,16 +23,15 @@ class DatabaseStorage
     function __construct($host, $database, $username, $password)
     {
         $this->pdo = new PDO("mysql:host=".$host.";dbname=".$database, $username, $password);
+        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->objects = array();
     }
 
     public function findAllRelated($class, &$object, &$destination)
     {
-        $sql = "SELECT * from :table WHERE :stranger_key=:id";
+        $sql = "SELECT * from ".$class." WHERE ".get_class($object)."_id=:id";
         $data = array();
         $data[":id"] = $object->id;
-        $sql = str_replace(":table", $class, $sql);
-        $sql = str_replace(":stranger_key", get_class($object)."_id", $sql);
         $request = $this->pdo->prepare($sql);
         $results = $request->execute($data);
         if($results != true)
