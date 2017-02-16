@@ -14,7 +14,7 @@ class User extends StorageItem
     public $firstname;
     public $password;
 
-    public $questions = array([NULL]);
+    public $questions = array(NULL);
 
     /**
      * Retourne l'ensemble des questions associés à cet utilisateur
@@ -22,8 +22,10 @@ class User extends StorageItem
      */
     public function Questions()
     {
-        if(!$this->isLoaded($this->questions))
+        if(!$this->isLoaded($this->questions)) {
+            echo "getiing";
             $this->storage->findAllRelated('Question', $this, $this->questions);
+        }
         return $this->questions;
     }
 

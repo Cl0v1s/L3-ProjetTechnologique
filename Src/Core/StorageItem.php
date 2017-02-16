@@ -24,9 +24,14 @@ abstract class StorageItem
         $this->storage = $storage;
     }
 
+    public function unload(&$value)
+    {
+        $value = array(Null);
+    }
+
     protected function isLoaded($value)
     {
-        if(isset($value[0]) && $value[0] == NULL)
+        if(isset($value) && $value[0] == NULL)
         {
             return false;
         }

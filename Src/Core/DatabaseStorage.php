@@ -33,7 +33,6 @@ class DatabaseStorage
         $data[":id"] = $object->id;
         $sql = str_replace(":table", $class, $sql);
         $sql = str_replace(":stranger_key", get_class($object)."_id", $sql);
-        echo $sql;
         $request = $this->pdo->prepare($sql);
         $results = $request->execute($data);
         if($results != true)
@@ -42,7 +41,7 @@ class DatabaseStorage
         $related = array();
         foreach ($results as $result)
         {
-            $inst = new $class();
+            $inst = new $class($this);
             foreach ($inst as $key => $value) {
                 if (is_array($value) == false)
                     $inst->$key = $result[$key];
@@ -123,6 +122,11 @@ class DatabaseStorage
                 else if($entry->State() == StorageState::ToDelete)
                 {
                     $this->delete($entry);
+                }
+                foreach ($entry as $key => $value) {
+                    if (is_array($value) == true)
+                        $entry->unload($entry->$key);
+
                 }
             }
         }

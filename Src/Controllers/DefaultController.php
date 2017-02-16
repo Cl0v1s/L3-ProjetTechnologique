@@ -24,14 +24,6 @@ class DefaultController extends Controller
         $s->find($user);
         $subject = new Subject($s, 1);
         $s->find($subject);
-        $question = new Question($s,2);
-        $s->find($question);
-        echo $question->Title();
-        $s->remove($question);
-
-
-
-        $s->flush();
 
 
 
