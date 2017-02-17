@@ -48,6 +48,20 @@ class Question extends StorageItem
         array_push($this->responses, $response);
     }
 
+    public function Subject()
+    {
+        $subject = new Subject($this->storage, $this->subject_id);
+        $this->storage->find($subject);
+        return $subject;
+    }
+
+    public function User()
+    {
+        $user = new User($this->storage, $this->user_id);
+        $this->storage->find($user);
+        return $user;
+    }
+
 
     /**
      * @return mixed

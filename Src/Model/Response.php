@@ -21,6 +21,20 @@ class Response extends StorageItem
         $this->date = $date->Timestamp();
     }
 
+    public function User()
+    {
+        $user = new User($this->storage, $this->user_id);
+        $this->storage->find($user);
+        return $user;
+    }
+
+    public function Question()
+    {
+        $question = new Question($this->storage, $this->question_id);
+        $this->storage->find($question);
+        return $question;
+    }
+
     /**
      * @return mixed
      */

@@ -15,6 +15,56 @@ class Service extends StorageItem
     public $reported;
     public $category_id;
 
+    public $users = array(NULL);
+    public $status = array(NULL);
+
+    /**
+     * @return array
+     */
+    public function Status()
+    {
+        if(!$this->isLoaded($this->status)) {
+            $is = array(NULL);
+            $this->storage->findAllRelated('ServiceStatus', $this, $is);
+            $this->status = array();
+            foreach ($is as $entry)
+            {
+                $u = $entry->Status();
+                if($u != NULL)
+                    array_push($this->status, $u);
+            }
+
+        }
+        return $this->status;
+    }
+
+    /**
+     * @return array
+     */
+    public function Users()
+    {
+        if(!$this->isLoaded($this->users)) {
+            $is = array(NULL);
+            $this->storage->findAllRelated('UserService', $this, $is);
+            $this->users = array();
+            foreach ($is as $entry)
+            {
+                $u = $entry->User();
+                if($u != NULL)
+                    array_push($this->users, $u);
+            }
+
+        }
+        return $this->users;
+    }
+
+    public function Category()
+    {
+        $category = new Category($this->storage, $this->category_id);
+        $this->storage->find($category);
+        return $category;
+    }
+
     /**
      * @return mixed
      */

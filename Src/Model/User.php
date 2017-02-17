@@ -16,6 +16,8 @@ class User extends StorageItem
 
     public $questions = array(NULL);
     public $status = array(NULL);
+    public $services = array(NULL);
+    public $responses = array(NULL);
 
     /**
      * Retourne l'ensemble des questions associés à cet utilisateur
@@ -41,6 +43,29 @@ class User extends StorageItem
     }
 
     /**
+     * Retourne l'ensemble des réponses postées par cet utilisateur
+     * @return array
+     */
+    public function Responses()
+    {
+        if(!$this->isLoaded($this->responses)) {
+            $this->storage->findAllRelated('Response', $this, $this->responses);
+        }
+        return $this->responses;
+    }
+
+    /**
+     * Ajoute une réponse à l'utilisateur
+     * @param Response $response
+     */
+    public function addResponse(Response $response)
+    {
+        $response->setUserId($this->id);
+        $this->storage->persist($response);
+        array_push($this->responses, $response);
+    }
+
+    /**
      * @return array
      */
     public function Status()
@@ -58,6 +83,26 @@ class User extends StorageItem
 
         }
         return $this->status;
+    }
+
+    /**
+     * @return array
+     */
+    public function Services()
+    {
+        if(!$this->isLoaded($this->services)) {
+            $is = array(NULL);
+            $this->storage->findAllRelated('UserService', $this, $is);
+            $this->services = array();
+            foreach ($is as $entry)
+            {
+                $u = $entry->Service();
+                if($u != NULL)
+                    array_push($this->services, $u);
+            }
+
+        }
+        return $this->services;
     }
 
 

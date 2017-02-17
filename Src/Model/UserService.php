@@ -11,6 +11,20 @@ class UserService extends StorageItem
     public $user_id;
     public $service_id;
 
+    public function User()
+    {
+        $user = new User($this->storage, $this->user_id);
+        $this->storage->find($user);
+        return $user;
+    }
+
+    public function Service()
+    {
+        $service = new Service($this->storage, $this->service_id);
+        $this->storage->find($service);
+        return $service;
+    }
+
     /**
      * @return mixed
      */
