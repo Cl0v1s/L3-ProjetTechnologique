@@ -8,15 +8,67 @@ Il consiste en un ensemble de balises supplémentaires, à utiliser en suppléme
 
 | Balise | Effet |
 |------|----|
+| {{@template}} | Permet d'inclure le template `template` dans la présentation courante |
 | {{data}} | Est remplacé par le contenu de la variable `data` |
-| {{=data}} html {{/data}} | html est affiché seulement si le contenu de la variable `data` est vrai. |
+| {{=data}} html {{/data}} | html est affiché seulement si le contenu de la variable `data` est `true`. |
 | {{#array}} html {{data1}} html {{data2} html {{/array}} | Itère dans le tableau de tableau  `array` et affiche `html ... html` autant de fois qu'il y a d'entrées dans `array`. Si `data1` et `data2` sont des entrées de tableaux contenus dans `array` leurs valeurs seront affichées` |
 
-## Utilisation dans le code 
+## Exemple de template 
 
-Core/Template est une classe statique exposant trois méthodes différentes:
+header.html
+```
+<html>
+	<head>
+    	<title>{{__title}}</title>
+    </head>
+    <body>
+```
 
-- Template::open, ouvre le fichier de template précisé
-- Template::prepare, traite le template et le prépare à l'affichage 
-- Template::process, effectue un open, un prepare et affiche le template précisé.
+footer.html
+```
+	</body>
+</html>
+```
 
+template.html
+```
+{{@header}}
+	{{=connected}}
+        <div class='user-connected'>
+            Connecté en tant que {{username}}.
+        </div>
+    {{/connected}}
+    {{=disconnected}}
+    	<div class='connection'>
+        	Se connecter
+        </div>
+    {{/disconnected}}
+	Bonjour et bienvenue sur notre site !<br>
+    Liste des fonctions:</br>
+    <table>
+    	<tr>
+        	<td>Nom</td><td>Description</td>
+        </tr>
+        {{#functions}}
+        <tr>
+        	<td>{{name}}</td><td>{{description}}</td>
+        </tr>
+        {{/functions}}
+	</table>
+{{@footer}}
+```
+
+Avec les données:
+
+| nom | valeur |
+|--|--|
+| connected | true |
+| disconnected | false |
+| functions | array(array("name"=>"direBonjour", "description" => "Dit bonjour"), array("name"=>"direAurevoir", "description" => "Dit au revoir")) |
+| username | Dupont |
+
+Affichera une page bien ordonnée.
+
+
+
+    
