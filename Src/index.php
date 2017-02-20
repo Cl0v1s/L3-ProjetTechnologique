@@ -10,7 +10,7 @@ include_once 'Model/User.php';
  * Time: 16:12
  */
 
-
+Engine::Instance()->setPersistence(new DatabaseStorage("localhost", "L3", "root", "root"));
 Engine::Instance()->run();
 
 
