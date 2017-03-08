@@ -60,7 +60,6 @@ class Engine
 
     public function run()
     {
-        echo getcwd();
         $ctx = array();
         $matches = array();
 
