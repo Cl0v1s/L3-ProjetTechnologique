@@ -73,7 +73,7 @@ class Engine
         $uri = "Controllers/".$class."Controller.php";
 
         if(file_exists($uri) == false) {
-            header("Location: /Error/404");
+            header("Location: Error/404");
             return;
         }
 
