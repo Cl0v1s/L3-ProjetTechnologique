@@ -18,8 +18,20 @@ class DefaultController extends Controller
 
     public function run($ctx)
     {
+        $action = $_GET["action"];
+        if($action=="faireuntruc")
+        {
+            $this->faireUnTruc();
+            return;
+        }
+        // Si on a pas faire un truc on fait ce qu'il y a en dessous 
         $view = new View("index");
         $view->setTitle("Index");
         $view->show();
+    }
+    
+    public function faireUnTruc()
+    {
+        // On fait des trucs   
     }
 }
