@@ -5,13 +5,15 @@
     <title>{{__title}}</title>
 </head>
 <body>
-<div class='Accueil'>Accueil</div>
-<div class='Services'>Services</div>
-<div class='Aide'>Aide</div>
+<nav>
+    <div class='onglet'><a hrel="Index.html">Accueil</a></div>
+    <div class='onglet'><a href="Services.html">Services</a></div>
+    <div class='onglet'><a href="Help.html">Aide</a></div>
 {{=disconnected}}
-<div class='Connection'>Se connecter</div>
-<div class='Inscription'>S'inscrire</div>
+    <div class='onglet'><a href="Login.html">Se connecter</a></div>
+    <div class='onglet'><a href="Register.html">S'inscrire</a></div>
 {{/disconnected}}
 {{=connected}}
-<div class='Deconnection'>Se déconnecter</div>
+    <div class='Deconnection'><a href="Logout.html">Se déconnecter</a></div>
 {{/connected}}
+    </nav>
