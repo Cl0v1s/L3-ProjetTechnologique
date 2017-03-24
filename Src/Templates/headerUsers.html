@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{__title}}</title>
+</head>
+<body>
+<nav>
+    <div class='onglet'><a hrel="/Default">Accueil</a></div>
+    <div class='onglet'><a href="/Services">Services</a></div>
+    <div class='onglet'><a href="/Help">Aide</a></div>
+{{=disconnected}}
+    <div class='onglet'><a href="/Login">Se connecter</a></div>
+    <div class='onglet'><a href="/Register">S'inscrire</a></div>
+{{/disconnected}}
+{{=connected}}
+    <div class='Deconnection'><a href="/Logout">Se déconnecter</div>
+{{/connected}}
+</nav>
