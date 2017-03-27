@@ -1,9 +1,19 @@
-<p>SALUUUUUT</p>
+<p>Questions sur ce sujet :</p>
 
-{{#subjects}}
-	<p>{{id}}</p><br/>
-{{/subjects}}
+<table>
+	<tr>
+		<td>
+			{{#subjects}}
+				<a href="/Question?action=displayQuestions&subjectId={{id}}&questionId=NULL">{{name}}</a>
+				<br/>
+			{{/subjects}}
+		</td>
+		<td>
+			{{#questions}}
+				<a href="/Question?action=displayQuestionContent&subjectId={{subject_id}}&questionId={{id}}">{{title}}</a>
+				<br/>
+			{{/questions}}
+		</td>
+	</tr>
+</table>
 
-	{{#questions}}
-	<p>{{id}}</p><br/>
-	{{/questions}}

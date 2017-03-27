@@ -18,7 +18,7 @@ class Response extends StorageItem
     {
         parent::__construct($storage, $id);
         $date = new DateTime();
-        $this->date = $date->Timestamp();
+        $this->date = $date->getTimestamp();
     }
 
     public function User()
@@ -70,7 +70,7 @@ class Response extends StorageItem
     /**
      * @return int
      */
-    public function Date(): int
+    public function Date()
     {
         $date = new DateTime();
         $date->setTimestamp($this->date);

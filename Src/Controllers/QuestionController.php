@@ -18,7 +18,7 @@ class QuestionController extends Controller
             header('Location: /Login');
 
         if(!isset($_GET["action"])){
-            $this->display();
+            $this->displayQuestions();
         }else{
             $action = $_GET["action"];
             switch($action){
@@ -28,39 +28,41 @@ class QuestionController extends Controller
                 case 'createQuestion':
                     $this->createQuestion();
                     return;
-                case 'displaySubjects':
-                    $this->displaySubjects();
+                case 'displayQuestions':
+                    $this->displayQuestions();
+                    return;
+                case 'displayQuestionContent':
+                    $this->displayQuestionContent();
+                    return;
+                case 'createResponse':
+                    $this->createResponse();
                     return;
             }
         }
     }
 
-    public function displaySubjects(){
-        $subjects = NULL;
-        $questions = NULL;
-        $tabQuestions = NULL;
+    public function displayQuestions(){
+        $subject_id = $_GET['subjectId'];
+        $question_id = $_GET['questionId'];
+        $condition = "subject_id = ".$subject_id;
+        $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Question",$questions,$condition);
 
-        $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Subject",$subjects);
-
-        foreach ($subjects as $subject) {
-            $subjectId= $subject->Id();
-            $condition = "subject_id = ".$subjectId;
-            $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Question",$questions,$condition);
-            foreach ($questions as $question) {
-                $questionId= $question->Id();
-                $tabQuestions[$subjectId][$questionId] = $question;
-            }
-        }
-
-        $data = array();
-        $data["subjects"] = array();
-        foreach ($subjects as $subject) {
-            array_push($data["subjects"],get_object_vars($subject));
-        }
         $data["questions"] = array();
         foreach ($questions as $question) {
             array_push($data["questions"],get_object_vars($question));
         }
+
+
+        $subjects = NULL;
+        $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Subject",$subjects);
+
+        $data["subjects"] = array();
+        foreach ($subjects as $subject) {
+            array_push($data["subjects"],get_object_vars($subject));
+        }
+
+        $data["subject_id"] = $subject_id;
+        $data["question_id"] = $question_id;
         $view = new View("questions", $data);
         $view->setTitle("questions");
         $view->show();
@@ -114,5 +116,56 @@ class QuestionController extends Controller
 
         $storage->persist($question);
         $storage->flush();
+    }
+
+    public function createResponse(){
+        if(isset($_GET["questionId"]))
+            $question_id = $_GET["questionId"];
+        if(isset($_POST["content"]))
+            $content = $_POST["content"];
+
+        $user_id = $_SESSION['User'];
+        $points = 0;
+        $date = new DateTime();
+
+        $storage = Engine::Instance()->Persistence("DatabaseStorage");
+        $response = new Response($storage);
+        $response->setContent($content);
+        $response->setPoints($points);
+        $response->setDate($date);
+        $response->setUserId($user_id);
+        $response->setQuestionId($question_id);
+
+        $storage->persist($response);
+        $storage->flush();
+
+        $subject_id = $_GET["subjectId"];
+        header('Location: /Question?action=displayQuestionContent&subjectId='.$subject_id.'&questionId='.$question_id);
+    }
+
+    public function displayQuestionContent(){
+        $question_id = $_GET['questionId'];
+        $subject_id = $_GET['subjectId'];
+        $condition = "question_id = ".$question_id;
+        $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Response",$responses,$condition);
+
+        $data["responses"] = array();
+        foreach ($responses as $response) {
+            array_push($data["responses"],get_object_vars($response));
+        }
+
+        $condition = "id = ".$question_id;
+        $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Question",$questions,$condition);
+
+        $data["questions"] = array();
+        foreach ($questions as $question) {
+            array_push($data["questions"],get_object_vars($question));
+        }
+
+        $data["subject_id"] = $subject_id;
+        $data["question_id"] = $question_id;
+        $view = new View("questionContent", $data);
+        $view->setTitle("questionContent");
+        $view->show();
     }
 }
