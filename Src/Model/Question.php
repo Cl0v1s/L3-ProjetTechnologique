@@ -29,7 +29,7 @@ class Question extends StorageItem
      * Retourne l'ensemble des responses associés à cet utilisateur
      * @return array
      */
-    public function Responses() : array
+    public function Responses()
     {
         if(!$this->isLoaded($this->responses)) {
             $this->storage->findAllRelated('Response', $this, $this->responses);

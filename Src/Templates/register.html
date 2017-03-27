@@ -1,18 +1,15 @@
-{{@header}}
 
 <h1 class='titre'>Créer votre compte</h1>
 
-<form action="/action_page.php">
+<form action="/Register?action=newRegister" method="POST">
   Prénom :<br>
-  <input type="text" name="prenom"><br>
+  <input type="text" name="firstname"><br>
   Nom :<br>
-  <input type="text" name="nom"><br>
-  Adresse électronique :<br>
-  <input type="text" name="email"><br>
+  <input type="text" name="lastname"><br>
   Créez un mot de passe :<br>
-  <input type="text" name="password"><br>
+  <input type="password" name="password"><br>
   Confirmez votre mot de passe :<br>
-  <input type="text" name="password-confirm"><br>
+  <input type="password" name="password_confirm"><br>
   <input type="submit" value="Submit"><br>
 </form>
 

@@ -22,11 +22,8 @@ class ErrorController extends Controller
         $data = array();
         $data["code"] = $this->code;
 
-
-
         $view = new View("Error/base", $data);
         $view->setTitle("Erreur ".$this->code);
-
         $view->show();
     }
 }

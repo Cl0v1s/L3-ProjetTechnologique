@@ -6,7 +6,7 @@ include_once "Core/Controller.php";
  * Date: 22/01/17
  * Time: 16:15
  */
-class DefaultController extends Controller
+class SubjectController extends Controller
 {
     function __construct($params)
     {
@@ -24,10 +24,16 @@ class DefaultController extends Controller
             }
         }
     }
-    
+
     public function display(){
-        $view = new View("index");
-        $view->setTitle("index");
-        $view->show();
+        //inutile pour le moment
+    }
+    
+    //Inutile pour le moment
+    public function getAllSubjects()
+    {
+        $subjects = NULL;
+        $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Subject",$subjects);
+        return $subjects;
     }
 }

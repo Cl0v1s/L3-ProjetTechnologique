@@ -55,8 +55,10 @@ abstract class StorageItem
 
     protected function setChanged()
     {
-        if($this->state == StorageState::UpToDate)
-            $this->state = StorageState::ToUpdate;
+        /*if($this->state == StorageState::UpToDate)
+            $this->state = StorageState::ToUpdate;*/
+        if($this->state == StorageState::ToUpdate)
+            $this->state = StorageState::UpToDate;
     }
 
 

@@ -10,6 +10,8 @@ include_once 'DatabaseStorage.php';
  * Time: 16:02
  */
 
+session_start();
+
 class Engine
 {
 

@@ -113,10 +113,13 @@ class DatabaseStorage implements Storage
      */
     public function persist(&$object, $state = StorageState::ToInsert)
     {
+        //echo $state;
         if(isset($this->objects[get_class($object)]))
         {
             if($state > $object->State())
                 $object->setState($state);
+            //echo $state."<br>";
+            //echo $object->State();
             $this->objects[get_class($object)][$object->id] = $object;
         }
         else
@@ -137,7 +140,7 @@ class DatabaseStorage implements Storage
         {
             foreach ($table as $k => $entry)
             {
-                if($entry->State() === StorageState::ToInsert)
+                if($entry->State() == StorageState::ToInsert)
                 {
                     $this->insert($entry);
                 }

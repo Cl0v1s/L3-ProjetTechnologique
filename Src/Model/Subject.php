@@ -8,6 +8,7 @@
  */
 class Subject extends StorageItem
 {
+    public $id;
     public $name;
 
     public $questions = array([NULL]);
@@ -51,6 +52,21 @@ class Subject extends StorageItem
         $this->name = $name;
     }
 
+        /**
+     * @return mixed
+     */
+    public function Id()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setId($name)
+    {
+        $this->id = $id;
+    }
 
 
 }

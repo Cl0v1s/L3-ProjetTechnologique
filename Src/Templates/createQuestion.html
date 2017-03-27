@@ -1,0 +1,14 @@
+<form action="/Question?action=createQuestion" method="POST">
+  Sujet :<br>
+  <select name="subject">
+    {{#subjects}}
+    <option value="{{id}}">{{name}}</option>
+    {{/subjects}}
+  </select>
+  <br>
+  Titre :<br>
+  <input type="text" name="title"><br>
+  Question :<br>
+  <textarea name="content" rows="10" cols="50"></textarea><br>
+  <input type="submit" value="Envoyer"><br>
+</form>

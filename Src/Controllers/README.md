@@ -1,1 +1,0 @@
-All Files here must extend Core/Controller.

@@ -13,6 +13,8 @@ class User extends StorageItem
     public $lastname;
     public $firstname;
     public $password;
+    public $username;
+    public $isadmin;
 
     public $questions = array(NULL);
     public $status = array(NULL);
@@ -114,10 +116,10 @@ class User extends StorageItem
         return $this->lastname;
     }
 
-    public function setLastname($value)
+    public function setLastname($lastname)
     {
         $this->setChanged();
-        $this->lastname = $value;
+        $this->lastname = $lastname;
     }
 
     /**
@@ -154,5 +156,31 @@ class User extends StorageItem
         $this->password = $password;
     }
 
+    /**
+     * @return mixed
+     */
+    public function Username()
+    {
+        return $this->username;
+    }
 
+    public function setUsername($username)
+    {
+        $this->setChanged();
+        $this->username = $username;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function Isadmin()
+    {
+        return $this->isadmin;
+    }
+
+    public function setIsAdmin($username)
+    {
+        $this->setChanged();
+        $this->isadmin = $isadmin;
+    }
 }
