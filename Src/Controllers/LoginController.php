@@ -18,6 +18,9 @@ class LoginController extends Controller
 
     public function run($ctx)
     {
+        if(isset($_SESSION["User"])){
+            header('Location: /Default');
+        }
         if(!isset($_GET["action"])){
             $this->display();
         }else{
@@ -58,7 +61,8 @@ class LoginController extends Controller
                 $_SESSION['User'] = $user->Id();
                 $isadmin = $user->Isadmin();
                 if($isadmin == 1){
-                    header('Location: /Default');
+                    $_SESSION['Admin'] = true;
+                    header('Location: /Admin');
                 }else{
                     header('Location: /Default');
                 }
@@ -70,8 +74,8 @@ class LoginController extends Controller
 
     public static function logout(){
         if(isset($_SESSION['User'])){
-            unset($_SESSION['User']);
-            header('Location: /Login');
+            session_unset();
+            session_destroy();
         }
         header('Location: /Default');
     }

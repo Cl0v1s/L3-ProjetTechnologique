@@ -61,6 +61,11 @@ class QuestionController extends Controller
             array_push($data["subjects"],get_object_vars($subject));
         }
 
+        if(isset($_SESSION["Admin"])){
+            $data["admin"] = true;
+        }else{
+             $data["admin"] = false;
+        }
         $data["subject_id"] = $subject_id;
         $data["question_id"] = $question_id;
         $view = new View("questions", $data);
@@ -147,11 +152,16 @@ class QuestionController extends Controller
         $question_id = $_GET['questionId'];
         $subject_id = $_GET['subjectId'];
         $condition = "question_id = ".$question_id;
-        $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Response",$responses,$condition);
+        $storage = Engine::Instance()->Persistence("DatabaseStorage");
+        $storage->findAll("Response",$responses,$condition);
 
         $data["responses"] = array();
         foreach ($responses as $response) {
-            array_push($data["responses"],get_object_vars($response));
+            $user = new User($storage, $response->UserId());
+            $user = $storage->find($user);
+            $responsevalues = get_object_vars($response);
+            $responsevalues["username"] = $user->Firstname().$user->Lastname();
+            array_push($data["responses"],$responsevalues);
         }
 
         $condition = "id = ".$question_id;
