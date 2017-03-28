@@ -26,6 +26,10 @@ class AdminController extends Controller
                     return $this->displayDeleteSubject();
                 case 'deleteSubject':
                     return $this->deleteSubject();
+                case 'displayDeleteQuestion':
+                    return $this->displayDeleteQuestion();
+                case 'deleteQuestion':
+                    return $this->deleteQuestion();
             }
         }
     }
@@ -69,11 +73,38 @@ class AdminController extends Controller
     }
 
     public function deleteSubject(){
-        if(isset($_POST['subjectId'])){
-            $subject_id = $_POST['subjectId'];
+        if(isset($_GET['subjectId'])){
+            $subject_id = $_GET['subjectId'];
+            $storage = Engine::Instance()->Persistence("DatabaseStorage");
             $subject = new Subject($storage, $subject_id);
             $subject = $storage->find($subject);
             $storage->remove($subject);
+            $storage->flush();
+            header('Location: /Admin');
+        }else{
+            header('Location: /Admin');
+        }
+    }
+
+    public function displayDeleteQuestion(){
+        $questions = NULL;
+        $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Question",$questions);
+        $data["questions"] = array();
+        foreach ($questions as $question) {
+            array_push($data["questions"],get_object_vars($question));
+        }
+        $view = new View("deleteQuestion",$data);
+        $view->setTitle("deleteQuestion");
+        $view->show();
+    }
+
+    public function deleteQuestion(){
+        if(isset($_GET['questionId'])){
+            $question_id = $_GET['questionId'];
+            $storage = Engine::Instance()->Persistence("DatabaseStorage");
+            $question = new Question($storage, $question_id);
+            $subject = $storage->find($question);
+            $storage->remove($question);
             $storage->flush();
             header('Location: /Admin');
         }else{

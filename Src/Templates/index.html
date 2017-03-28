@@ -1,10 +1,20 @@
-
-
 <h1>Bonjour et bienvenue</h1>
 
-<a href="/Question?action=displayQuestions&subjectId=NULL&questionId=NULL">Questions</a>
-<a href="/Login">Login</a>
-<a href="/Register">Register</a>
-<a href="/Login?action=logout"><button type="button">Logout!</button></a>
+{{=admin}}
+	{{@headerAdmin}}
+{{/admin}}
+{{=user}}
+	{{@headerUser}}
+{{/user}}
+
+<a href="/Question?action=displayQuestions&subjectId=NULL&questionId=NULL"><button type="button">Questions</button></a>
+<a href="/Login"><button type="button">Login</button></a>
+<a href="/Register"><button type="button">Register</button></a>
+<a href="/Login?action=logout"><button type="button">Logout</button></a>
+
+
+{{=admin}}
+	<a href="/Admin"><button type="button">Partie Admin</button></a>
+{{/admin}}
 
 {{@footer}}

@@ -26,7 +26,29 @@ class DefaultController extends Controller
     }
     
     public function display(){
-        $view = new View("index");
+        if(isset($_SESSION["Admin"])){
+            $data["admin"] = true;
+            $data["user"] = false;
+        }else{
+            $data["admin"] = false;
+            $data["user"] = true;
+        }
+        if(isset($_SESSION["Admin"])){
+            $data["admin"] = true;
+            $data["user"] = false;
+        }else{
+            $data["admin"] = false;
+            $data["user"] = true;
+        }
+        if(isset($_SESSION["User"])){
+            $data["connected"] = true;
+            $data["disconnected"] = false;
+        }else{
+            $data["disconnected"] = true;
+            $data["connected"] = false;
+        }
+
+        $view = new View("index", $data);
         $view->setTitle("index");
         $view->show();
     }

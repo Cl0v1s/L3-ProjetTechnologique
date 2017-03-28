@@ -6,8 +6,11 @@
 </head>
 <body>
 <nav>
-	<div class='gestionAide'><a href="/AdminHelp">Gestion aide</a></div>
-	<div class='gestionService'><a href="/AdminServices">Gestion services</a></div>
-	<div class='gestionUtilisateur'><a href="/AdminUsers">Gestion utilisateurs</a></div>
-	<div class='deconnection'><a href="/Logout">Se déconnecter</a></div>
+{{=disconnected}}
+    <div class='onglet'><a href="/Login">Se connecter</a></div>
+    <div class='onglet'><a href="/Register">S'inscrire</a></div>
+{{/disconnected}}
+{{=connected}}
+    <div class='Deconnection'><a href="/Login?action=logout">Se déconnecter</div>
+{{/connected}}
 </nav>
