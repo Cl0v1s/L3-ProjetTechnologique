@@ -45,6 +45,7 @@ abstract class StorageItem
 
     public function setState($state)
     {
+        //print "Changing state: ".$this->state." -> ".$state."<br>";
         $this->state = $state;
     }
 
@@ -55,10 +56,8 @@ abstract class StorageItem
 
     protected function setChanged()
     {
-        /*if($this->state == StorageState::UpToDate)
-            $this->state = StorageState::ToUpdate;*/
-        if($this->state == StorageState::ToUpdate)
-            $this->state = StorageState::UpToDate;
+        if($this->state == StorageState::UpToDate)
+            $this->state = StorageState::ToUpdate;
     }
 
 
