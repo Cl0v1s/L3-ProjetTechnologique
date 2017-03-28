@@ -9,17 +9,24 @@
 
 include_once 'Storage.php';
 
+foreach (glob("./../Model/*.php") as $filename)
+{
+    include_once $filename;
+}
+
 
 class DatabaseStorage implements Storage
 {
     private $pdo;
     private $objects;
+    private $index;
 
     function __construct($host, $database, $username, $password)
     {
         $this->pdo = new PDO("mysql:host=".$host.";dbname=".$database, $username, $password);
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->objects = array();
+        $this->index = 0;
     }
 
     /**
@@ -100,8 +107,14 @@ class DatabaseStorage implements Storage
      */
     public function remove(&$object)
     {
-        if(isset($this->objects[get_class($object)]) && isset($this->objects[get_class($object)][$object->id]))
-            $object->setState(StorageState::ToDelete);
+        if(isset($this->objects[get_class($object)]) && isset($this->objects[get_class($object)][$object->id])) {
+            //print "change state<br>";
+            $this->objects[get_class($object)][$object->id]->setState(StorageState::ToDelete);
+            //print $object->State()."<br>";
+        }
+        else {
+            $this->persist($object, StorageState::ToDelete);
+        }
     }
 
 
@@ -113,14 +126,17 @@ class DatabaseStorage implements Storage
      */
     public function persist(&$object, $state = StorageState::ToInsert)
     {
-        //echo $state;
         if(isset($this->objects[get_class($object)]))
         {
             if($state > $object->State())
                 $object->setState($state);
-            //echo $state."<br>";
-            //echo $object->State();
-            $this->objects[get_class($object)][$object->id] = $object;
+            $key = $object->id;
+            if(isset($object->id) == false)
+            {
+                $key = "N".$this->index;
+                $this->index = $this->index + 1;
+            }
+            $this->objects[get_class($object)][$key] = $object;
         }
         else
         {
@@ -136,20 +152,24 @@ class DatabaseStorage implements Storage
      */
     public function flush()
     {
+
         foreach ($this->objects as $key => $table)
         {
             foreach ($table as $k => $entry)
             {
-                if($entry->State() == StorageState::ToInsert)
+                //if(get_class($entry) == "StructureType")
+                 //   print $k." = flushing: ".get_class($entry).$entry->Id()." state: ".$entry->State()."<br>";
+                if($entry->State() === StorageState::ToInsert)
                 {
                     $this->insert($entry);
                 }
-                else if($entry->State() == StorageState::ToUpdate)
+                else if($entry->State() === StorageState::ToUpdate)
                 {
                     $this->update($entry);
                 }
-                else if($entry->State() == StorageState::ToDelete)
+                else if($entry->State() === StorageState::ToDelete)
                 {
+                    //print "DELETING ".$key." ".$k."<br>";
                     $this->delete($entry);
                 }
                 foreach ($entry as $key => $value) {
@@ -159,11 +179,35 @@ class DatabaseStorage implements Storage
                 }
             }
         }
+
+        $this->index = 0;
+        // building cache with new indexes
+        for($i = 0; $i != count($this->objects); $i++)
+        {
+            $table = array_keys($this->objects)[$i];
+            for($u = 0; $u != count($this->objects[$table]); $u++)
+            {
+                $key = array_keys($this->objects[$table])[$u];
+                //print $table." ".$key." / ";
+                if(substr( $key, 0, 1 ) != "N") {
+                    //print "Skipping<br>";
+                    continue;
+                }
+                $entry = $this->objects[$table][$key];
+                unset($this->objects[$table][$key]);
+                $this->objects[$table][$entry->Id()] = $entry;
+                //print $table." ".$entry->Id()."<br>";
+
+            }
+        }
     }
 
     private function delete(&$object)
     {
+        //print "EXECUTING ".$object->id."<br>";
+
         $sql = "DELETE FROM ".get_class($object)." WHERE id=:id";
+        //print $sql.$object->id."<br>";
         $data = array();
         $data[":id"] = $object->id;
         $request = $this->pdo->prepare($sql);
@@ -238,7 +282,7 @@ class DatabaseStorage implements Storage
     public function findAll($class, &$destination, $condition="")
     {
         $destination = array();
-        $sql = "SELECT * from ".$class;
+        $sql = "SELECT * from ".$class. " T";
         if($condition != "")
         {
             $sql = $sql." WHERE ".$condition;
