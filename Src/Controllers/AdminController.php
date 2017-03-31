@@ -31,6 +31,11 @@ class AdminController extends Controller
                     return $this->displayDeleteQuestion();
                 case 'deleteQuestion':
                     return $this->deleteQuestion();
+                case 'displayDeleteResponse':
+                    return $this->displayDeleteResponse();
+                case 'deleteResponse':
+                    return $this->deleteResponse();
+
             }
         }
     }
@@ -114,5 +119,43 @@ class AdminController extends Controller
         }else{
             header('Location: /Admin');
         }
+    }
+
+    public function displayDeleteResponse(){
+        $data = sessionVariables();
+
+        $subject_id = $_GET['subjectId'];
+        $question_id = $_GET['questionId'];
+        $response_id = $_GET['responseId'];
+
+        $subjects = NULL;
+        $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Subject",$subjects);
+        $data["subjects"] = array();
+        foreach ($subjects as $subject) {
+            array_push($data["subjects"],get_object_vars($subject));
+        }
+
+        $questions = NULL;
+        $condition = "subject_id = ".$subject_id;
+        $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Question",$questions,$condition);
+        $data["questions"] = array();
+        foreach ($questions as $question) {
+            array_push($data["questions"],get_object_vars($question));
+        }
+
+        $responses = NULL;
+        $condition = "question_id = ".$question_id;
+        $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Response",$responses,$condition);
+        $data["responses"] = array();
+        foreach ($responses as $response) {
+            array_push($data["responses"],get_object_vars($response));
+        }
+
+        $data["subject_id"] = $subject_id;
+        $data["question_id"] = $question_id;
+        $data["response_id"] = $response_id;
+        $view = new View("deleteResponse",$data);
+        $view->setTitle("deleteResponse");
+        $view->show();
     }
 }

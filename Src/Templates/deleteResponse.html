@@ -1,0 +1,34 @@
+{{=admin}}
+	{{@headerAdmin}}
+{{/admin}}
+{{=user}}
+	{{@headerUser}}
+{{/user}}
+<br/>
+
+<h1> SUPPRESSION DES REPONSES </h1>
+
+<table>
+	<tr>
+		<td>
+			{{#subjects}}
+				<a href="/Admin?action=displayDeleteResponse&subjectId={{id}}&questionId=NULL&responseId=NULL">{{name}}</a>
+				<br/>
+			{{/subjects}}
+		</td>
+		<td>
+			{{#questions}}
+				<a href="/Admin?action=displayDeleteResponse&subjectId={{subject_id}}&questionId={{id}}&responseId=NULL">{{title}}</a>
+				<br/>
+			{{/questions}}
+		</td>
+				<td>
+			{{#responses}}
+				<a href="/Admin?action=displayDeleteResponse&responseId={{response_id}}">{{content}}</a>
+				<br/>
+			{{/responses}}
+		</td>
+	</tr>
+</table>
+<br/>
+<a href="/Admin"><button type="button">Retour</button></a>

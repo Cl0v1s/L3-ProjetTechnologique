@@ -41,6 +41,7 @@ class QuestionController extends Controller
 
     public function displayQuestions(){
         $data = sessionVariables();
+        $questions = NULL;
         $subject_id = $_GET['subjectId'];
         $question_id = $_GET['questionId'];
         $condition = "subject_id = ".$subject_id;
@@ -73,13 +74,11 @@ class QuestionController extends Controller
     }
     
     public function displayCreateQuestion(){
-        $data = sessionVariables();
+        //$data = sessionVariables();
         if(!isset($_SESSION['User']))
             header('Location: /Login');
         $subjects = NULL;
-        $questions=NULL;
         $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Subject",$subjects);
-        $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Question",$questions);
 
         $data = array();
         $data["subjects"] = array();
@@ -88,9 +87,7 @@ class QuestionController extends Controller
         foreach ($subjects as $entry) {
             array_push($data["subjects"],get_object_vars($entry));
         }
-        foreach ($questions as $entry) {
-            array_push($data1["questions"],get_object_vars($entry));
-        }
+
         $view = new View("createQuestion", $data);
         $view->setTitle("createQuestion");
         $view->show();
@@ -162,10 +159,12 @@ class QuestionController extends Controller
 
     public function displayQuestionContent(){
         $data = sessionVariables();
+
         $question_id = $_GET['questionId'];
         $subject_id = $_GET['subjectId'];
         $condition = "question_id = ".$question_id;
         $storage = Engine::Instance()->Persistence("DatabaseStorage");
+        $responses = NULL;
         $storage->findAll("Response",$responses,$condition);
 
         $data["responses"] = array();
@@ -176,7 +175,7 @@ class QuestionController extends Controller
             $responsevalues["username"] = $user->Firstname().$user->Lastname();
             array_push($data["responses"],$responsevalues);
         }
-
+        $questions = NULL;
         $condition = "id = ".$question_id;
         $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Question",$questions,$condition);
 
