@@ -1,16 +1,18 @@
+{{=admin}}
+	{{@headerAdmin}}
+{{/admin}}
+{{=user}}
+	{{@headerUser}}
+{{/user}}
+<br/>
+
 <h1>ADMINISTRATION</h1>
 
-<table>
-	<tr>
-		<td>
-			<a href="/Admin?action=displayCreateSubject">Créer un sujet</a>
-			<br/>
-			<a href="/Admin?action=displayDeleteSubject">Supprimer un sujet</a>
-			<br/>
-			<a href="/Admin?action=displayDeleteQuestion">Supprimer une question</a>
-			<br/>
-		</td>
-	</tr>
-</table>
+<nav>
+	<div class='onglet'><a href="/Admin?action=displayCreateSubject"><button type="button">Créer un sujet</button></a></div>
+	<div class='onglet'><a href="/Admin?action=displayDeleteSubject"><button type="button">Supprimer un sujet</button></a></div>
+	<div class='onglet'><a href="/Admin?action=displayDeleteQuestion"><button type="button">Supprimer une question</button></a></div>
+   <div class='onglet'><a href="/Default"><button type="button">Partie Utilisateur</button></a></div>
+</nav>
 
-<a href="/Default"><button type="button">Partie Utilisateur</button></a>
+

@@ -1,6 +1,7 @@
 <?php
 
 include_once "Core/Controller.php";
+include_once "Session.php";
 
 /**
  * Created by PhpStorm.

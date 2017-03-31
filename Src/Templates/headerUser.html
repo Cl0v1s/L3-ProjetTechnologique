@@ -7,10 +7,12 @@
 <body>
 <nav>
 {{=disconnected}}
-    <div class='onglet'><a href="/Login">Se connecter</a></div>
-    <div class='onglet'><a href="/Register">S'inscrire</a></div>
+    <div class='onglet'><a href="/Login"><button type="button">Login</button></a></div>
+    <div class='onglet'><a href="/Register"><button type="button">Register</button></a></div>
 {{/disconnected}}
 {{=connected}}
-    <div class='Deconnection'><a href="/Login?action=logout">Se déconnecter</div>
+   <div class='onglet'><a href="/Login?action=logout"><button type="button">Logout</button></a></div>
 {{/connected}}
+	<div class='onglet'><a href="/Default"><button type="button">Index</button></a></div>
+	<div class='onglet'><a href="/Question?action=displayQuestions&subjectId=NULL&questionId=NULL"><button type="button">Questions</button></a></div>
 </nav>

@@ -1,5 +1,6 @@
 <?php
 include_once "Core/Controller.php";
+include_once "Session.php";
 /**
  * Created by PhpStorm.
  * User: clovis
@@ -26,28 +27,7 @@ class DefaultController extends Controller
     }
     
     public function display(){
-        if(isset($_SESSION["Admin"])){
-            $data["admin"] = true;
-            $data["user"] = false;
-        }else{
-            $data["admin"] = false;
-            $data["user"] = true;
-        }
-        if(isset($_SESSION["Admin"])){
-            $data["admin"] = true;
-            $data["user"] = false;
-        }else{
-            $data["admin"] = false;
-            $data["user"] = true;
-        }
-        if(isset($_SESSION["User"])){
-            $data["connected"] = true;
-            $data["disconnected"] = false;
-        }else{
-            $data["disconnected"] = true;
-            $data["connected"] = false;
-        }
-
+        $data = sessionVariables();
         $view = new View("index", $data);
         $view->setTitle("index");
         $view->show();

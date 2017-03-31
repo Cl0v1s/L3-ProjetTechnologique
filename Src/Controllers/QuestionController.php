@@ -1,5 +1,6 @@
 <?php
 include_once "Core/Controller.php";
+include_once "Session.php";
 /**
  * Created by PhpStorm.
  * User: clovis
@@ -14,9 +15,6 @@ class QuestionController extends Controller
     }
     public function run($ctx)
     {
-        if(!isset($_SESSION['User']))
-            header('Location: /Login');
-
         if(!isset($_GET["action"])){
             $this->displayQuestions();
         }else{
@@ -42,6 +40,7 @@ class QuestionController extends Controller
     }
 
     public function displayQuestions(){
+        $data = sessionVariables();
         $subject_id = $_GET['subjectId'];
         $question_id = $_GET['questionId'];
         $condition = "subject_id = ".$subject_id;
@@ -74,6 +73,9 @@ class QuestionController extends Controller
     }
     
     public function displayCreateQuestion(){
+        $data = sessionVariables();
+        if(!isset($_SESSION['User']))
+            header('Location: /Login');
         $subjects = NULL;
         $questions=NULL;
         $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Subject",$subjects);
@@ -121,9 +123,13 @@ class QuestionController extends Controller
 
         $storage->persist($question);
         $storage->flush();
+        header('Location: /Question?action=displayQuestions&subjectId=NULL&questionId=NULL');
+
     }
 
     public function createResponse(){
+        if(!isset($_SESSION['User']))
+            header('Location: /Login');
         if(isset($_GET["questionId"]))
             $question_id = $_GET["questionId"];
         if(isset($_POST["content"]))
@@ -132,6 +138,12 @@ class QuestionController extends Controller
         $user_id = $_SESSION['User'];
         $points = 0;
         $date = new DateTime();
+
+        // content replace()
+        // '' -> \''
+        // "" -> \""
+        // < -> &lt;
+        // > -> &gt;
 
         $storage = Engine::Instance()->Persistence("DatabaseStorage");
         $response = new Response($storage);
@@ -149,6 +161,7 @@ class QuestionController extends Controller
     }
 
     public function displayQuestionContent(){
+        $data = sessionVariables();
         $question_id = $_GET['questionId'];
         $subject_id = $_GET['subjectId'];
         $condition = "question_id = ".$question_id;

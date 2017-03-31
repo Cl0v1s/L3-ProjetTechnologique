@@ -6,11 +6,8 @@
 </head>
 <body>
 <nav>
-{{=disconnected}}
-    <div class='onglet'><a href="/Login">Se connecter</a></div>
-    <div class='onglet'><a href="/Register">S'inscrire</a></div>
-{{/disconnected}}
-{{=connected}}
-    <div class='Deconnection'><a href="/Login?action=logout">Se déconnecter</div>
-{{/connected}}
+	<div class='onglet'><a href="/Login?action=logout"><button type="button">Logout</button></a></div>
+	<div class='onglet'><a href="/Default"><button type="button">Index</button></a></div>
+	<div class='onglet'><a href="/Question?action=displayQuestions&subjectId=NULL&questionId=NULL"><button type="button">Questions</button></a></div>
+	<div class='onglet'><a href="/Admin"><button type="button">Partie Admin</button></a></div>
 </nav>
