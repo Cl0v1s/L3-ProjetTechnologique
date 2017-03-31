@@ -73,20 +73,19 @@ class QuestionController extends Controller
     }
     
     public function displayCreateQuestion(){
-        $data = Utils::SessionVariables();
         if(!isset($_SESSION['User']))
             header('Location: /Login');
         $subjects = NULL;
         $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Subject",$subjects);
 
         $data = array();
+        $data = Utils::SessionVariables();
         $data["subjects"] = array();
         $data1 = array();
         $data1["questions"] = array();
         foreach ($subjects as $entry) {
             array_push($data["subjects"],get_object_vars($entry));
         }
-
         $view = new View("createQuestion", $data);
         $view->setTitle("createQuestion");
         $view->show();
@@ -107,7 +106,7 @@ class QuestionController extends Controller
         $date = new DateTime();
 
         $storage = Engine::Instance()->Persistence("DatabaseStorage");
-
+        $content = Utils::MakeTextSafe($content);
         $question = new Question($storage);
         $question->setSubjectId($subject_id);
         $question->setTitle($title);

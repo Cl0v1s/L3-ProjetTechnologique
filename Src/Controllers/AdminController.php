@@ -121,8 +121,7 @@ class AdminController extends Controller
     }
 
     public function displayDeleteResponse(){
-        $data = sessionVariables();
-
+        $data = Utils::SessionVariables();
         $subject_id = $_GET['subjectId'];
         $question_id = $_GET['questionId'];
         $response_id = $_GET['responseId'];
@@ -156,5 +155,19 @@ class AdminController extends Controller
         $view = new View("deleteResponse",$data);
         $view->setTitle("deleteResponse");
         $view->show();
+    }
+
+    public function deleteResponse(){
+        if(isset($_GET['responseId'])){
+            $response_id = $_GET['responseId'];
+            $storage = Engine::Instance()->Persistence("DatabaseStorage");
+            $response = new Response($storage, $response_id);
+            $question = $storage->find($response);
+            $storage->remove($response);
+            $storage->flush();
+            header('Location: /Admin');
+        }else{
+            header('Location: /Admin');
+        }
     }
 }
