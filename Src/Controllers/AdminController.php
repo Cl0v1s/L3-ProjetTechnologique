@@ -1,6 +1,5 @@
 <?php
 include_once "Core/Controller.php";
-include_once "Session.php";
 
 
 class AdminController extends Controller
@@ -41,7 +40,7 @@ class AdminController extends Controller
     }
     
     public function displayAdmin(){
-        $data = sessionVariables();
+        $data = Utils::SessionVariables();
         $view = new View("admin",$data);
         $view->setTitle("admin");
         $view->show();
@@ -68,7 +67,7 @@ class AdminController extends Controller
     }
 
     public function displayDeleteSubject(){
-        $data = sessionVariables();
+        $data = Utils::SessionVariables();
         $subjects = NULL;
         $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Subject",$subjects);
         $data["subjects"] = array();
@@ -95,7 +94,7 @@ class AdminController extends Controller
     }
 
     public function displayDeleteQuestion(){
-        $data = sessionVariables();
+        $data = Utils::SessionVariables();
         $questions = NULL;
         $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Question",$questions);
         $data["questions"] = array();
