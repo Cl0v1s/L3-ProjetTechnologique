@@ -1,6 +1,5 @@
 <?php
 include_once "Core/Controller.php";
-include_once "Session.php";
 /**
  * Created by PhpStorm.
  * User: clovis
@@ -40,7 +39,7 @@ class QuestionController extends Controller
     }
 
     public function displayQuestions(){
-        $data = sessionVariables();
+        $data = Utils::SessionVariables();
         $subject_id = $_GET['subjectId'];
         $question_id = $_GET['questionId'];
         $condition = "subject_id = ".$subject_id;
@@ -73,7 +72,7 @@ class QuestionController extends Controller
     }
     
     public function displayCreateQuestion(){
-        $data = sessionVariables();
+        $data = Utils::SessionVariables();
         if(!isset($_SESSION['User']))
             header('Location: /Login');
         $subjects = NULL;
@@ -139,11 +138,7 @@ class QuestionController extends Controller
         $points = 0;
         $date = new DateTime();
 
-        // content replace()
-        // '' -> \''
-        // "" -> \""
-        // < -> &lt;
-        // > -> &gt;
+        $content = Utils::MakeTextSafe($content);
 
         $storage = Engine::Instance()->Persistence("DatabaseStorage");
         $response = new Response($storage);
@@ -161,7 +156,7 @@ class QuestionController extends Controller
     }
 
     public function displayQuestionContent(){
-        $data = sessionVariables();
+        $data = Utils::SessionVariables();
         $question_id = $_GET['questionId'];
         $subject_id = $_GET['subjectId'];
         $condition = "question_id = ".$question_id;

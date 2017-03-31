@@ -3,6 +3,8 @@
 include_once 'Core/Engine.php';
 
 include_once 'Model/User.php';
+
+include_once 'Utils.php';
 /**
  * Created by PhpStorm.
  * User: clovis

@@ -1,7 +1,6 @@
 <?php
 
 include_once "Core/Controller.php";
-include_once "Session.php";
 
 /**
  * Created by PhpStorm.
@@ -39,7 +38,7 @@ class LoginController extends Controller
     }
     
     public function display(){
-        $data = sessionVariables();
+        $data = Utils::SessionVariables();
         $view = new View("login", $data);
         $view->setTitle("login");
         $view->show();

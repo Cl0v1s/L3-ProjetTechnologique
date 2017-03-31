@@ -1,6 +1,5 @@
 <?php
 include_once "Core/Controller.php";
-include_once "Session.php";
 /**
  * Created by PhpStorm.
  * User: clovis
@@ -27,7 +26,7 @@ class DefaultController extends Controller
     }
     
     public function display(){
-        $data = sessionVariables();
+        $data = Utils::SessionVariables();
         $view = new View("index", $data);
         $view->setTitle("index");
         $view->show();
