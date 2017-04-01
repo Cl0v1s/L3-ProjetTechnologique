@@ -1,0 +1,70 @@
+nav
+{
+  a
+  {
+    text-decoration: none;
+    font-family: $font-high;
+    display: inline-block;
+    margin: 1%;
+    position: relative;
+    height: 25px;
+
+    &::after
+    {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 5px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+
+    }
+
+    &:nth-of-type(5n)
+    {
+      color: nth($colors-secondary,1);
+
+      &::after
+      {
+        background-color: nth($colors-secondary,1);
+      }
+    }
+
+    &:nth-of-type(5n+1)
+    {
+      color: nth($colors-secondary,2);
+      &::after
+      {
+        background-color: nth($colors-secondary,2);
+      }
+    }
+
+    &:nth-of-type(5n+2)
+    {
+      color: nth($colors-secondary,3);
+      &::after
+      {
+        background-color: nth($colors-secondary,3);
+      }
+    }
+
+    &:nth-of-type(5n+3)
+    {
+      color: nth($colors-secondary,4);
+      &::after
+      {
+        background-color: nth($colors-secondary,4);
+      }
+    }
+
+    &:nth-of-type(5n+4)
+    {
+      color: nth($colors-secondary,5);
+      &::after
+      {
+        background-color: nth($colors-secondary,5);
+      }
+    }
+  }
+}

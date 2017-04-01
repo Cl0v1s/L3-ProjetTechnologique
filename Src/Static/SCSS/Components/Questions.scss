@@ -1,0 +1,67 @@
+div.Questions
+{
+  div.summary
+  {
+    h1
+    {
+      color: nth($colors-secondary, 1);
+      font-size: 2vw;
+    }
+    p
+    {
+      font-style: italic;
+    }
+    margin-bottom: 20px;
+  }
+
+  div.ask
+  {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 15px;
+    color: rgba(65,65,65,0.5);
+    a
+    {
+      text-decoration: none;
+      font-family: $font-high;
+      display: inline-block;
+      margin: auto;
+      margin-bottom: 15px;
+      position: relative;
+      height: 25px;
+
+      &::after
+      {
+        content: "";
+        display: block;
+        width: 100%;
+        height: 5px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        background-color: nth($colors-secondary,5);
+
+      }
+
+        color: nth($colors-secondary,5);
+
+    }
+  }
+
+  table
+  {
+    width: 100%;
+    table-layout: fixed;
+    border-spacing: 5px;
+
+    h3
+    {
+        color: nth($colors-secondary, 4);
+    }
+    p
+    {
+      font-size: 8px;
+      font-style:italic;
+    }
+  }
+}

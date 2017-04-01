@@ -1,0 +1,30 @@
+// Importation de la charte graphique
+@import "Chart";
+
+// Importing Components
+@import "Components/Header";
+@import "Components/Footer";
+@import "Components/Content";
+@import "Components/Questions";
+@import 'Components/Nav';
+
+*
+{
+  margin:0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html
+{
+  position: relative;
+  min-height: 100%;
+}
+
+body
+{
+  background-color: $color-back;
+  background-image: url('http://www.pessac.fr/sites/all/themes/pressblog/images/bg-site.gif');
+  font-family: $font-base;
+  color: #3E3939;
+}

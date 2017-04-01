@@ -1,0 +1,25 @@
+
+
+body
+{
+  $height: 50px;
+  margin-bottom: $height;
+  footer
+  {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    display: block;
+    width: 100%;
+    height: $height;
+    font-size: 15px;
+    color: rgba(100,100,100,0.8);
+    text-align: center;
+    background-color: white;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    //line-height: $height;
+    //vertical-align: middle;
+  }
+}
+

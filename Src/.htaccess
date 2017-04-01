@@ -5,7 +5,7 @@
 
     # if your app is in a subfolder:
     # RewriteBase /my_app/
-    
+    RewriteRule ^(Static)($|/) - [L]
     RewriteRule ([^/]+)   index.php?p=$1   [NC,L,QSA]
     # with QSA flag (query string append),
     # forces the rewrite engine to append a query string part of the

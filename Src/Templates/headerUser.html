@@ -3,16 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>{{__title}}</title>
+    <link rel="stylesheet" href="/Static/main.css">
 </head>
 <body>
-<nav>
-{{=disconnected}}
-    <div class='onglet'><a href="/Login"><button type="button">Login</button></a></div>
-    <div class='onglet'><a href="/Register"><button type="button">Register</button></a></div>
-{{/disconnected}}
-{{=connected}}
-   <div class='onglet'><a href="/Login?action=logout"><button type="button">Logout</button></a></div>
-{{/connected}}
-	<div class='onglet'><a href="/Default"><button type="button">Index</button></a></div>
-	<div class='onglet'><a href="/Question?action=displayQuestions&subjectId=NULL&questionId=NULL"><button type="button">Questions</button></a></div>
-</nav>
+    <header>
+        <h1>Solidarité</h1>
+        <nav>
+        {{=disconnected}}
+            <a href="/Login">Se connecter</a>
+            <a href="/Register">S'enregistrer</a>
+        {{/disconnected}}
+        {{=connected}}
+           <a href="/Login?action=logout">Logout</a>
+        {{/connected}}
+            <a href="/Default">Acceuil</a>
+            <a href="/Question?action=displayQuestions&subjectId=NULL&questionId=NULL">Questions</a>
+        </nav>
+    </header>
