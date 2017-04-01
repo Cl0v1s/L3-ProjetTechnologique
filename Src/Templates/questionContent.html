@@ -4,20 +4,33 @@
 {{=user}}
 	{{@headerUser}}
 {{/user}}
-<br/>
 
-{{#questions}}
-	<h2>{{title}}</h2>
-	<p>{{content}}</p>
-	<br/>
-{{/questions}}
+<div class="Content">
 
-{{#responses}}
-<p><b>{{username}} dit :</b></p>
-	<p>{{content}}</p>
-	<br/>
-{{/responses}}
-<form action="/Question?action=createResponse&questionId={{question_id}}" method="POST">
-	<textarea name="content" rows="10" cols="50" placeholder="Répondez ici..."></textarea><br>
-	<input type="submit" value="Envoyer"><br>
-</form>
+
+	<div class="Question">
+		<div class="question">
+			{{#questions}}
+				<div>
+					<h2>{{title}}</h2>
+					<span>par <b>{{user}}</b></span>
+				</div>
+				<p>{{content}}</p>
+			{{/questions}}
+		</div>
+
+		<div class="reponses">
+			{{#responses}}
+				<div class="reponse">
+					<span>{{username}} dit :</span>
+					<p>{{content}}</p>
+				</div>
+			{{/responses}}
+			<form action="/Question?action=createResponse&questionId={{question_id}}" method="POST">
+				<textarea name="content" rows="10" cols="50" placeholder="Répondez ici..."></textarea><br>
+				<input type="submit" value="Envoyer"><br>
+			</form>
+		</div>
+	</div>
+
+</div>

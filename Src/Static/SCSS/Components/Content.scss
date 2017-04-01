@@ -3,9 +3,11 @@ div.Content
   display: block;
   width: 70%;
   min-width:300px;
-  background-color: white;
+  background-color: $color-back;
   padding: 15px;
 
   margin: auto;
   margin-top: 50px;
+
+  border-radius: 2px;
 }

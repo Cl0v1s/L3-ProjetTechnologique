@@ -170,11 +170,16 @@ class QuestionController extends Controller
         }
         $questions = NULL;
         $condition = "id = ".$question_id;
-        $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Question",$questions,$condition);
+        $storage = Engine::Instance()->Persistence("DatabaseStorage");
+        $storage->findAll("Question",$questions,$condition);
 
         $data["questions"] = array();
         foreach ($questions as $question) {
-            array_push($data["questions"],get_object_vars($question));
+            $ques = get_object_vars($question);
+            $user = new User($storage, $question->UserId());
+            $user = $storage->find($user);
+            $ques["user"] = $user->Firstname().".".$user->Lastname();
+            array_push($data["questions"],$ques);
         }
 
         $data["subject_id"] = $subject_id;

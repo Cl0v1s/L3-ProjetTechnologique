@@ -87,10 +87,11 @@ div.Content {
   display: block;
   width: 70%;
   min-width: 300px;
-  background-color: white;
+  background-color: #F6F7F0;
   padding: 15px;
   margin: auto;
-  margin-top: 50px; }
+  margin-top: 50px;
+  border-radius: 2px; }
 
 div.Questions div.summary {
   margin-bottom: 20px; }
@@ -105,24 +106,6 @@ div.Questions div.ask {
   text-align: center;
   margin-bottom: 15px;
   color: rgba(65, 65, 65, 0.5); }
-  div.Questions div.ask a {
-    text-decoration: none;
-    font-family: "Aspira-DEMO", sans-serif;
-    display: inline-block;
-    margin: auto;
-    margin-bottom: 15px;
-    position: relative;
-    height: 25px;
-    color: #EF7009; }
-    div.Questions div.ask a::after {
-      content: "";
-      display: block;
-      width: 100%;
-      height: 5px;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      background-color: #EF7009; }
 
 div.Questions table {
   width: 100%;
@@ -133,6 +116,35 @@ div.Questions table {
   div.Questions table p {
     font-size: 8px;
     font-style: italic; }
+  div.Questions table thead td {
+    padding-bottom: 15px; }
+  div.Questions table tbody td {
+    margin-top: 15px;
+    padding: 5px;
+    box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.1); }
+    div.Questions table tbody td a {
+      color: #E8554E;
+      text-decoration: none; }
+
+div.Question div.question {
+  border-radius: 2px;
+  background-color: #16A6B6;
+  padding: 15px;
+  color: #F6F7F0;
+  box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.1); }
+  div.Question div.question div h2 {
+    font-size: 30px;
+    height: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+    display: inline-block; }
+  div.Question div.question div span {
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    vertical-align: middle; }
+  div.Question div.question p {
+    margin-top: 15px; }
 
 nav a {
   text-decoration: none;
@@ -184,3 +196,9 @@ body {
   background-image: url("http://www.pessac.fr/sites/all/themes/pressblog/images/bg-site.gif");
   font-family: "Museo", sans-serif;
   color: #3E3939; }
+
+button {
+  border: 1px solid rgba(56, 56, 56, 0.3);
+  background-color: #F6F7F0;
+  border-radius: 2px;
+  padding: 5px; }

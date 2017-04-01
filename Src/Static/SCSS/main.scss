@@ -6,6 +6,7 @@
 @import "Components/Footer";
 @import "Components/Content";
 @import "Components/Questions";
+@import "Components/Questiond";
 @import 'Components/Nav';
 
 *
@@ -27,4 +28,12 @@ body
   background-image: url('http://www.pessac.fr/sites/all/themes/pressblog/images/bg-site.gif');
   font-family: $font-base;
   color: #3E3939;
+}
+
+button
+{
+  border: 1px solid rgba(56,56,56,0.3);
+  background-color: #F6F7F0;
+  border-radius: 2px;
+  padding: 5px;
 }
