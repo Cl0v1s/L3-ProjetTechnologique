@@ -4,21 +4,26 @@
 {{=user}}
   {{@headerUser}}
 {{/user}}
-<br/>
 
-<h1> CREATION D'UNE QUESTION </h1>
+<div class="Content">
+    <div class="CreateQuestion">
+        <h1>Poster une question</h1>
 
-<form action="/Question?action=createQuestion" method="POST">
-  Sujet :<br>
-  <select name="subject">
-    {{#subjects}}
-    <option value="{{id}}">{{name}}</option>
-    {{/subjects}}
-  </select>
-  <br>
-  Titre :<br>
-  <input type="text" name="title"><br>
-  Question :<br>
-  <textarea name="content" rows="10" cols="50"></textarea><br>
-  <input type="submit" value="Envoyer"><br>
-</form>
+        <form action="/Question?action=createQuestion" method="POST">
+            <br>
+            <span>Sujet:</span><br>
+            <select name="subject">
+                {{#subjects}}
+                <option value="{{id}}">{{name}}</option>
+                {{/subjects}}
+            </select>
+            <br><br>
+            <span>Titre:</span><br>
+            <input type="text" name="title"><br><br>
+            <span>Question:</span><br>
+            <textarea name="content" rows="10" cols="50"></textarea><br>
+            <input type="submit" value="Envoyer"><br>
+        </form>
+    </div>
+</div>
+

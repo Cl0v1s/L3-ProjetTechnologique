@@ -7,6 +7,7 @@
 @import "Components/Content";
 @import "Components/Questions";
 @import "Components/Questiond";
+@import "Components/CreateQuestion";
 @import 'Components/Nav';
 
 *
@@ -30,8 +31,9 @@ body
   color: #3E3939;
 }
 
-button
+button, input[type=button], input[type=submit]
 {
+  margin: 5px;
   border: 1px solid rgba(56,56,56,0.3);
   background-color: #F6F7F0;
   border-radius: 2px;

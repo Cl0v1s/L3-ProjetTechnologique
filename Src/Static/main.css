@@ -91,7 +91,8 @@ div.Content {
   padding: 15px;
   margin: auto;
   margin-top: 50px;
-  border-radius: 2px; }
+  border-radius: 2px;
+  box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.1); }
 
 div.Questions div.summary {
   margin-bottom: 20px; }
@@ -110,7 +111,7 @@ div.Questions div.ask {
 div.Questions table {
   width: 100%;
   table-layout: fixed;
-  border-spacing: 5px; }
+  border-spacing: 15px; }
   div.Questions table h3 {
     color: #16A6B6; }
   div.Questions table p {
@@ -121,10 +122,15 @@ div.Questions table {
   div.Questions table tbody td {
     margin-top: 15px;
     padding: 5px;
-    box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.1); }
+    line-height: 30px;
+    box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.1);
+    background-color: #16A6B6;
+    border-radius: 2px; }
     div.Questions table tbody td a {
-      color: #E8554E;
+      color: #F6F7F0;
       text-decoration: none; }
+  div.Questions table tbody td + td {
+    background-color: #EF7009; }
 
 div.Question div.question {
   border-radius: 2px;
@@ -144,6 +150,70 @@ div.Question div.question {
     line-height: 30px;
     vertical-align: middle; }
   div.Question div.question p {
+    margin-top: 15px;
+    max-width: 100%;
+    word-break: break-all; }
+
+div.Question div.reponses {
+  width: 90%;
+  margin: auto;
+  background-color: #843A53;
+  border-radius: 2px;
+  box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.1);
+  padding-top: 15px; }
+  div.Question div.reponses div.reponse {
+    background-color: #F6F7F0;
+    background-image: url("./Images/user.svg");
+    background-size: 45px 45px;
+    background-repeat: no-repeat;
+    background-position: 95% 100%;
+    border-radius: 2px;
+    margin: 15px;
+    padding: 5px; }
+    div.Question div.reponses div.reponse span {
+      font-weight: 500; }
+    div.Question div.reponses div.reponse p {
+      max-width: 100%;
+      word-break: break-all; }
+  div.Question div.reponses form {
+    padding-top: 15px; }
+    div.Question div.reponses form h2 {
+      color: #F6F7F0;
+      margin: 15px; }
+    div.Question div.reponses form textarea {
+      display: block;
+      padding: 5px;
+      width: 90%;
+      margin: auto; }
+    div.Question div.reponses form input {
+      display: block;
+      width: 100px;
+      margin: auto; }
+
+div.CreateQuestion h1 {
+  width: 100%;
+  text-align: center;
+  color: #16A6B6; }
+
+div.CreateQuestion form {
+  width: 70%;
+  margin: auto;
+  margin-top: 15px; }
+  div.CreateQuestion form span:nth-of-type(1) {
+    font-size: 25px;
+    color: #843A53; }
+  div.CreateQuestion form span:nth-of-type(2) {
+    font-size: 25px;
+    color: #208BC9; }
+  div.CreateQuestion form span:nth-of-type(3) {
+    font-size: 25px;
+    color: #EF7009; }
+  div.CreateQuestion form input, div.CreateQuestion form textarea, div.CreateQuestion form select, div.CreateQuestion form option {
+    width: 100%; }
+  div.CreateQuestion form input[type=submit] {
+    display: block;
+    width: 100px;
+    margin: auto;
     margin-top: 15px; }
 
 nav a {
@@ -197,7 +267,8 @@ body {
   font-family: "Museo", sans-serif;
   color: #3E3939; }
 
-button {
+button, input[type=button], input[type=submit] {
+  margin: 5px;
   border: 1px solid rgba(56, 56, 56, 0.3);
   background-color: #F6F7F0;
   border-radius: 2px;

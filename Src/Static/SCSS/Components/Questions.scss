@@ -27,7 +27,7 @@ div.Questions
   {
     width: 100%;
     table-layout: fixed;
-    border-spacing: 5px;
+    border-spacing: 15px;
 
     h3
     {
@@ -48,12 +48,21 @@ div.Questions
     {
       margin-top: 15px;
       padding: 5px;
+      line-height:30px;
       a
       {
-        color: $color-primary;
+        color: $color-back;
         text-decoration: none;
       }
       box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.1);
+      background-color: nth($colors-secondary, 4);
+      border-radius: 2px;
+    }
+
+    tbody td+td
+    {
+
+      background-color: nth($colors-secondary, 5);
     }
   }
 }

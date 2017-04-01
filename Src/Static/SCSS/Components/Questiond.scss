@@ -30,6 +30,66 @@ div.Question
         p
         {
             margin-top: 15px;
+            max-width: 100%;
+            word-break: break-all;
         }
+    }
+
+    div.reponses
+    {
+        width: 90%;
+        margin: auto;
+        background-color: nth($colors-secondary, 1);
+        border-radius: 2px;
+        box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.1);
+        padding-top: 15px;
+
+        div.reponse
+        {
+            background-color: $color-back;
+            background-image: url("./Images/user.svg");
+            background-size: 45px 45px;
+            background-repeat: no-repeat;
+            background-position: 95% 100%;
+            border-radius: 2px;
+            margin: 15px;
+            padding: 5px;
+
+            span
+            {
+                font-weight: 500;
+            }
+
+            p
+            {
+                max-width: 100%;
+                word-break: break-all;
+            }
+        }
+
+        form
+        {
+            h2
+            {
+                color : $color-back;
+                margin: 15px;
+            }
+            padding-top: 15px;
+            textarea
+            {
+                display: block;
+                padding: 5px;
+                width: 90%;
+                margin: auto;
+            }
+
+            input
+            {
+                display: block;
+                width: 100px;
+                margin: auto;
+            }
+        }
+
     }
 }

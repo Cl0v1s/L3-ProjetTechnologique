@@ -27,6 +27,7 @@
 				</div>
 			{{/responses}}
 			<form action="/Question?action=createResponse&questionId={{question_id}}" method="POST">
+				<h2>Votre réponse</h2>
 				<textarea name="content" rows="10" cols="50" placeholder="Répondez ici..."></textarea><br>
 				<input type="submit" value="Envoyer"><br>
 			</form>
