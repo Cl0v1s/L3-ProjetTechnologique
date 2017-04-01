@@ -47,7 +47,8 @@ class AdminController extends Controller
     }
 
     public function displayCreateSubject(){
-        $view = new View("createSubject");
+        $data = Utils::SessionVariables();
+        $view = new View("createSubject",$data);
         $view->setTitle("createSubject");
         $view->show();
     }
