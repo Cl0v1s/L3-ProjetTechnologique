@@ -8,6 +8,7 @@
  */
 class Status extends StorageItem
 {
+    public $id;
     public $name;
 
     private $users = array(NULL);
@@ -47,6 +48,22 @@ class Status extends StorageItem
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+     /**
+     * @return mixed
+     */
+    public function Id()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($name)
+    {
+        $this->id = $id;
     }
 
 

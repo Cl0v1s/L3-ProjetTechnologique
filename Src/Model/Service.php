@@ -100,7 +100,7 @@ class Service extends StorageItem
     /**
      * @return mixed
      */
-    public function DateStart() : DateTime
+    public function DateStart()
     {
         $date = new DateTime();
         $date->setTimestamp($this->date_start);
@@ -118,7 +118,7 @@ class Service extends StorageItem
     /**
      * @return mixed
      */
-    public function DateEnd() : DateTime
+    public function DateEnd() 
     {
         $date = new DateTime();
         $date->setTimestamp($this->date_end);
