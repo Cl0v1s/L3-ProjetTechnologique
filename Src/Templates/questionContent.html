@@ -14,16 +14,28 @@
 				<div>
 					<h2>{{title}}</h2>
 					<span>par <b>{{user}}</b></span>
+					<br/>
+					<span>{{datee}}</span>
 				</div>
 				<p>{{content}}</p>
+				<p><a href="/Question?action=likeQuestion&subjectId={{subject_id}}&questionId={{question_id}}">J'aime</a></p>
+				{{=isreported}}
+				    <p><a href="/Question?action=reportQuestion&subjectId={{subject_id}}&questionId={{question_id}}">Reporter</a></p>
+				{{/isreported}}
 			{{/questions}}
 		</div>
 
 		<div class="reponses">
 			{{#responses}}
 				<div class="reponse">
-					<span>{{username}} dit :</span>
+					<span>{{username}}</span>
+					<br/>
+					<span>{{datee}}</span>
 					<p>{{content}}</p>
+					<p><a href="/Question?action=likeResponse&subjectId={{subject_id}}&questionId={{question_id}}&responseId={{id}}">J'aime</a></p>
+					{{=isreported}}
+						<p><a href="/Question?action=reportResponse&subjectId={{subject_id}}&questionId={{question_id}}&responseId={{id}}">Reporter</a></p>
+					{{/isreported}}
 				</div>
 			{{/responses}}
 			<form action="/Question?action=createResponse&questionId={{question_id}}" method="POST">

@@ -13,6 +13,7 @@ class Response extends StorageItem
     public $date;
     public $user_id;
     public $question_id;
+    public $reported;
 
     public function __construct($storage, $id = NULL)
     {
@@ -117,5 +118,19 @@ class Response extends StorageItem
         $this->question_id = $question_id;
     }
     
-    
+        /**
+     * @return mixed
+     */
+    public function Reported()
+    {
+        return $this->reported;
+    }
+
+    /**
+     * @param mixed $reported
+     */
+    public function setReported($reported)
+    {
+        $this->reported = $reported;
+    }
 }

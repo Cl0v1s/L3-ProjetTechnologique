@@ -6,7 +6,7 @@ include_once "Core/Controller.php";
  * Date: 22/01/17
  * Time: 16:15
  */
-class QuestionController extends Controller
+class ServiceController extends Controller
 {
     function __construct($params)
     {
@@ -25,8 +25,8 @@ class QuestionController extends Controller
                 case 'createQuestion':
                     $this->createQuestion();
                     return;
-                case 'displayQuestions':
-                    $this->displayQuestions();
+                case 'displayServices':
+                    $this->displayServices();
                     return;
                 case 'displayQuestionContent':
                     $this->displayQuestionContent();
@@ -44,15 +44,14 @@ class QuestionController extends Controller
         }
     }
 
-    public function displayQuestions(){
-        $questions = NULL;
+    public function displayServices(){
+        $services = NULL;
         $data = Utils::SessionVariables();
-        $subject_id = $_GET['subjectId'];
-        $question_id = $_GET['questionId'];
-        $condition = "subject_id = ".$subject_id;
-        $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Question",$questions,$condition);
+        $user_id = $_SESSION['User'];
+        $condition = "user_id = ".$user_id;
+        $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Users",$user,$condition);
 
-        $data["questions"] = array();
+        $data["user"] = array();
         foreach ($questions as $question) {
             array_push($data["questions"],get_object_vars($question));
         }
