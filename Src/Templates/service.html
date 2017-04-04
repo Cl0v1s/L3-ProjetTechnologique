@@ -1,0 +1,24 @@
+{{=admin}}
+	{{@headerAdmin}}
+{{/admin}}
+{{=user}}
+	{{@headerUser}}
+{{/user}}
+
+<div class="Content">
+
+	<div class="Services">
+		
+		{{#service}}
+			<p>Nom: {{name}}</p>
+			<p>Description: {{description}}</p>
+			<p>A débuté le: {{date_s}}</p>
+			<p>Se termine le: {{date_e}}</p>
+			{{=is_registred}}
+				<a href="/Service?action=registerService&serviceId={{id}}"><button type="button">Inscrire</button></a>
+			{{/is_registred}}
+		{{/service}}
+
+	</div>
+
+</div>

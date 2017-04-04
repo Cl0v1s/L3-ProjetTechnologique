@@ -22,31 +22,44 @@ class ServiceController extends Controller
                 case 'displayServices':
                     $this->displayServices();
                     return;
+                case 'displayService':
+                    $this->displayService();
+                    return;
+                case 'registerService':
+                    $this->registerService();
+                    return;    
             }
         }
     }
 
     public function displayServices(){
-        $services = NULL;
+     
         $data = Utils::SessionVariables();
         $user_id = $_SESSION['User'];
         $storage = Engine::Instance()->Persistence("DatabaseStorage");
-        $user = new User($storage, $user_id);
-        $user = $storage->find($user);
-        $statuss=$user->Status();
-        $data["services"] = array();
-        foreach ($statuss as $status) {
-            $servicesstatus = NULL;
-            $status_id=$status->Id();
-            $condition = "id = ".$status_id;
-            $storage->findAll("ServiceStatus",$servicesstatus,$condition);
-            foreach ($servicesstatus as $servicestatus) {
-                $service_id=$servicestatus->ServiceId();
-                $service=NULL;
-                $condition = "id = ".$service_id;
-                $storage->findAll("Service",$service,$condition);
-                array_push($data["services"],$service);
-            }      
+        $condition = "user_id = ".$user_id; 
+        $Status = NULL;
+        $storage->findAll("UserStatus",$Status,$condition);
+        foreach ($Status as $status) {
+            $services_id=NULL;
+            $status_id=$status->StatusId();
+            $condition = "status_id = ".$status_id;
+            $storage->findAll("ServiceStatus",$services_id,$condition);
+            $data["services"] = array();
+            foreach ($services_id as $service_id){
+
+                $service=$service_id->Service();
+                $date_e = $service->DateEnd();
+                $date_e = $date_e->format('d-m-Y');
+                $now = date('d-m-Y');
+                $now = new DateTime($now);
+                $now = $now->format('d-m-Y');
+                if( $now < $date_e ){ 
+                    array_push($data["services"],get_object_vars($service));
+                }    
+                
+            }
+
         }
 
         if(isset($_SESSION["Admin"])){
@@ -58,6 +71,75 @@ class ServiceController extends Controller
         $view = new View("services", $data);
         $view->setTitle("services");
         $view->show();
+    }
+
+    public function displayService(){
+
+        $data = Utils::SessionVariables();
+        $service_id = $_GET['serviceId'];
+        $storage = Engine::Instance()->Persistence("DatabaseStorage");
+        $service = new Service($storage, $service_id);
+        $obj = $storage->find($service);
+        
+        $user_id = $_SESSION['User'];
+        $condition="user_id='".$user_id."' AND service_id='".$service_id."'";
+    
+        $is_registred = NULL;
+        $storage->findAll("UserService",$is_registred,$condition);
+
+        $data["service"]=array();
+        $service = get_object_vars($obj);
+        if($is_registred==NULL){
+          $service["is_registred"]=True;  
+        }else{
+          $service["is_registred"]=False; 
+        }       
+
+        $date_s = $obj->DateStart();
+        $date_s = $date_s->format('d-m-Y à H:i');
+
+        $date_e = $obj->DateEnd();
+        $date_e = $date_e->format('d-m-Y à H:i');
+
+        $service["date_s"]=$date_s;
+        $service["date_e"]=$date_e;
+
+        array_push($data["service"],$service);
+
+        
+        if(isset($_SESSION["Admin"])){
+            $data["admin"] = true;
+        }else{
+             $data["admin"] = false;
+        }
+
+        $view = new View("service", $data);
+        $view->setTitle("service");
+        $view->show();
+
+    }
+
+    public function registerService(){
+
+        $data = Utils::SessionVariables();
+        $service_id = $_GET['serviceId'];
+        $user_id = $_SESSION['User'];
+        $storage = Engine::Instance()->Persistence("DatabaseStorage");        
+        $user_service = new UserService($storage);
+        $user_service->setUserId($service_id);
+        $user_service->setServiceId($user_id);
+        
+        $storage->persist($user_service);
+        $storage->flush();
+
+
+        if(isset($_SESSION["Admin"])){
+            $data["admin"] = true;
+        }else{
+             $data["admin"] = false;
+        }
+
+        header('Location: /Service?action=displayService&serviceId='.$service_id);
     }
     
 }
