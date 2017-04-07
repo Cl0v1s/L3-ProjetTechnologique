@@ -21,14 +21,13 @@
 <tr>
 	<td>
 		{{#questions}}
-			<a href="/Question?action=displayQuestions&subjectId={{id}}&questionId=NULL">{{name}}</a>
+			<a href="/Question?action=displayQuestionContent&subjectId={{subject_id}}&questionId={{id}}">{{title}}</a>
 			<br/>
 		{{/questions}}
 	</td>
 	<td>
 		{{#responses}}
-			<a href="/Question?action=displayQuestionContent&subjectId={{subject_id}}&questionId={{id}}">{{title}}</a>
-			<br/>
+		
 		{{/responses}}
 	</td>
 </tr>

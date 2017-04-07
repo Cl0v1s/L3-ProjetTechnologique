@@ -220,7 +220,7 @@ class QuestionController extends Controller
             }
             array_push($data["questions"],$ques);
         }
-
+        
         $data["subject_id"] = $subject_id;
         $data["question_id"] = $question_id;
         $view = new View("questionContent", $data);
