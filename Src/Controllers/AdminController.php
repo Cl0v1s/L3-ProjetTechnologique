@@ -41,6 +41,22 @@ class AdminController extends Controller
     
     public function displayAdmin(){
         $data = Utils::SessionVariables();
+        $questions = NULL;
+        $condition = "reported = 1";
+        $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Question",$questions,$condition);
+        $data["questions"] = array();
+        foreach ($questions as $question) {
+            array_push($data["questions"],get_object_vars($question));
+        }
+
+        $responses = NULL;
+        $condition = "reported = 1";
+        $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Response",$responses,$condition);
+        $data["responses"] = array();
+        foreach ($responses as $response) {
+            array_push($data["responses"],get_object_vars($response));
+        }
+
         $view = new View("admin",$data);
         $view->setTitle("admin");
         $view->show();

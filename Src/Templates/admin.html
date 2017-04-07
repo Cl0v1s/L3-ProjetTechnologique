@@ -15,4 +15,21 @@
 	<div class='onglet'><a href="/Admin?action=displayDeleteResponse&subjectId=NULL&questionId=NULL&responseId=NULL"><button type="button">Supprimer une réponse</button></a></div>
 </nav>
 
+<p>Questions et réponses signalées :</p>
+<br/>
+<tr>
+	<td>
+		{{#questions}}
+			<a href="/Question?action=displayQuestions&subjectId={{id}}&questionId=NULL">{{name}}</a>
+			<br/>
+		{{/questions}}
+	</td>
+	<td>
+		{{#responses}}
+			<a href="/Question?action=displayQuestionContent&subjectId={{subject_id}}&questionId={{id}}">{{title}}</a>
+			<br/>
+		{{/responses}}
+	</td>
+</tr>
+
 
