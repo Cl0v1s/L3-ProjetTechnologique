@@ -54,12 +54,10 @@ class ServiceController extends Controller
                 $now = date('d-m-Y');
                 $now = new DateTime($now);
                 $now = $now->format('d-m-Y');
-                if( $now < $date_e ){ 
+                if( $now > $date_e ){ 
                     array_push($data["services"],get_object_vars($service));
-                }    
-                
+                }      
             }
-
         }
 
         if(isset($_SESSION["Admin"])){
