@@ -34,7 +34,6 @@ class AdminController extends Controller
                     return $this->displayDeleteResponse();
                 case 'deleteResponse':
                     return $this->deleteResponse();
-
             }
         }
     }
@@ -46,7 +45,11 @@ class AdminController extends Controller
         $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Question",$questions,$condition);
         $data["questions"] = array();
         foreach ($questions as $question) {
-            array_push($data["questions"],get_object_vars($question));
+            $responsevalues = get_object_vars($question);
+            $subject = new Subject($storage);
+            $subject = $question->Subject();
+            $responsevalues["subject_id"] = $subject->Id();
+            array_push($data["questions"],$responsevalues);
         }
 
         $responses = NULL;
@@ -54,6 +57,10 @@ class AdminController extends Controller
         $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Response",$responses,$condition);
         $data["responses"] = array();
         foreach ($responses as $response) {
+            /*$subject_id = $response->
+            $user = $storage->find($user);
+            $responsevalues = get_object_vars($response);
+            $responsevalues["username"] = $user->Firstname().$user->Lastname();*/
             array_push($data["responses"],get_object_vars($response));
         }
 
