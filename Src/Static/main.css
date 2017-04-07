@@ -118,7 +118,10 @@ div.Questions table {
     font-size: 8px;
     font-style: italic; }
   div.Questions table thead td {
-    padding-bottom: 15px; }
+    padding: 15px; }
+  div.Questions table tbody tr {
+    padding-left: 15px;
+    padding-right: 15px; }
   div.Questions table tbody td {
     margin-top: 15px;
     padding: 5px;
@@ -252,6 +255,11 @@ nav a {
     nav a:nth-of-type(5n+4)::after {
       background-color: #EF7009; }
 
+div.Login {
+  text-align: center; }
+  div.Login form {
+    margin-top: 15px; }
+
 * {
   margin: 0;
   padding: 0;
@@ -273,3 +281,8 @@ button, input[type=button], input[type=submit] {
   background-color: #F6F7F0;
   border-radius: 2px;
   padding: 5px; }
+
+table thead td {
+  color: #F6F7F0;
+  font-size: 25px;
+  background-color: #843A53; }
