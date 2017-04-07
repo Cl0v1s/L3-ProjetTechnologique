@@ -17,34 +17,34 @@
 		<div class="ask">
 			<a href="/Question?action=displayCreateQuestion"><button>Poser une question</button></a>
 		</div>
-		<table>
-			<thead>
-				<td>
-					<h3>1. Sujets</h3>
-					<p>(Cliquez sur un sujet pour afficher les questions en rapport)</p>
-				</td>
-				<td>
-					<h3>2. Questions</h3>
-					<p>(Cliquez sur une question pour accéder à ses réponses)</p>
-				</td>
-			</thead>
-			<tr>
-				<td>
-					{{#subjects}}
-						<a href="/Question?action=displayQuestions&subjectId={{id}}&questionId=NULL">{{name}}</a>
-						<br/>
-					{{/subjects}}
-				</td>
-				<td>
-					{{#questions}}
-						<a href="/Question?action=displayQuestionContent&subjectId={{subject_id}}&questionId={{id}}">{{title}}</a>
-						<br/>
-					{{/questions}}
-				</td>
-			</tr>
-		</table>
-		<br/>
+		<nav>
+			<center>
+				{{#subjects}}
+					<a href="/Question?action=displayQuestions&subjectId={{id}}&questionId=NULL">{{name}}</a>
+				{{/subjects}}
+			</center>
+		</nav>
+		<div>
+			<table>
+				<thead>
+					<tr>
+						<td>
+							Questions: {{subject_name}}
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+				{{#questions}}
+					<tr>
+						<td>
+							<a href="/Question?action=displayQuestionContent&subjectId={{subject_id}}&questionId={{id}}">{{title}}</a>
+						</td>
+					</tr>
+				{{/questions}}
+				</tbody>
+			</table>
 
+		</div>
 	</div>
 
 </div>

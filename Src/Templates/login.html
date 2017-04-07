@@ -4,18 +4,21 @@
 {{=user}}
 	{{@headerUser}}
 {{/user}}
-<br/>
 
-<h1 class='titre'>Connectez-vous pour accéder à l'ensemble de nos services !</h1>
 
-<form action="/Login?action=login" method="POST">
-  Identifiant :<br>
-  <input type="text" name="username" placeholder="prénom.nom"><br>
-  Mot de passe :<br>
-  <input type="password" name="password"><br>
-  <input type="submit" value="login"><br>
-</form>
+<div class="Content">
+    <div class="Login">
+        <h1 class='titre'>Connectez-vous pour accéder à l'ensemble de nos services !</h1>
 
-<a href="/Default"><button type="button">Retour</button></a>
+        <form action="/Login?action=login" method="POST">
+            <h2>Identifiant :</h2>
+          <input type="text" name="username" placeholder="prénom.nom">
+            <h2>Mot de passe :</h2>
+          <input type="password" name="password"><br>
+          <input type="submit" value="login"><br>
+        </form>
+    </div>
+</div>
+
 
 {{@footer}}

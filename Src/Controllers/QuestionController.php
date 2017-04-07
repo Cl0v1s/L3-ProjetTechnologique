@@ -50,7 +50,21 @@ class QuestionController extends Controller
         $subject_id = $_GET['subjectId'];
         $question_id = $_GET['questionId'];
         $condition = "subject_id = ".$subject_id;
-        $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Question",$questions,$condition);
+        $storage = Engine::Instance()->Persistence("DatabaseStorage");
+        $storage->findAll("Question",$questions,$condition);
+
+
+        $data["subject_name"] = "(s�lectionnez un sujet...)";
+        if($subject_id != "NULL")
+        {
+            $subj = new Subject($storage,$subject_id);
+            $subj = $storage->find($subj);
+            if($subj != null)
+            {
+                $data["subject_name"] = $subj->Name();
+            }
+        }
+
 
         $data["questions"] = array();
         foreach ($questions as $question) {
@@ -173,7 +187,7 @@ class QuestionController extends Controller
             $responsevalues = get_object_vars($response);
             $responsevalues["username"] = $user->Firstname().$user->Lastname();
             $date = $response->Date();
-            $date = $date->format('d-m-Y à H:i');
+            $date = $date->format('d-m-Y ? H:i');
             $responsevalues["datee"] = $date;
             $reported = $response->Reported();
             if($reported==0){
@@ -195,7 +209,7 @@ class QuestionController extends Controller
             $user = $storage->find($user);
             $ques["user"] = $user->Firstname().".".$user->Lastname();
             $date = $question->Date();
-            $date = $date->format('d-m-Y à H:i');
+            $date = $date->format('d-m-Y ? H:i');
             $ques["datee"] = $date;
 
             $reported = $question->Reported();

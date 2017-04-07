@@ -9,6 +9,7 @@
 @import "Components/Questiond";
 @import "Components/CreateQuestion";
 @import 'Components/Nav';
+@import 'Components/Login';
 
 *
 {
@@ -25,6 +26,7 @@ html
 
 body
 {
+
   background-color: $color-back;
   background-image: url('http://www.pessac.fr/sites/all/themes/pressblog/images/bg-site.gif');
   font-family: $font-base;
@@ -33,9 +35,23 @@ body
 
 button, input[type=button], input[type=submit]
 {
+
   margin: 5px;
   border: 1px solid rgba(56,56,56,0.3);
   background-color: #F6F7F0;
   border-radius: 2px;
   padding: 5px;
+}
+
+table
+{
+  thead
+  {
+    td
+    {
+      color: $color-back;
+      font-size: 25px;
+      background-color: nth($colors-secondary, 1);
+    }
+  }
 }
