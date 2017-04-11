@@ -70,11 +70,11 @@ class LoginController extends Controller
                         header('Location: /Default');
                     }
                 }else{//User banni
-                    header('Location: /Login');
+                    header('Location: /Login?info=banned');
                 }   
             } else {
                 //mauvais mdp
-                header('Location: /Login');
+                header('Location: /Login?info=wrongpass');
             }
         }
     }
