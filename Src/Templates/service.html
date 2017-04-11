@@ -8,16 +8,26 @@
 <div class="Content">
 
 	<div class="Services">
+		{{=user}}
+			{{#service}}
+				<p>Nom: {{name}}</p>
+				<p>Description: {{description}}</p>
+				<p>A débuté le: {{date_s}}</p>
+				<p>Se termine le: {{date_e}}</p>
+				{{=is_registred}}
+					<a href="/Service?action=registerService&serviceId={{id}}"><button type="button">Inscrire</button></a>
+				{{/is_registred}}
+			{{/service}}
+		{{/user}}
 		
-		{{#service}}
-			<p>Nom: {{name}}</p>
-			<p>Description: {{description}}</p>
-			<p>A dÃ©butÃ© le: {{date_s}}</p>
-			<p>Se termine le: {{date_e}}</p>
-			{{=is_registred}}
-				<a href="/Service?action=registerService&serviceId={{id}}"><button type="button">Inscrire</button></a>
-			{{/is_registred}}
-		{{/service}}
+		{{=admin}}
+			{{#service}}
+				<p>Nom: {{name}}</p>
+				<p>Description: {{description}}</p>
+				<p>A débuté le: {{date_s}}</p>
+				<p>Se termine le: {{date_e}}</p>
+			{{/service}}
+		{{/admin}}	
 
 	</div>
 
