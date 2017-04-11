@@ -30,7 +30,22 @@ class ServiceController extends Controller
                     return; 
                 case 'displayAllServices':
                     $this->displayAllServices();
+                    return;
+                case 'deleteUserService':
+                    $this->deleteUserService();
+                    return;
+                case 'updateService':      
+                    $this->updateService();
+                    return;
+                case 'deleteService':
+                    $this->deleteService();
                     return; 
+                case 'newService':
+                    $this->newService();
+                    return;
+                case 'addService':
+                    $this->addService();
+                    return;              
             }
         }
     }
@@ -97,9 +112,11 @@ class ServiceController extends Controller
         $data["service"]=array();
         $service = get_object_vars($obj);
         if($is_registred==NULL){
-          $service["is_registred"]=True;  
+          $service["is_registred"]=True;
+          $service["not_registred"]=False;  
         }else{
-          $service["is_registred"]=False; 
+          $service["is_registred"]=False;
+          $service["not_registred"]=True; 
         }       
 
         $date_s = $obj->DateStart();
@@ -149,6 +166,28 @@ class ServiceController extends Controller
         header('Location: /Service?action=displayService&serviceId='.$service_id);
     }
 
+    public function DeleteUserService(){
+
+        $data = Utils::SessionVariables();
+        $service_id = $_GET['serviceId'];
+        $user_id = $_SESSION['User'];
+        $storage = Engine::Instance()->Persistence("DatabaseStorage");        
+        $user_service = new UserService($storage);
+        $user_service->setUserId($service_id);
+        $user_service->setServiceId($user_id);
+        
+        $storage->persist($user_service);
+        $storage->flush();
+
+
+        if(isset($_SESSION["Admin"])){
+            $data["admin"] = true;
+        }else{
+             $data["admin"] = false;
+        }
+
+        header('Location: /Service?action=displayService&serviceId='.$service_id);
+    }    
 
     public function displayAllServices(){
         $services = NULL;
@@ -180,5 +219,57 @@ class ServiceController extends Controller
         $view->show();
     }
 
-    
+   public function deleteService(){
+
+   }
+   public function updateService(){
+
+   }
+
+   public function newService(){
+        $categorys = NULL;
+        $statuss = NULL;
+        $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Category",$categorys);
+        $data = array();
+        $data = Utils::SessionVariables();
+        $data["categorys"] = array();
+        foreach ($categorys as $entry) {
+            array_push($data["categorys"],get_object_vars($entry));
+        }
+        $storage=Engine::Instance()->Persistence("DatabaseStorage")->findAll("Status",$statuss);
+        $data["statuss"] = array();
+        foreach ($statuss as $entry) {
+            array_push($data["statuss"],get_object_vars($entry));
+        }
+        $view = new View("newService",$data);
+        $view->setTitle("newService");
+        $view->show();
+    }
+
+   public function addService(){
+        if(isset($_POST["name"]))
+            $name = $_POST["name"];
+        if(isset($_POST["description"]))
+            $description = $_POST["description"];
+        if(isset($_POST["category"]))
+            $category = $_POST["category"];
+        if(isset($_POST["date_start"]))
+            $date_start = $_POST["date_start"];
+        if(isset($_POST["date_end"]))
+            $date_end = $_POST["date_end"];
+        if(isset($_POST["handicape"]))
+            $handicape_id = $_POST["handicape"];
+
+        $storage = Engine::Instance()->Persistence("DatabaseStorage");
+        $service = new Service($storage);
+        $service->setName($name);
+        $service->setDescription($description);
+        $service->setCategoryId($category);
+        $service->setDateStart($date_start);
+        $service->setDateEnd($date_end);
+        $storage->persist($user);
+        $storage->flush();
+        header('Location: /Default');
+   }     
+
 }

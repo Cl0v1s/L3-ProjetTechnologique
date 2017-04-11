@@ -31,7 +31,7 @@ class Category extends StorageItem
     /**
      * @return array
      */
-    public function Services(): array
+    public function Services()
     {
         if(!$this->isLoaded($this->services))
             $this->storage->findAllRelated('Service', $this, $this->services);

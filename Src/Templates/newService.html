@@ -1,0 +1,37 @@
+{{=admin}}
+	{{@headerAdmin}}
+{{/admin}}
+{{=user}}
+	{{@headerUser}}
+{{/user}}
+<br/>
+
+<h1 class='titre'>Créer un service</h1>
+
+<form action="/Service?action=addService" method="POST">
+  Nom :<br>
+  <input type="text" name="name"><br>
+  Description :<br>
+  <input type="text" name="description"><br>
+  <span>Catégorie:</span><br>
+        <select name="category">
+            {{#categorys}}
+            <option value="{{id}}">{{name}}</option>
+            {{/categorys}}
+        </select>
+  <br>
+  <span> Status :</span> <br>
+      {{#statuss}}
+        <input type="checkbox" name="{{name}}" value="{{id}}"> {{name}}
+      {{/statuss}}  
+  <br>             
+  Date début :<br>
+  <input type="datetime" name="date_start"><br>
+  Date fin :<br>
+  <input type="datetime" name="date_end"><br>
+  <input type="submit" value="Créer"><br>
+</form>
+
+<a href="/Default"><button type="button">Retour</button></a>
+
+{{@footer}}
