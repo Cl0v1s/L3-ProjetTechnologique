@@ -59,6 +59,7 @@ class RegisterController extends Controller
             $user->setPassword($password);
             $user->setUserName($username);
             $user->setIsadmin(0);
+            $user->setIsbanned(0);
             $storage->persist($user);
             $storage->flush();
             $_SESSION["User"] = $user->Id();

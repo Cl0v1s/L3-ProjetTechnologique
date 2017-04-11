@@ -15,6 +15,7 @@ class User extends StorageItem
     public $password;
     public $username;
     public $isadmin;
+    public $isbanned;
 
     public $questions = array(NULL);
     public $status = array(NULL);
@@ -178,9 +179,20 @@ class User extends StorageItem
         return $this->isadmin;
     }
 
-    public function setIsAdmin($username)
+    public function setIsAdmin($value)
     {
         $this->setChanged();
-        $this->isadmin = $isadmin;
+        $this->isadmin = $value;
+    }
+
+        public function Isbanned()
+    {
+        return $this->isbanned;
+    }
+
+    public function setIsbanned($value)
+    {
+        $this->setChanged();
+        $this->isbanned = $value;
     }
 }

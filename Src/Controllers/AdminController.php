@@ -34,6 +34,10 @@ class AdminController extends Controller
                     return $this->displayDeleteResponse();
                 case 'deleteResponse':
                     return $this->deleteResponse();
+                case 'displayBanUser':
+                    return $this->displayBanUser();
+                case 'banUser':
+                    return $this->banUser();
             }
         }
     }
@@ -193,5 +197,38 @@ class AdminController extends Controller
         }else{
             header('Location: /Admin');
         }
+    }
+
+    public function displayBanUser(){
+        $data = Utils::SessionVariables();
+        $users = NULL;
+        $condition = "isbanned = 0";
+        $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("User",$users,$condition);
+        $data["users"] = array();
+        foreach ($users as $user) {
+            array_push($data["users"],get_object_vars($user));
+        }
+        $view = new View("banuser",$data);
+        $view->setTitle("banuser");
+        $view->show();
+
+    }
+
+    public function banUser(){
+        $data = Utils::SessionVariables();
+        $user_id = $_GET['userId'];
+        $storage = Engine::Instance()->Persistence("DatabaseStorage");
+        $user = new User($storage, $user_id);
+        $user = $storage->find($user);
+        $user->setIsbanned(1);
+        $storage->persist($user, $state = StorageState::ToUpdate);
+        $storage->flush();
+        $users = NULL;
+        $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("User",$users,NULL);
+        $data["users"] = array();
+        foreach ($users as $user) {
+            array_push($data["users"],get_object_vars($user));
+        }
+        header('Location : /Admin?action=displayBanUser');
     }
 }
