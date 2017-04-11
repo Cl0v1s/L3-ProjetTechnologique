@@ -36,6 +36,7 @@ class ServiceController extends Controller
     }
 
     public function displayServices(){
+
         if(!isset($_SESSION['User'])){
             header('Location: /Login');
         }else{    
