@@ -16,6 +16,8 @@
 		{{/user}}
 		
 		{{=admin}}
+		    <a href="/Service?action=newService"><button type="button">Ajouter</button></a>
+		    <br>
 			{{#services}}
 				<a href="/Service?action=displayService&serviceId={{id}}">{{name}}</a>
 				<br>

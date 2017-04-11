@@ -29,13 +29,8 @@
 					<span>{{datee}}</span>
 					<p>{{content}}</p>
 					<p><a href="/Question?action=likeResponse&subjectId={{subject_id}}&questionId={{question_id}}&responseId={{id}}">J'aime</a></p>
-<<<<<<< HEAD
 
 						<p><a href="/Question?action=reportResponse&subjectId={{subject_id}}&questionId={{question_id}}&responseId={{id}}">Reporter</a></p>
-
-=======
-						<p><a href="/Question?action=reportResponse&subjectId={{subject_id}}&questionId={{question_id}}&responseId={{id}}">Reporter</a></p>
->>>>>>> 70931eee9ae1640f37f00241533c96e5ded10702
 				</div>
 			{{/responses}}
 			<form action="/Question?action=createResponse&questionId={{question_id}}" method="POST">

@@ -17,6 +17,10 @@
 				{{=is_registred}}
 					<a href="/Service?action=registerService&serviceId={{id}}"><button type="button">Inscrire</button></a>
 				{{/is_registred}}
+				{{=not_registred}}
+					<a href="/Service?action=deleteUserService&serviceId={{id}}"><button type="button">Désinscrire</button></a>
+				{{/not_registred}}
+
 			{{/service}}
 		{{/user}}
 		
@@ -26,6 +30,8 @@
 				<p>Description: {{description}}</p>
 				<p>A débuté le: {{date_s}}</p>
 				<p>Se termine le: {{date_e}}</p>
+				<a href="/Service?action=updateService&serviceId={{id}}"><button type="button">Modifier</button></a>
+				<a href="/Service?action=deleteService&serviceId={{id}}"><button type="button">Supprimer</button></a>
 			{{/service}}
 		{{/admin}}	
 
