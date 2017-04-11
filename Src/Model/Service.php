@@ -110,7 +110,7 @@ class Service extends StorageItem
     /**
      * @param mixed $date_start
      */
-    public function setDateStart(DateTime $date_start)
+    public function setDateStart($date_start)
     {
         $this->date_start = $date_start->getTimestamp();
     }
@@ -128,7 +128,7 @@ class Service extends StorageItem
     /**
      * @param mixed $date_end
      */
-    public function setDateEnd(DateTime $date_end)
+    public function setDateEnd($date_end)
     {
         $this->date_end = $date_end->getTimestamp();
     }

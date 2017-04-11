@@ -220,7 +220,16 @@ class ServiceController extends Controller
     }
 
    public function deleteService(){
-
+        if(isset($_GET['serviceId'])){
+            $service_id = $_GET['serviceId'];
+            $storage = Engine::Instance()->Persistence("DatabaseStorage");
+            $service = new Service($storage, $service_id);
+            $storage->remove($service);
+            $storage->flush();
+            header('Location: /Service?action=displayAllServices');
+        }else{
+            header('Location: /Service?action=displayAllServices');
+        }
    }
    public function updateService(){
 
@@ -254,11 +263,18 @@ class ServiceController extends Controller
         if(isset($_POST["category"]))
             $category = $_POST["category"];
         if(isset($_POST["date_start"]))
-            $date_start = $_POST["date_start"];
+            $date_start_string = $_POST["date_start"];
         if(isset($_POST["date_end"]))
-            $date_end = $_POST["date_end"];
+            $date_end_string = $_POST["date_end"];
         if(isset($_POST["handicape"]))
             $handicape_id = $_POST["handicape"];
+
+        echo  $date_start_string;
+        $date_start = new DateTime();
+        $date_start = date_create_from_format('Y-m-d', $date_start_string);
+        echo  $date_end_string;
+        $date_end = new DateTime();
+        $date_end = date_create_from_format('Y-m-d', $date_end_string);
 
         $storage = Engine::Instance()->Persistence("DatabaseStorage");
         $service = new Service($storage);
@@ -267,7 +283,7 @@ class ServiceController extends Controller
         $service->setCategoryId($category);
         $service->setDateStart($date_start);
         $service->setDateEnd($date_end);
-        $storage->persist($user);
+        $storage->persist($service);
         $storage->flush();
         header('Location: /Default');
    }     
