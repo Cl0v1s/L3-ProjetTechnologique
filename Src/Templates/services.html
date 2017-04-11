@@ -8,12 +8,20 @@
 <div class="Content">
 
 	<div class="Services">
+		{{=user}}
+			{{#services}}
+				<a href="/Service?action=displayService&serviceId={{id}}">{{name}}</a>
+				<br>
+			{{/services}}
+		{{/user}}
 		
-		{{#services}}
-			<a href="/Service?action=displayService&serviceId={{id}}">{{name}}</a>
-			<br>
-		{{/services}}
-
+		{{=admin}}
+			{{#services}}
+				<a href="/Service?action=displayService&serviceId={{id}}">{{name}}</a>
+				<br>
+			{{/services}}
+		{{/admin}}
+						
 	</div>
 
 </div>
