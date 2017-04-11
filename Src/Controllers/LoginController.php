@@ -59,15 +59,21 @@ class LoginController extends Controller
             $hash = $user->Password();
             if (password_verify($password, $hash)) {
                 // Success!
-                $_SESSION['User'] = $user->Id();
-                $isadmin = $user->Isadmin();
-                if($isadmin == 1){
-                    $_SESSION['Admin'] = true;
-                    header('Location: /Admin');
-                }else{
-                    header('Location: /Default');
-                }
+                if($user->Isbanned() == 0){
+                    //User n'est pas banni
+                    $_SESSION['User'] = $user->Id();
+                    $isadmin = $user->Isadmin();
+                    if($isadmin == 1){
+                        $_SESSION['Admin'] = true;
+                        header('Location: /Admin');
+                    }else{
+                        header('Location: /Default');
+                    }
+                }else{//User banni
+                    header('Location: /Login');
+                }   
             } else {
+                //mauvais mdp
                 header('Location: /Login');
             }
         }

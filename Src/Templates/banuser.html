@@ -1,0 +1,23 @@
+{{=admin}}
+	{{@headerAdmin}}
+{{/admin}}
+{{=user}}
+	{{@headerUser}}
+{{/user}}
+<br/>
+
+<h2> BANNIR UN UTILISATEUR </h2>
+
+<table>
+	<tr>
+		<td>
+			{{#users}}
+				<a href="/Admin?action=banUser&userId={{id}}">{{username}}</a>
+				<br/>
+			{{/users}}
+		</td>
+	</tr>
+</table>
+
+
+<a href="/Admin"><button type="button">Retour</button></a>
