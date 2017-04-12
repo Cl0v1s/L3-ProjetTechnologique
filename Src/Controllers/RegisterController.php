@@ -124,6 +124,7 @@ class RegisterController extends Controller
                     $storage->persist($link);
                 }
             }
+            $storage->flush();
             header('Location: /Default');
         }else{
             header('Location: /Register?info=ErrorPassword');

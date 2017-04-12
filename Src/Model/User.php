@@ -153,7 +153,6 @@ class User extends StorageItem
 
     public function setLastname($lastname)
     {
-        $this->setChanged();
         $this->lastname = $lastname;
     }
 
@@ -170,7 +169,6 @@ class User extends StorageItem
      */
     public function setFirstname($firstname)
     {
-        $this->setChanged();
         $this->firstname = $firstname;
     }
 
@@ -187,7 +185,6 @@ class User extends StorageItem
      */
     public function setPassword($password)
     {
-        $this->setChanged();
         $this->password = $password;
     }
 
@@ -201,7 +198,6 @@ class User extends StorageItem
 
     public function setUsername($username)
     {
-        $this->setChanged();
         $this->username = $username;
     }
 
@@ -215,7 +211,6 @@ class User extends StorageItem
 
     public function setIsAdmin($value)
     {
-        $this->setChanged();
         $this->isadmin = $value;
     }
 
@@ -226,7 +221,6 @@ class User extends StorageItem
 
     public function setIsbanned($value)
     {
-        $this->setChanged();
         $this->isbanned = $value;
     }
 }
