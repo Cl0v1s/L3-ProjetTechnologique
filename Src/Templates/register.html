@@ -8,7 +8,6 @@
   <div class="Register">
     <h1>Créer votre compte</h1>
 
-
       <span class="error">{{info}}</span>
 
       <form action="/Register?action=newRegister" method="POST">
@@ -22,7 +21,13 @@
       <input type="text" name="phone" /><br><br>
       Vous pouvez préciser l'un ou l'autre (email ou téléphone). Mais la précision d'au moins une possibilité de contact est obligatoire.<br>
       (Ces informations seront utilisées pour vous contacter suite à vos inscriptions aux services, et ne seront pas diffusées.)<br><br>
-        <span>Créez un mot de passe</span>* :<br>
+
+          <span> Status :</span> <br>
+          {{#status}}
+          <input type="checkbox" name="Statut_{{id}}" value="{{id}}"> {{name}}
+          {{/status}}
+          <br><br>
+          <span>Créez un mot de passe</span>* :<br>
       <input type="password" name="password"><br>
         <span>Confirmez votre mot de passe</span>* :<br>
       <input type="password" name="password_confirm"><br>

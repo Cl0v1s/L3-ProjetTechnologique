@@ -18,9 +18,11 @@
         {{service_category_id}} 
       </p>
       <br>  
-      <p> Status : <br>
-    
-      </p>          
+      <span> Status actuels: </span> <br>
+        {{#status}}
+             <input type="checkbox" name="Statut_{{id}}" value="{{id}}" {{checked}} {{disabled}}> {{name}}
+        {{/status}}
+      <br>         
       Date début :<br>
       <p> {{service_date_start}} </p>
       <br>

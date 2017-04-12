@@ -208,19 +208,34 @@ class ServiceController extends Controller
    public function updateService(){
 
         $service_id = $_GET['serviceId'];
-        $status_id=NULL;
+        $servicestatus=NULL;
         $storage = Engine::Instance()->Persistence("DatabaseStorage");
         $service = new Service($storage, $service_id);
         $service = $storage->find($service);
         $condition = "service_id = ".$service_id;
-        $storage->findAll("ServiceStatus",$status_id,$condition);
+        $storage->findAll("ServiceStatus",$servicestatus,$condition);
         $data=array();
         $data = Utils::SessionVariables();
-        $data["statuss"] = array();
-        foreach ($status_id as $entry) {
-            $status=$entry->Status();
-            array_push($data["statuss"],get_object_vars($status));
+        $data["status"] = array();
+        $status=NULL;
+        $storage->findAll("Status",$status);
+        
+        foreach($status as $statut)
+        {
+            $vars = get_object_vars($statut);
+            $vars["checked"] = "";
+            $vars["disabled"] = "";
+            foreach ($servicestatus as $servicestatut)
+            {
+                if($statut->Id() == $servicestatus->StatusId())
+                {
+                    $vars["checked"] = "checked";
+                    $vars["disabled"] = "disabled readonly";
+                }
+            }
+            array_push($data["status"], $vars);
         }
+
 
         $data["service_name"] = $service->Name();
         $data["service_id"] = $service->Id();
@@ -228,7 +243,6 @@ class ServiceController extends Controller
         $data["service_date_start"] = $service->DateStart()->format('d/m/Y');;
         $data["service_category_id"] = $service->CategoryId();
         $data["service_date_end"] = $service->DateEnd()->format('d/m/Y');;
-
         $view = new View("updateService",$data);
         $view->setTitle("updateService");
         $view->show();

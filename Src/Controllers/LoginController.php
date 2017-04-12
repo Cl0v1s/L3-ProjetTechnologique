@@ -68,7 +68,9 @@ class LoginController extends Controller
                     $isadmin = $user->Isadmin();
                     if($isadmin == 1){
                         $_SESSION['Admin'] = true;
+
                         header('Location: /Admin?&info=NULL');
+
                     }else{
                         header('Location: /Default');
                     }
