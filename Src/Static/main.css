@@ -339,6 +339,32 @@ div.Services {
       font-size: 15px;
       font-weight: bold; }
 
+div.Register h1 {
+  color: #16A6B6;
+  margin-bottom: 15px; }
+
+div.Register span.error {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  color: red !important; }
+
+div.Register span {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 15px;
+  font-weight: bold; }
+  div.Register span:nth-of-type(2n) {
+    color: #208BC9; }
+  div.Register span:nth-of-type(2n+1) {
+    color: #843A53; }
+
+div.Register input[type=submit] {
+  display: block;
+  width: 100px;
+  margin: auto;
+  margin-top: 10px; }
+
 * {
   margin: 0;
   padding: 0;

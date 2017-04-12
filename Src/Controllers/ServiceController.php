@@ -208,40 +208,44 @@ class ServiceController extends Controller
    public function updateService(){
 
         $service_id = $_GET['serviceId'];
-        $status_id=NULL;
+        $servicestatus=NULL;
         $storage = Engine::Instance()->Persistence("DatabaseStorage");
         $service = new Service($storage, $service_id);
         $service = $storage->find($service);
         $condition = "service_id = ".$service_id;
-        $storage->findAll("ServiceStatus",$status_id,$condition);
+        $storage->findAll("ServiceStatus",$servicestatus,$condition);
         $data=array();
         $data = Utils::SessionVariables();
-        $data["statuss"] = array();
-        $allstatus=NULL; 
-        $condition=NULL;
-        $storage->findAll("Status",$allstatus,$condition);
-        foreach ($status_id as $id) {
-            $notregistred=false;
-            $registred=true;
-            foreach ($allstatus as $statuss) {
-                $statuss=new Status($storage, $);
-                $status = get_object_vars($statuss);
-                $status = $storage->find($status);
-                if($statuss->Id()==$id){
-                    $notregistred=true;
-                    $registred=false;
+        $data["status"] = array();
+        $status=NULL;
+        $storage->findAll("Status",$status);
+
+        foreach($status as $statut)
+        {
+            $vars = get_object_vars($statut);
+            $vars["checked"] = "";
+            $vars["disabled"] = "";
+            foreach ($servicestatus as $servicestatut)
+            {
+                if($statut->Id() == $servicestatut->StatusId())
+                {
+                    $vars["checked"] = "checked";
+                    $vars["disabled"] = "disabled readonly";
                 }
             }
-            $status["registred"]=$registred;
-            $status["notregistred"]=$notregistred;
-            array_push($data["statuss"],get_object_vars($status));
+            array_push($data["status"], $vars);
         }
+
 
         $data["service_name"] = $service->Name();
         $data["service_id"] = $service->Id();
         $data["service_description"] = $service->Description();
         $data["service_date_start"] = $service->DateStart()->format('d/m/Y');;
-        $data["service_category_id"] = $service->CategoryId();
+
+        $category = new Category($storage, $service->CategoryId());
+        $category = $storage->find($category);
+        $data["service_category_id"] = $category->Name();
+
         $data["service_date_end"] = $service->DateEnd()->format('d/m/Y');;
         $view = new View("updateService",$data);
         $view->setTitle("updateService");
