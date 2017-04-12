@@ -1,0 +1,32 @@
+div.Admin
+{
+  h1
+  {
+    color: nth($colors-secondary, 4);
+    margin-bottom: 15px;
+  }
+
+  &>table
+  {
+    table-layout: fixed;
+    td
+    {
+      width: 4%;
+      vertical-align: top;
+    }
+  }
+
+  &>table table
+  {
+    box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.1);
+    td
+    {
+      padding: 5px;
+      a
+      {
+        text-decoration: none;
+        color: nth($colors-secondary, 2);
+      }
+    }
+  }
+}

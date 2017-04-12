@@ -4,15 +4,15 @@
 {{=user}}
 	{{@headerUser}}
 {{/user}}
-<br/>
-
+<div class="Content">
+    <div class="Register">
 <h1 class='titre'>Créer un service</h1>
 
 <form action="/Service?action=addService" method="POST">
-  Nom :<br>
+    <span>Nom</span> :<br>
   <input type="text" name="name"><br>
-  Description :<br>
-  <input type="text" name="description"><br>
+      <span>Description</span> :<br>
+  <textarea name="description" rows="10" cols="50"> </textarea><br>
   <span>Catégorie:</span><br>
         <select name="category">
             {{#categorys}}
@@ -25,13 +25,13 @@
             <input type="checkbox" name="Statut_{{id}}" value="{{id}}"> {{name}}
       {{/statuss}}  
   <br>             
-  Date début :<br>
+      <span>Date début</span> :<br>
   <input type="date" name="date_start"><br>
-  Date fin :<br>
+      <span>Date fin</span> :<br>
   <input type="date" name="date_end"><br>
   <input type="submit" value="Créer"><br>
 </form>
-
-<a href="/Default"><button type="button">Retour</button></a>
-
+    <a href="/Service?action=displayAllServices"><button type="button">Retour</button></a>
+     </div>
+</div>
 {{@footer}}

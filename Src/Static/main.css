@@ -316,6 +316,13 @@ div.Service button {
   width: 100px;
   margin: auto; }
 
+div.Service div.action {
+  text-align: center; }
+  div.Service div.action button {
+    display: inline-block;
+    margin: 5px;
+    width: auto; }
+
 div.Services {
   height: auto; }
   div.Services h2 {
@@ -338,6 +345,66 @@ div.Services {
       text-decoration: none;
       font-size: 15px;
       font-weight: bold; }
+
+div.Register h1 {
+  color: #16A6B6;
+  margin-bottom: 15px; }
+
+div.Register span.error {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  color: red !important; }
+
+div.Register span {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 15px;
+  font-weight: bold; }
+  div.Register span:nth-of-type(2n) {
+    color: #208BC9; }
+  div.Register span:nth-of-type(2n+1) {
+    color: #843A53; }
+
+div.Register input[type=submit] {
+  display: block;
+  width: 100px;
+  margin: auto;
+  margin-top: 10px; }
+
+div.DisplayUser h1 {
+  color: #16A6B6;
+  margin-bottom: 15px; }
+  div.DisplayUser h1 a {
+    color: #208BC9;
+    text-decoration: none;
+    display: inline-block;
+    width: 100%;
+    text-align: center; }
+
+div.DisplayUser table {
+  table-layout: fixed; }
+  div.DisplayUser table tr td {
+    width: 4%;
+    text-align: center; }
+
+div.Admin h1 {
+  color: #16A6B6;
+  margin-bottom: 15px; }
+
+div.Admin > table {
+  table-layout: fixed; }
+  div.Admin > table td {
+    width: 4%;
+    vertical-align: top; }
+
+div.Admin > table table {
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1); }
+  div.Admin > table table td {
+    padding: 5px; }
+    div.Admin > table table td a {
+      text-decoration: none;
+      color: #208BC9; }
 
 * {
   margin: 0;

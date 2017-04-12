@@ -126,6 +126,13 @@ class ServiceController extends Controller
 
         array_push($data["service"],$service);
 
+        // ajout du fait que l'user qui a créé le service a les droits d'administration dessus
+        if($obj->UserId() == $_SESSION["User"])
+        {
+            $data["admin"] = true;
+            $data["user"] = false;
+        }
+
 
         $view = new View("service", $data);
         $view->setTitle("service");
@@ -201,27 +208,45 @@ class ServiceController extends Controller
    public function updateService(){
 
         $service_id = $_GET['serviceId'];
-        $status_id=NULL;
+        $servicestatus=NULL;
         $storage = Engine::Instance()->Persistence("DatabaseStorage");
         $service = new Service($storage, $service_id);
         $service = $storage->find($service);
         $condition = "service_id = ".$service_id;
-        $storage->findAll("ServiceStatus",$status_id,$condition);
+        $storage->findAll("ServiceStatus",$servicestatus,$condition);
         $data=array();
         $data = Utils::SessionVariables();
-        $data["statuss"] = array();
-        foreach ($status_id as $entry) {
-            $status=$entry->Status();
-            array_push($data["statuss"],get_object_vars($status));
+        $data["status"] = array();
+        $status=NULL;
+        $storage->findAll("Status",$status);
+
+        foreach($status as $statut)
+        {
+            $vars = get_object_vars($statut);
+            $vars["checked"] = "";
+            $vars["disabled"] = "";
+            foreach ($servicestatus as $servicestatut)
+            {
+                if($statut->Id() == $servicestatut->StatusId())
+                {
+                    $vars["checked"] = "checked";
+                    $vars["disabled"] = "disabled readonly";
+                }
+            }
+            array_push($data["status"], $vars);
         }
+
 
         $data["service_name"] = $service->Name();
         $data["service_id"] = $service->Id();
         $data["service_description"] = $service->Description();
         $data["service_date_start"] = $service->DateStart()->format('d/m/Y');;
-        $data["service_category_id"] = $service->CategoryId();
-        $data["service_date_end"] = $service->DateEnd()->format('d/m/Y');;
 
+        $category = new Category($storage, $service->CategoryId());
+        $category = $storage->find($category);
+        $data["service_category_id"] = $category->Name();
+
+        $data["service_date_end"] = $service->DateEnd()->format('d/m/Y');;
         $view = new View("updateService",$data);
         $view->setTitle("updateService");
         $view->show();
@@ -232,7 +257,27 @@ class ServiceController extends Controller
             $service_id = $_GET['serviceId'];
             $storage = Engine::Instance()->Persistence("DatabaseStorage");
             $service = new Service($storage, $service_id);
-            $storage->remove($service);
+            $service= $storage->find($service);
+            $name=$_POST['name'];
+            $description=$_POST['description'];
+            $date_end_string=$_POST['date_end'];
+            $date_end = date_create_from_format('d/m/Y', $date_end_string);
+            $service->setName($name);
+            $service->setDescription($description);
+            $service->setDateEnd($date_end);
+            $storage->persist($service, $state= StorageState::ToUpdate);
+            $status = null;
+            $storage->findAll("Status", $status);
+            foreach ($status as $statut)
+            {
+                if(isset($_POST["Statut_".$statut->Id()]))
+                {
+                    $link = new ServiceStatus($storage);
+                    $link->setServiceId($service->Id());
+                    $link->setStatusId($statut->Id());
+                    $storage->persist($link);
+                }
+            }
             $storage->flush();
             header('Location: /Service?action=displayService&serviceId='.$service_id);
         }else{
@@ -273,10 +318,8 @@ class ServiceController extends Controller
         if(isset($_POST["date_end"]))
             $date_end_string = $_POST["date_end"];
 
-        echo  $date_start_string;
         $date_start = new DateTime();
         $date_start = date_create_from_format('Y-m-d', $date_start_string);
-        echo  $date_end_string;
         $date_end = new DateTime();
         $date_end = date_create_from_format('Y-m-d', $date_end_string);
 
@@ -287,6 +330,7 @@ class ServiceController extends Controller
         $service->setCategoryId($category);
         $service->setDateStart($date_start);
         $service->setDateEnd($date_end);
+        $service->setUserId($_SESSION["User"]);
         $storage->persist($service);
         $storage->flush();
 
@@ -304,7 +348,7 @@ class ServiceController extends Controller
         }
         $storage->flush();
 
-        header('Location: /Default');
+        header('Location: /Service?action=displayAllServices');
    }  
 
    public function displayUsers(){
@@ -334,4 +378,4 @@ class ServiceController extends Controller
 
    }   
 
-}        $st = array();        $st = array();        $st = array();
+}

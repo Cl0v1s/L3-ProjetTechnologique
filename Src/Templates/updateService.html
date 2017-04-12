@@ -4,32 +4,31 @@
 {{=user}}
 	{{@headerUser}}
 {{/user}}
-<br/>
+<div class="Content">
+  <div class="Register">
+    <h1>Modifier le service: {{service_name}}</h1>
 
 
-    <h1 class='titre'>Modifier le service: {{service_name}}</h1>
-
-    <form action="/Service?action=updateInfoService" method="POST">
-      Nom :<br>
+    <form action="/Service?action=updateInfoService&serviceId={{service_id}}" method="POST">
+      <span>Nom</span> :<br>
       <input type="text" name="name" value="{{service_name}}"><br>
-      Description :<br>
-      <input type="text" name="description" value="{{service_description}}"><br>
-      <p> CatÃ©gorie : <br> 
-        {{service_category_id}} 
-      </p>
-      <br>  
-      <p> Status : <br>
-    
-      </p>          
-      Date dÃ©but :<br>
-      <p> {{service_date_start}} </p>
+      <span>Description</span> :<br>
+      <textarea name="description" value="{{service_description}}" rows="10" cols="50"> </textarea><br>
+        <span>Catégorie</span> : <br>
+          {{service_category_id}}<br>
+        <span>Status actuels</span>:<br>
+          {{#status}}
+               <input type="checkbox" name="Statut_{{id}}" value="{{id}}" {{checked}} {{disabled}}> {{name}}
+          {{/status}}
       <br>
-      Date fin :<br>
-      <input type="date" name="date_end" value="{{service_date_end}}" ><br>
-      <input type="submit" value="Mettre Ã  jour"><br>
+        <span>Date début</span>:<br>
+        {{service_date_start}}<br>
+        <span>Date fin</span>:<br>
+        <input type="date" name="date_end" value="{{service_date_end}}"><br>
+      <input type="submit" value="Mettre à jour"><br>
     </form>
-<a href="/Service?action=displayService&serviceId={{service_id}}"><button type="button">Retour</button></a>
-
-
+    <a href="/Service?action=displayService&serviceId={{service_id}}"><button type="button">Retour</button></a>
+  </div>
+</div>
 
 {{@footer}}

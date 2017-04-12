@@ -1,0 +1,42 @@
+div.Register
+{
+  h1{
+    color: nth($colors-secondary, 4);
+    margin-bottom: 15px;
+  }
+
+  span.error
+  {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    color: red !important;
+  }
+
+  span
+  {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 15px;
+  font-weight: bold;
+
+    &:nth-of-type(2n)
+    {
+      color: nth($colors-secondary, 2);
+    }
+
+    &:nth-of-type(2n+1)
+    {
+      color: nth($colors-secondary, 1);
+    }
+  }
+
+  input[type=submit]
+  {
+    display: block;
+    width: 100px;
+    margin: auto;
+    margin-top: 10px;
+  }
+
+}

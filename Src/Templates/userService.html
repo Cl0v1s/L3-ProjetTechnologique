@@ -4,13 +4,25 @@
 {{=user}}
 	{{@headerUser}}
 {{/user}}
-<br/>
+<div class="Content">
+    <div class="DisplayUser">
+    <h1>Liste des utilisateurs inscrit au service:<br><a href="/Service?action=displayService&serviceId={{id}}">{{name}}</a> </h1>
 
-<h1 class='titre'>Liste des utilisateurs inscrit au service: <a href="/Service?action=displayService&serviceId={{id}}">{{name}}</a> </h1>
-    
-  {{#users}}
-    <p>Mr {{firstname}} {{lastname}} </p>
-    <br>
-  {{/users}}
-  
+    <table>
+        <thead>
+            <tr>
+                <td>Nom</td><td>Prénom</td><td>Email</td><td>Phone</td>
+            </tr>
+        </thead>
+        <tbody>
+      {{#users}}
+          <tr>
+              <td>{{lastname}}</td><td>{{firstname}}</td><td>{{email}}</td><td>{{phone}}</td>
+          </tr>
+      {{/users}}
+        </tbody>
+    </table>
+    </div>
+    <a href="/Service?action=displayService&serviceId={{id}}"><button type="button">Retour</button></a>
+</div>
 {{@footer}}

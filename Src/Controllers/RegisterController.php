@@ -50,20 +50,27 @@ class RegisterController extends Controller
             $info = "";
         }
         $data['info'] = $info;
+        $allstatus=NULL;
+        $storage = Engine::Instance()->Persistence("DatabaseStorage");
+        $storage->findAll("Status",$allstatus);
+        $data["status"] = array();
+        foreach ($allstatus as $status){
+            array_push($data["status"],get_object_vars($status));
+        }
         $view = new View("register",$data);
         $view->setTitle("register");
         $view->show();
     }
     
     public function newRegister(){
-        if(isset($_POST["firstname"]) ==  false || isset($_POST["lastname"]) ==  false || isset($_POST["password"]) == false || isset($_POST["password_confirm"]) == false)
+        if(isset($_POST["firstname"]) ==  false || strlen($_POST["firstname"]) <=0 || isset($_POST["lastname"]) ==  false || strlen($_POST["lastname"]) <=0 || isset($_POST["password"]) == false || strlen($_POST["password"]) <=0 || isset($_POST["password_confirm"]) == false || strlen($_POST["password_confirm"]) <=0)
         {
-            header('Location: /Register&info=ErrorEmpty');
+            header('Location: /Register?info=ErrorEmpty');
             return;
         }
-        if(isset($_POST["email"]) == false && isset($_POST["phone"]) ==  false)
+        if((isset($_POST["email"]) == false || strlen($_POST["email"]) <= 0 ) && (isset($_POST["phone"]) ==  false || strlen($_POST["phone"]) <= 0))
         {
-            header('Location: /Register&info=ErrorContact');
+            header('Location: /Register?info=ErrorContact');
             return;
         }
 
@@ -105,9 +112,22 @@ class RegisterController extends Controller
             $storage->persist($user);
             $storage->flush();
             $_SESSION["User"] = $user->Id();
+            $status = null;
+            $storage->findAll("Status", $status);
+            foreach ($status as $statut)
+            {
+                if(isset($_POST["Statut_".$statut->Id()]))
+                {
+                    $link = new UserStatus($storage);
+                    $link->setUserId($user->Id());
+                    $link->setStatusId($statut->Id());
+                    $storage->persist($link);
+                }
+            }
+            $storage->flush();
             header('Location: /Default');
         }else{
-            header('Location: /Register&info=ErrorPassword');
+            header('Location: /Register?info=ErrorPassword');
         }
     }
 }
