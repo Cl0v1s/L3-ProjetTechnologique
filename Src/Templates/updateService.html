@@ -8,7 +8,8 @@
   <div class="Register">
     <h1>Modifier le service: {{service_name}}</h1>
 
-    <form action="/Service?action=updateInfoService" method="POST">
+
+    <form action="/Service?action=updateInfoService&serviceId={{service_id}}" method="POST">
       <span>Nom</span> :<br>
       <input type="text" name="name" value="{{service_name}}"><br>
       <span>Description</span> :<br>
