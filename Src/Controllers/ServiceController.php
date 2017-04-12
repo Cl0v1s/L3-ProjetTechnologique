@@ -210,8 +210,23 @@ class ServiceController extends Controller
         $data=array();
         $data = Utils::SessionVariables();
         $data["statuss"] = array();
-        foreach ($status_id as $entry) {
-            $status=$entry->Status();
+        $allstatus=NULL; 
+        $condition=NULL;
+        $storage->findAll("Status",$allstatus,$condition);
+        foreach ($status_id as $id) {
+            $notregistred=false;
+            $registred=true;
+            foreach ($allstatus as $statuss) {
+                $statuss=new Status($storage, $);
+                $status = get_object_vars($statuss);
+                $status = $storage->find($status);
+                if($statuss->Id()==$id){
+                    $notregistred=true;
+                    $registred=false;
+                }
+            }
+            $status["registred"]=$registred;
+            $status["notregistred"]=$notregistred;
             array_push($data["statuss"],get_object_vars($status));
         }
 
@@ -221,7 +236,6 @@ class ServiceController extends Controller
         $data["service_date_start"] = $service->DateStart()->format('d/m/Y');;
         $data["service_category_id"] = $service->CategoryId();
         $data["service_date_end"] = $service->DateEnd()->format('d/m/Y');;
-
         $view = new View("updateService",$data);
         $view->setTitle("updateService");
         $view->show();
