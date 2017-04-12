@@ -372,6 +372,22 @@ div.Register input[type=submit] {
   margin: auto;
   margin-top: 10px; }
 
+div.Register table {
+  table-layout: fixed; }
+
+div.Register table tbody td {
+  width: 4%;
+  margin-top: 15px;
+  padding: 5px;
+  line-height: 30px;
+  box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.1);
+  background-color: #16A6B6;
+  border-radius: 2px; }
+
+div.Register table tbody td a {
+  color: #F6F7F0;
+  text-decoration: none; }
+
 div.DisplayUser h1 {
   color: #16A6B6;
   margin-bottom: 15px; }

@@ -4,12 +4,22 @@
 {{=user}}
 	{{@headerUser}}
 {{/user}}
-<br/>
+<div class="Content">
+	<div class="Register">
+		<h1>Suppression de sujets</h1>
+		<table>
+			<tbody>
+				{{#subjects}}
+				<tr>
+					<td>
+						{{name}}<a class="delete" href="/Admin?action=deleteSubject&subjectId={{id}}">supprimer</a>
+					</td>
+				</tr>
+				{{/subjects}}
+			</tbody>
+		</table>
 
-<h1> SUPPRESSION DES SUBJECTS </h1>
+	</div>
+</div>
 
-{{#subjects}}
-	<a href="/Admin?action=deleteSubject&subjectId={{id}}">{{name}}</a>
-	<br/>
-{{/subjects}}
-<a href="/Admin&info=NULL"><button type="button">Retour</button></a>
+

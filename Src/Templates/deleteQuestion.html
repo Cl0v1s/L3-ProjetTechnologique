@@ -4,12 +4,14 @@
 {{=user}}
 	{{@headerUser}}
 {{/user}}
-<br/>
+<div class="Content">
+	<div class="Register">
+		<h1> SUPPRESSION DES QUESTIONS </h1>
 
-<h1> SUPPRESSION DES QUESTIONS </h1>
 
-{{#questions}}
-	<a href="/Admin?action=deleteQuestion&questionId={{id}}">{{title}}</a>
-	<br/>
-{{/questions}}
-<a href="/Admin&info=NULL"><button type="button">Retour</button></a>
+		{{#questions}}
+		<a href="/Admin?action=deleteQuestion&questionId={{id}}">{{title}}</a>
+		{{/questions}}
+	</div>
+</div>
+

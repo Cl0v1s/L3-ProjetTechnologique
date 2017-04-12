@@ -83,22 +83,22 @@ class AdminController extends Controller
             $info = "";
         }
         if($info === "SubjectCreated"){
-            $info = "Le sujet a bien Ã©tÃ© crÃ©Ã©.";
+            $info = "Le sujet a bien été créé.";
         }
         if($info === "ErrorCreationSubject"){
-            $info = "Erreur crÃ©ation : nom de sujet invalide.";
+            $info = "Erreur création : nom de sujet invalide.";
         }
         if($info === "SubjectDeleted"){
-            $info = "Le sujet a bien Ã©tÃ© supprimÃ©.";
+            $info = "Le sujet a bien été supprimé.";
         }
         if($info === "QuestionDeleted"){
-            $info = "La question a bien Ã©tÃ© supprimÃ©e.";
+            $info = "La question a bien été supprimée.";
         }
         if($info === "ResponseDeleted"){
-            $info = "La rÃ©ponse a bien Ã©tÃ© supprimÃ©e.";
+            $info = "La réponse a bien été supprimée.";
         }
         if($info === "UserBanned"){
-            $info = "L'utilisateur a bien Ã©tÃ© banni.";
+            $info = "L'utilisateur a bien été banni.";
         }
 
         $data["info"] = $info;

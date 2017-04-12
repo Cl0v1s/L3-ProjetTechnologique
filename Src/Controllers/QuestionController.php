@@ -197,7 +197,7 @@ class QuestionController extends Controller
             $responsevalues = get_object_vars($response);
             $responsevalues["username"] = $user->Firstname().$user->Lastname();
             $date = $response->Date();
-            $date = $date->format('d-m-Y à H:i');
+            $date = $date->format('d/m/Y à H:i');
             $responsevalues["datee"] = $date;
             $reported = $response->Reported();
             if($reported==0){
@@ -210,16 +210,25 @@ class QuestionController extends Controller
         $questions = NULL;
         $condition = "id = ".$question_id;
         $storage = Engine::Instance()->Persistence("DatabaseStorage");
-        $storage->findAll("Question",$questions,$condition);
+        $question = new Question($storage, $question_id);
+        $question = $storage->find($question);
 
-        $data["questions"] = array();
-        foreach ($questions as $question) {
+        $data["question_id"] = $question->Id();
+        $data["question_title"] = $question->Title();
+        $data["question_content"] = $question->Content();
+        $user = new User($storage, $question->UserId());
+        $user = $storage->find($user);
+        $data["question_user"] = $user->Firstname().".".$user->Lastname();
+        $data["question_date"] = $question->Date()->format('d/m/Y à H:i');
+
+
+        /*foreach ($questions as $question) {
             $ques = get_object_vars($question);
             $user = new User($storage, $question->UserId());
             $user = $storage->find($user);
             $ques["user"] = $user->Firstname().".".$user->Lastname();
             $date = $question->Date();
-            $date = $date->format('d-m-Y à H:i');
+            $date = $date->format('d/m/Y à H:i');
             $ques["datee"] = $date;
 
             $reported = $question->Reported();
@@ -229,7 +238,7 @@ class QuestionController extends Controller
                 $ques["isreported"] = false;      
             }
             array_push($data["questions"],$ques);
-        }
+        }*/
         if(($info === "QuestionReported") || ($info === "ResponseReported")){
             $info = "Votre signalement a bien été pris en compte.";
         }
