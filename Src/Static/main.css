@@ -156,6 +156,23 @@ div.Question div.question {
     margin-top: 15px;
     max-width: 100%;
     word-break: break-all; }
+  div.Question div.question a.like {
+    color: transparent;
+    background: url("/Static/Images/like.svg");
+    background-size: contain;
+    display: inline-block;
+    width: 32px;
+    height: 32px; }
+  div.Question div.question a.report {
+    background: url("/Static/Images/report.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 32px;
+    line-height: 32px;
+    vertical-align: middle;
+    padding-left: 32px;
+    color: white; }
 
 div.Question div.reponses {
   width: 90%;
