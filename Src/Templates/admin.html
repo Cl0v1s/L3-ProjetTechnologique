@@ -6,35 +6,85 @@
 {{/user}}
 <br/>
  
-<span>{{info}}</span>
+<div class="Content">
+	<div class="Admin">
+		<h1>Administration</h1>
+		<span>{{info}}</span>
 
-<h1>ADMINISTRATION</h1>
+		<div class="action">
+			<a href="/Admin?action=displayCreateSubject"><button type="button">Créer un sujet</button></a>
+			<a href="/Admin?action=displayDeleteSubject"><button type="button">Supprimer un sujet</button></a>
+			<a href="/Admin?action=displayDeleteQuestion"><button type="button">Supprimer une question</button></a>
+			<a href="/Admin?action=displayDeleteResponse&subjectId=NULL&questionId=NULL&responseId=NULL&info=NULL"><button type="button">Supprimer une réponse</button></a>
+			<a href="/Admin?action=displayBanUser"><button type="button">Bannir un utilisateur</button></a>
+		</div>
 
-<nav>
-	<div class='onglet'><a href="/Admin?action=displayCreateSubject"><button type="button">Créer un sujet</button></a></div>
-	<div class='onglet'><a href="/Admin?action=displayDeleteSubject"><button type="button">Supprimer un sujet</button></a></div>
-	<div class='onglet'><a href="/Admin?action=displayDeleteQuestion"><button type="button">Supprimer une question</button></a></div>
-	<div class='onglet'><a href="/Admin?action=displayDeleteResponse&subjectId=NULL&questionId=NULL&responseId=NULL&info=NULL"><button type="button">Supprimer une réponse</button></a></div>
-	<div class='onglet'><a href="/Admin?action=displayBanUser"><button type="button">Bannir un utilisateur</button></a></div>
-</nav>
+		<br/>
+		<table>
+			<tr>
+				<td>
+					<table>
+						<thead>
+						<tr>
+							<td>Questions signalées</td>
+						</tr>
+						</thead>
+						<tbody>
+						{{#questions}}
+						<tr>
+							<td>
+								<a href="/Question?action=displayQuestionContent&subjectId={{subject_id}}&questionId={{id}}&info=NULL">{{title}}</a>
+							</td>
+						</tr>
+						{{/questions}}
+						</tbody>
+					</table>
+				</td>
+				<td>
+					<table>
+						<thead>
+						<tr>
+							<td>
+								Réponses signalées
+							</td>
+						</tr>
+						</thead>
+						<tbody>
+						{{#responses}}
+						<tr>
+							<td>
+								<a href="/Question?action=displayQuestionContent&subjectId={{subject_id}}&questionId={{id}}&info=NULL">{{content}}</a>
+							</td>
+						</tr>
+						{{/responses}}
+						</tbody>
+					</table>
+				</td>
+				<td>
+					<table>
+						<thead>
+						<tr>
+							<td>
+								Services signalés
+							</td>
+						</tr>
+						</thead>
+						<tbody>
+						{{#services}}
+						<tr>
+							<td>
+								<a href="Service?action=displayService&serviceId={{id}}">{{name}}</a>
+							</td>
+						</tr>
+						{{/services}}
+						</tbody>
+					</table>
+				</td>
+			</tr>
+		</table>
 
 
-<br/>
-<tr>
-	<p>Questions signalées :</p>
-	<td>
-		{{#questions}}
-			<a href="/Question?action=displayQuestionContent&subjectId={{subject_id}}&questionId={{id}}&info=NULL">{{title}}</a>
-			<br/>
-		{{/questions}}
-	</td>
-	<p>Réponses signalées :</p>
-	<td>
-		{{#responses}}
-			<a href="/Question?action=displayQuestionContent&subjectId={{subject_id}}&questionId={{id}}&info=NULL">{{content}}</a>
-			<br/>
-		{{/responses}}
-	</td>
-</tr>
+	</div>
+</div>
 
 

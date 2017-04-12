@@ -388,6 +388,24 @@ div.DisplayUser table {
     width: 4%;
     text-align: center; }
 
+div.Admin h1 {
+  color: #16A6B6;
+  margin-bottom: 15px; }
+
+div.Admin > table {
+  table-layout: fixed; }
+  div.Admin > table td {
+    width: 4%;
+    vertical-align: top; }
+
+div.Admin > table table {
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1); }
+  div.Admin > table table td {
+    padding: 5px; }
+    div.Admin > table table td a {
+      text-decoration: none;
+      color: #208BC9; }
+
 * {
   margin: 0;
   padding: 0;
