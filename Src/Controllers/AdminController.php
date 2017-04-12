@@ -46,7 +46,8 @@ class AdminController extends Controller
         $data = Utils::SessionVariables();
         $questions = NULL;
         $condition = "reported = 1";
-        $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Question",$questions,$condition);
+        $storage = Engine::Instance()->Persistence("DatabaseStorage");
+        $storage->findAll("Question",$questions,$condition);
         $data["questions"] = array();
         foreach ($questions as $question) {
             $responsevalues = get_object_vars($question);
@@ -58,7 +59,7 @@ class AdminController extends Controller
 
         $responses = NULL;
         $condition = "reported = 1";
-        $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Response",$responses,$condition);
+        $storage->findAll("Response",$responses,$condition);
         $data["responses"] = array();
         foreach ($responses as $response) {
             $responsevalues = get_object_vars($response);
@@ -70,6 +71,16 @@ class AdminController extends Controller
             $responsevalues["subject_id"] = $subject->Id();
             array_push($data["responses"],$responsevalues);
         }
+
+        $services = Null;
+        $condition = "reported = 1";
+        $storage->findAll("Service",$services,$condition);
+        $data["services"] = array();
+        foreach($services as $service)
+        {
+            array_push($data["services"], get_object_vars($service));
+        }
+
         $info = $_GET["info"];
         if($info === "NULL"){
             $info = "";
