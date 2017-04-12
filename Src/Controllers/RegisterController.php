@@ -36,7 +36,15 @@ class RegisterController extends Controller
         $data = Utils::SessionVariables();
         $info = $_GET['info'];
         if($info === "ErrorPassword"){
-            $info = "Erreur les mots de passes ne sont pas identiques";
+            $info = "Erreur: les mots de passes ne sont pas identiques";
+        }
+        else if($info === "ErrorContact")
+        {
+            $info = "Erreur: vous devez communiquer au moins un moyen de vous contacter.";
+        }
+        else if($info === "ErrorEmpty")
+        {
+            $info = "Erreur: Au moins un des champs requis est vide.";
         }
         if($info === "NULL"){
             $info = "";
@@ -48,14 +56,38 @@ class RegisterController extends Controller
     }
     
     public function newRegister(){
+        if(isset($_POST["firstname"]) ==  false || isset($_POST["lastname"]) ==  false || isset($_POST["password"]) == false || isset($_POST["password_confirm"]) == false)
+        {
+            header('Location: /Register&info=ErrorEmpty');
+            return;
+        }
+        if(isset($_POST["email"]) == false && isset($_POST["phone"]) ==  false)
+        {
+            header('Location: /Register&info=ErrorContact');
+            return;
+        }
+
         if(isset($_POST["firstname"]))
-            $firstname = $_POST["firstname"];
+            $firstname = Utils::MakeTextSafe($_POST["firstname"]);
         if(isset($_POST["lastname"]))
-            $lastname = $_POST["lastname"];
+            $lastname = Utils::MakeTextSafe($_POST["lastname"]);
         if(isset($_POST["password"]))
-            $password = $_POST["password"];
+            $password = Utils::MakeTextSafe($_POST["password"]);
         if(isset($_POST["password_confirm"]))
-            $password_confirm = $_POST["password_confirm"];
+            $password_confirm = Utils::MakeTextSafe($_POST["password_confirm"]);
+
+        $email = "N/A";
+        if(isset($_POST["email"]))
+        {
+            $email = Utils::MakeTextSafe($_POST["email"]);
+        }
+
+        $phone = "N/A";
+        if(isset($_POST["phone"]))
+        {
+            $phone = Utils::MakeTextSafe($_POST["phone"]);
+        }
+
         if($password == $password_confirm)
         {
             $password = password_hash($password, PASSWORD_DEFAULT);
@@ -68,6 +100,8 @@ class RegisterController extends Controller
             $user->setUserName($username);
             $user->setIsadmin(0);
             $user->setIsbanned(0);
+            $user->setEmail($email);
+            $user->setPhone($phone);
             $storage->persist($user);
             $storage->flush();
             $_SESSION["User"] = $user->Id();
