@@ -219,7 +219,7 @@ class ServiceController extends Controller
         $data["status"] = array();
         $status=NULL;
         $storage->findAll("Status",$status);
-        
+
         foreach($status as $statut)
         {
             $vars = get_object_vars($statut);
@@ -227,7 +227,7 @@ class ServiceController extends Controller
             $vars["disabled"] = "";
             foreach ($servicestatus as $servicestatut)
             {
-                if($statut->Id() == $servicestatus->StatusId())
+                if($statut->Id() == $servicestatut->StatusId())
                 {
                     $vars["checked"] = "checked";
                     $vars["disabled"] = "disabled readonly";
@@ -241,7 +241,11 @@ class ServiceController extends Controller
         $data["service_id"] = $service->Id();
         $data["service_description"] = $service->Description();
         $data["service_date_start"] = $service->DateStart()->format('d/m/Y');;
-        $data["service_category_id"] = $service->CategoryId();
+
+        $category = new Category($storage, $service->CategoryId());
+        $category = $storage->find($category);
+        $data["service_category_id"] = $category->Name();
+
         $data["service_date_end"] = $service->DateEnd()->format('d/m/Y');;
         $view = new View("updateService",$data);
         $view->setTitle("updateService");
