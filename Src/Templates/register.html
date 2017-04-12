@@ -19,6 +19,11 @@
   <input type="text" name="phone" /><br>
   Vous pouvez préciser l'un ou l'autre (email ou téléphone). Mais la précision d'au moins une possibilité de contact est obligatoire.<br>
   (Ces informations seront utilisées pour vous contacter suite à vos inscriptions aux services, et ne seront pas diffusées.)<br>
+  <span> Status :</span> <br>
+      {{#status}}
+            <input type="checkbox" name="Statut_{{id}}" value="{{id}}"> {{name}}
+      {{/status}}  
+  <br>          
   Créez un mot de passe* :<br>
   <input type="password" name="password"><br>
   Confirmez votre mot de passe* :<br>

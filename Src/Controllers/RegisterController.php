@@ -50,6 +50,13 @@ class RegisterController extends Controller
             $info = "";
         }
         $data['info'] = $info;
+        $allstatus=NULL;
+        $storage = Engine::Instance()->Persistence("DatabaseStorage");
+        $storage->findAll("Status",$allstatus,$condition);
+        $data["status"] = array();
+        foreach ($allstatus as $status){
+            array_push($data["status"],get_object_vars($status));
+        }
         $view = new View("register",$data);
         $view->setTitle("register");
         $view->show();
