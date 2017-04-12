@@ -13,7 +13,7 @@
       <span>Nom</span> :<br>
       <input type="text" name="name" value="{{service_name}}"><br>
       <span>Description</span> :<br>
-      <input type="text" name="description" value="{{service_description}}"><br>
+      <textarea name="description" value="{{service_description}}" rows="10" cols="50"> </textarea><br>
         <span>Catégorie</span> : <br>
           {{service_category_id}}<br>
         <span>Status actuels</span>:<br>
@@ -27,6 +27,7 @@
         <input type="date" name="date_end" value="{{service_date_end}}"><br>
       <input type="submit" value="Mettre à jour"><br>
     </form>
+    <a href="/Service?action=displayService&serviceId={{service_id}}"><button type="button">Retour</button></a>
   </div>
 </div>
 
