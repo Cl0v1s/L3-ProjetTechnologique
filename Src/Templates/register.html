@@ -9,16 +9,23 @@
 <h1 class='titre'>Créer votre compte</h1>
 
 <form action="/Register?action=newRegister" method="POST">
-  Prénom :<br>
+  Prénom* :<br>
   <input type="text" name="firstname"><br>
-  Nom :<br>
+  Nom* :<br>
   <input type="text" name="lastname"><br>
-  Créez un mot de passe :<br>
+  E-mail:<br>
+  <intput type="text" name="email" /><br>
+  N° de téléphone:<br>
+  <input type="text" name="phone" /><br>
+  Vous pouvez préciser l'un ou l'autre (email ou téléphone). Mais la précision d'au moins une possibilité de contact est obligatoire.<br>
+  (Ces informations seront utilisées pour vous contacter suite à vos inscriptions aux services, et ne seront pas diffusées.)<br>
+  Créez un mot de passe* :<br>
   <input type="password" name="password"><br>
-  Confirmez votre mot de passe :<br>
+  Confirmez votre mot de passe* :<br>
   <input type="password" name="password_confirm"><br>
   <input type="submit" value="Créer"><br>
 </form>
+Les champs marqués d'une * sont obligatoires.
 <a href="/Default"><button type="button">Retour</button></a>
 
 {{@footer}}

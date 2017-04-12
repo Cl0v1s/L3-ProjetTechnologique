@@ -16,11 +16,45 @@ class User extends StorageItem
     public $username;
     public $isadmin;
     public $isbanned;
+    public $email;
+    public $phone;
 
     public $questions = array(NULL);
     public $status = array(NULL);
     public $services = array(NULL);
     public $responses = array(NULL);
+
+    /**
+     * @return mixed
+     */
+    public function Email()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param mixed $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function Phone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * @param mixed $phone
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+    }
 
     /**
      * Retourne l'ensemble des questions associés à cet utilisateur

@@ -14,9 +14,28 @@ class Service extends StorageItem
     public $date_end;
     public $reported;
     public $category_id;
+    public $user_id;
 
     public $users = array(NULL);
     public $status = array(NULL);
+
+    /**
+     * @return mixed
+     */
+    public function UserId()
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * @param mixed $user_id
+     */
+    public function setUserId($user_id)
+    {
+        $this->user_id = $user_id;
+    }
+
+
 
     /**
      * @return array

@@ -57,6 +57,7 @@ class LoginController extends Controller
             $info="Cet identifiant n'existe pas.";
             $this->display($info);
         }
+
         foreach ($users as $user) {
             $hash = $user->Password();
             if (password_verify($password, $hash)) {
@@ -67,7 +68,9 @@ class LoginController extends Controller
                     $isadmin = $user->Isadmin();
                     if($isadmin == 1){
                         $_SESSION['Admin'] = true;
-                        header('Location: /Admin&info=NULL');
+
+                        header('Location: /Admin?&info=NULL');
+
                     }else{
                         header('Location: /Default');
                     }
