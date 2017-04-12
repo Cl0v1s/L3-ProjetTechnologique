@@ -22,7 +22,8 @@ class LoginController extends Controller
             header('Location: /Default');
         }
         if(!isset($_GET["action"])){
-            $this->display();
+            $info = "";
+            $this->display($info);
         }else{
             $action = $_GET["action"];
             switch($action){
@@ -34,17 +35,17 @@ class LoginController extends Controller
                     return;
             }
         }
-
     }
     
-    public function display(){
+    public function display($info){
         $data = Utils::SessionVariables();
+        $data["info"] = $info;
         $view = new View("login", $data);
         $view->setTitle("login");
         $view->show();
     }
 
-    public static function login(){
+    public function login(){
         if(isset($_POST["username"]))
             $username = $_POST["username"];
         if(isset($_POST["password"]))
@@ -53,7 +54,8 @@ class LoginController extends Controller
         $condition = "username = '".$username."'";
         $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("User",$users,$condition);
         if($users == NULL){
-            header('Location: /Login');
+            $info="Cet identifiant n'existe pas.";
+            $this->display($info);
         }
         foreach ($users as $user) {
             $hash = $user->Password();
@@ -70,11 +72,13 @@ class LoginController extends Controller
                         header('Location: /Default');
                     }
                 }else{//User banni
-                    header('Location: /Login?info=banned');
+                    $info="Cet utilisateur est banni !";
+                    $this->display($info);
                 }   
             } else {
                 //mauvais mdp
-                header('Location: /Login?info=wrongpass');
+                $info="Mot de passe incorrect.";
+                $this->display($info);
             }
         }
     }

@@ -47,12 +47,12 @@ class QuestionController extends Controller
     public function displayQuestions(){
         $questions = NULL;
         $data = Utils::SessionVariables();
+        $info = $_GET['info'];
         $subject_id = $_GET['subjectId'];
         $question_id = $_GET['questionId'];
         $condition = "subject_id = ".$subject_id;
         $storage = Engine::Instance()->Persistence("DatabaseStorage");
         $storage->findAll("Question",$questions,$condition);
-
 
         $data["subject_name"] = "(sélectionnez un sujet...)";
         if($subject_id != "NULL")
@@ -65,12 +65,10 @@ class QuestionController extends Controller
             }
         }
 
-
         $data["questions"] = array();
         foreach ($questions as $question) {
             array_push($data["questions"],get_object_vars($question));
         }
-
 
         $subjects = NULL;
         $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Subject",$subjects);
@@ -85,6 +83,15 @@ class QuestionController extends Controller
         }else{
              $data["admin"] = false;
         }
+
+        if($info === "QuestionCreated"){
+            $info = "Votre question a bien été envoyée!";
+        }
+        if($info === "NULL"){
+            $info = "";
+        }
+        
+        $data["info"] = $info;
         $data["subject_id"] = $subject_id;
         $data["question_id"] = $question_id;
         $view = new View("questions", $data);
@@ -100,12 +107,15 @@ class QuestionController extends Controller
 
         $data = array();
         $data = Utils::SessionVariables();
+        $info = $_GET["info"];
         $data["subjects"] = array();
         $data1 = array();
         $data1["questions"] = array();
         foreach ($subjects as $entry) {
             array_push($data["subjects"],get_object_vars($entry));
         }
+
+        $data["info"] = $info;
         $view = new View("createQuestion", $data);
         $view->setTitle("createQuestion");
         $view->show();
@@ -135,11 +145,9 @@ class QuestionController extends Controller
         $question->setReported($reported);
         $question->setUserId($user_id);
         $question->setDate($date);
-
         $storage->persist($question);
         $storage->flush();
-        header('Location: /Question?action=displayQuestions&subjectId=NULL&questionId=NULL');
-
+        header('Location: /Question?action=displayQuestions&subjectId=NULL&questionId=NULL&info=QuestionCreated');
     }
 
     public function createResponse(){
@@ -168,13 +176,15 @@ class QuestionController extends Controller
         $storage->flush();
 
         $subject_id = $_GET["subjectId"];
-        header('Location: /Question?action=displayQuestionContent&subjectId='.$subject_id.'&questionId='.$question_id);
+        header('Location: /Question?action=displayQuestionContent&subjectId='.$subject_id.'&questionId='.$question_id.'info=ResponseCreated');
     }
 
     public function displayQuestionContent(){
         $data = Utils::SessionVariables();
         $question_id = $_GET['questionId'];
+        $question_id = $_GET['questionId'];
         $subject_id = $_GET['subjectId'];
+        $info = $_GET['info'];
         $condition = "question_id = ".$question_id;
         $storage = Engine::Instance()->Persistence("DatabaseStorage");
         $responses = NULL;
@@ -220,7 +230,7 @@ class QuestionController extends Controller
             }
             array_push($data["questions"],$ques);
         }
-        
+        $data["info"] = $info;
         $data["subject_id"] = $subject_id;
         $data["question_id"] = $question_id;
         $view = new View("questionContent", $data);
@@ -238,7 +248,7 @@ class QuestionController extends Controller
             $question->setReported(1);
             $storage->persist($question, $state = StorageState::ToUpdate);
             $storage->flush();
-            header('Location: /Question?action=displayQuestionContent&subjectId='.$subject_id.'&questionId='.$question_id);
+            header('Location: /Question?action=displayQuestionContent&subjectId='.$subject_id.'&questionId='.$question_id.'&info=QuestionReported');
         }else{
             header('Location: /Question?action=displayQuestionContent&subjectId='.$subject_id.'&questionId='.$question_id);
         }
@@ -255,7 +265,7 @@ class QuestionController extends Controller
             $response->setReported(1);
             $storage->persist($response, $state = StorageState::ToUpdate);
             $storage->flush();
-            header('Location: /Question?action=displayQuestionContent&subjectId='.$subject_id.'&questionId='.$question_id);
+            header('Location: /Question?action=displayQuestionContent&subjectId='.$subject_id.'&questionId='.$question_id.'&info=ResponseReported');
         }else{
             header('Location: /Question?action=displayQuestionContent&subjectId='.$subject_id.'&questionId='.$question_id);
         }

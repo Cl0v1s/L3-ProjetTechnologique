@@ -16,7 +16,6 @@
 					<span>{{datee}}</span>
 				</div>
 				<p>{{content}}</p>
-				<p><a href="/Question?action=likeQuestion&subjectId={{subject_id}}&questionId={{question_id}}">J'aime</a></p>
 				    <p><a href="/Question?action=reportQuestion&subjectId={{subject_id}}&questionId={{question_id}}">Reporter</a></p>
 			{{/questions}}
 		</div>
@@ -28,8 +27,6 @@
 					<br/>
 					<span>{{datee}}</span>
 					<p>{{content}}</p>
-					<p><a href="/Question?action=likeResponse&subjectId={{subject_id}}&questionId={{question_id}}&responseId={{id}}">J'aime</a></p>
-
 						<p><a href="/Question?action=reportResponse&subjectId={{subject_id}}&questionId={{question_id}}&responseId={{id}}">Reporter</a></p>
 				</div>
 			{{/responses}}

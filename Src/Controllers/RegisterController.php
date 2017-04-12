@@ -34,6 +34,14 @@ class RegisterController extends Controller
 
     public function display(){
         $data = Utils::SessionVariables();
+        $info = $_GET['info'];
+        if($info === "ErrorPassword"){
+            $info = "Erreur les mots de passes ne sont pas identiques";
+        }
+        if($info === "NULL"){
+            $info = "";
+        }
+        $data['info'] = $info;
         $view = new View("register",$data);
         $view->setTitle("register");
         $view->show();
@@ -65,7 +73,7 @@ class RegisterController extends Controller
             $_SESSION["User"] = $user->Id();
             header('Location: /Default');
         }else{
-            header('Location: /Register');
+            header('Location: /Register&info=ErrorPassword');
         }
     }
 }
