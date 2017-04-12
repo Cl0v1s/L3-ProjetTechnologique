@@ -74,14 +74,10 @@ class ServiceController extends Controller
                 $storage->findAll("ServiceStatus",$services_id,$condition);
                 $data["services"] = array();
                 foreach ($services_id as $service_id){
-
                     $service=$service_id->Service();
                     $date_e = $service->DateEnd();
-                    $date_e = $date_e->format('d-m-Y');
-                    $now = date('d-m-Y');
-                    $now = new DateTime($now);
-                    $now = $now->format('d-m-Y');
-                    if( $now > $date_e ){ 
+                    $now = new DateTime();
+                    if( $now->getTimestamp() < $date_e->getTimestamp() ){
                         array_push($data["services"],get_object_vars($service));
                     }    
                     
@@ -120,10 +116,10 @@ class ServiceController extends Controller
         }       
 
         $date_s = $obj->DateStart();
-        $date_s = date('d-m-Y',$date_s);
+        $date_s = $date_s->format("d/m/Y");
 
         $date_e = $obj->DateEnd();
-        $date_e = date('d-m-Y',$date_e);
+        $date_e = $date_e->format("d/m/Y");
 
         $service["date_s"]=$date_s;
         $service["date_e"]=$date_e;
@@ -144,8 +140,8 @@ class ServiceController extends Controller
         $user_id = $_SESSION['User'];
         $storage = Engine::Instance()->Persistence("DatabaseStorage");        
         $user_service = new UserService($storage);
-        $user_service->setUserId($service_id);
-        $user_service->setServiceId($user_id);
+        $user_service->setUserId($user_id);
+        $user_service->setServiceId($service_id);
         
         $storage->persist($user_service);
         $storage->flush();
@@ -159,16 +155,14 @@ class ServiceController extends Controller
         $data = Utils::SessionVariables();
         $service_id = $_GET['serviceId'];
         $user_id = $_SESSION['User'];
-        $storage = Engine::Instance()->Persistence("DatabaseStorage");        
-        $user_service = new UserService($storage);
-        $user_service->setUserId($service_id);
-        $user_service->setServiceId($user_id);
-        $storage->remove($service);
-        $storage->persist($user_service);
+        $storage = Engine::Instance()->Persistence("DatabaseStorage");
+        $user_services = null;
+        $storage->findAll("UserService", $user_services, "user_id = '".$user_id."' AND service_id='".$service_id."'");
+        foreach ($user_services as $us)
+        {
+            $storage->remove($us);
+        }
         $storage->flush();
-
-
-
         header('Location: /Service?action=displayService&serviceId='.$service_id);
     }    
 
@@ -181,11 +175,8 @@ class ServiceController extends Controller
         foreach ($services as $service) {
 
             $date_e = $service->DateEnd();
-            $date_e = $date_e->format('d-m-Y');
-            $now = date('d-m-Y');
-            $now = new DateTime($now);
-            $now = $now->format('d-m-Y');
-            if( $now > $date_e ){ 
+            $now = new DateTime();
+            if( $now->getTimestamp() < $date_e->getTimestamp() ){
                 array_push($data["services"],get_object_vars($service));
             }  
         }

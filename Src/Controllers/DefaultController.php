@@ -29,6 +29,8 @@ class DefaultController extends Controller
         $data = Utils::SessionVariables();
         $view = new View("index", $data);
         $view->setTitle("index");
+        $view->setData('test', "ZBLEH");
+        $view->setData('test1', "ZBLAH");
         $view->show();
     }
 }
