@@ -90,7 +90,7 @@ class QuestionController extends Controller
         if($info === "NULL"){
             $info = "";
         }
-        
+
         $data["info"] = $info;
         $data["subject_id"] = $subject_id;
         $data["question_id"] = $question_id;
@@ -176,7 +176,7 @@ class QuestionController extends Controller
         $storage->flush();
 
         $subject_id = $_GET["subjectId"];
-        header('Location: /Question?action=displayQuestionContent&subjectId='.$subject_id.'&questionId='.$question_id.'info=ResponseCreated');
+        header('Location: /Question?action=displayQuestionContent&subjectId='.$subject_id.'&questionId='.$question_id.'&info=ResponseCreated');
     }
 
     public function displayQuestionContent(){
@@ -230,6 +230,12 @@ class QuestionController extends Controller
             }
             array_push($data["questions"],$ques);
         }
+        if(($info === "QuestionReported") || ($info === "ResponseReported")){
+            $info = "Votre signalement a bien été pris en compte.";
+        }
+        if($info === "NULL"){
+            $info = "";
+        }
         $data["info"] = $info;
         $data["subject_id"] = $subject_id;
         $data["question_id"] = $question_id;
@@ -245,16 +251,18 @@ class QuestionController extends Controller
             $storage = Engine::Instance()->Persistence("DatabaseStorage");
             $question = new Question($storage, $question_id);
             $question = $storage->find($question);
-            $question->setReported(1);
-            $storage->persist($question, $state = StorageState::ToUpdate);
-            $storage->flush();
+            if($question->Reported()==0){
+                $question->setReported(1);
+                $storage->persist($question, $state = StorageState::ToUpdate);
+                $storage->flush();
+            }
             header('Location: /Question?action=displayQuestionContent&subjectId='.$subject_id.'&questionId='.$question_id.'&info=QuestionReported');
         }else{
             header('Location: /Question?action=displayQuestionContent&subjectId='.$subject_id.'&questionId='.$question_id);
         }
     }
 
-        public function reportResponse(){
+    public function reportResponse(){
         if(isset($_GET['responseId'])){
             $subject_id =  $_GET['subjectId'];
             $question_id = $_GET['questionId'];

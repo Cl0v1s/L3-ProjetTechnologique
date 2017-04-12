@@ -6,27 +6,30 @@
 {{/user}}
 <br/>
 
-{{#service}}
-    <h1 class='titre'>Modifier le service: {{name}}</h1>
+
+    <h1 class='titre'>Modifier le service: {{service_name}}</h1>
 
     <form action="/Service?action=updateInfoService" method="POST">
       Nom :<br>
-      <input type="text" name="name" value="{{name}}"><br>
+      <input type="text" name="name" value="{{service_name}}"><br>
       Description :<br>
-      <input type="text" name="description" value="{{description}}"><br>
+      <input type="text" name="description" value="{{service_description}}"><br>
       <p> Catégorie : <br> 
-        {{category_id}} 
+        {{service_category_id}} 
       </p>
-      <br>            
+      <br>  
+      <p> Status : <br>
+    
+      </p>          
       Date début :<br>
-      <p> {{date_start}} </p>
+      <p> {{service_date_start}} </p>
       <br>
       Date fin :<br>
-      <input type="date" name="date_end" value="{{date_end}}" ><br>
+      <input type="date" name="date_end" value="{{service_date_end}}" ><br>
       <input type="submit" value="Mettre à jour"><br>
     </form>
-{{/service}}
+<a href="/Service?action=displayService&serviceId={{service_id}}"><button type="button">Retour</button></a>
 
-<a href="/Service?action=displayService&serviceId={{id}}"><button type="button">Retour</button></a>
+
 
 {{@footer}}
