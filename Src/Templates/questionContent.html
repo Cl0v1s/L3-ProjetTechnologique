@@ -27,7 +27,7 @@
 					<br/>
 					<span>{{datee}}</span>
 					<p>{{content}}</p>
-						<p><a href="/Question?action=reportResponse&subjectId={{subject_id}}&questionId={{question_id}}&responseId={{id}}">Reporter</a></p>
+						<p><a class="report" href="/Question?action=reportResponse&subjectId={{subject_id}}&questionId={{question_id}}&responseId={{id}}">Reporter</a></p>
 				</div>
 			{{/responses}}
 			<form action="/Question?action=createResponse&questionId={{question_id}}" method="POST">

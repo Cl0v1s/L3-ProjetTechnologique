@@ -118,7 +118,7 @@ class Service extends StorageItem
     /**
      * @return mixed
      */
-    public function DateEnd() 
+    public function DateEnd()
     {
         $date = new DateTime();
         $date->setTimestamp($this->date_end);
