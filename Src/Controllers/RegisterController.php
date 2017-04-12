@@ -56,14 +56,14 @@ class RegisterController extends Controller
     }
     
     public function newRegister(){
-        if(isset($_POST["firstname"]) ==  false || isset($_POST["lastname"]) ==  false || isset($_POST["password"]) == false || isset($_POST["password_confirm"]) == false)
+        if(isset($_POST["firstname"]) ==  false || strlen($_POST["firstname"]) <=0 || isset($_POST["lastname"]) ==  false || strlen($_POST["lastname"]) <=0 || isset($_POST["password"]) == false || strlen($_POST["password"]) <=0 || isset($_POST["password_confirm"]) == false || strlen($_POST["password_confirm"]) <=0)
         {
-            header('Location: /Register&info=ErrorEmpty');
+            header('Location: /Register?info=ErrorEmpty');
             return;
         }
-        if(isset($_POST["email"]) == false && isset($_POST["phone"]) ==  false)
+        if((isset($_POST["email"]) == false || strlen($_POST["email"]) <= 0 ) && (isset($_POST["phone"]) ==  false || strlen($_POST["phone"]) <= 0))
         {
-            header('Location: /Register&info=ErrorContact');
+            header('Location: /Register?info=ErrorContact');
             return;
         }
 
@@ -107,7 +107,7 @@ class RegisterController extends Controller
             $_SESSION["User"] = $user->Id();
             header('Location: /Default');
         }else{
-            header('Location: /Register&info=ErrorPassword');
+            header('Location: /Register?info=ErrorPassword');
         }
     }
 }
