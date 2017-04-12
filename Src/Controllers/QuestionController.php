@@ -197,7 +197,7 @@ class QuestionController extends Controller
             $responsevalues = get_object_vars($response);
             $responsevalues["username"] = $user->Firstname().$user->Lastname();
             $date = $response->Date();
-            $date = $date->format('d-m-Y ? H:i');
+            $date = $date->format('d-m-Y à H:i');
             $responsevalues["datee"] = $date;
             $reported = $response->Reported();
             if($reported==0){
@@ -219,7 +219,7 @@ class QuestionController extends Controller
             $user = $storage->find($user);
             $ques["user"] = $user->Firstname().".".$user->Lastname();
             $date = $question->Date();
-            $date = $date->format('d-m-Y ? H:i');
+            $date = $date->format('d-m-Y à H:i');
             $ques["datee"] = $date;
 
             $reported = $question->Reported();
@@ -258,7 +258,7 @@ class QuestionController extends Controller
             }
             header('Location: /Question?action=displayQuestionContent&subjectId='.$subject_id.'&questionId='.$question_id.'&info=QuestionReported');
         }else{
-            header('Location: /Question?action=displayQuestionContent&subjectId='.$subject_id.'&questionId='.$question_id);
+            header('Location: /Default');
         }
     }
 
@@ -275,7 +275,7 @@ class QuestionController extends Controller
             $storage->flush();
             header('Location: /Question?action=displayQuestionContent&subjectId='.$subject_id.'&questionId='.$question_id.'&info=ResponseReported');
         }else{
-            header('Location: /Question?action=displayQuestionContent&subjectId='.$subject_id.'&questionId='.$question_id);
+            header('Location: /Default');
         }
     }
 }
