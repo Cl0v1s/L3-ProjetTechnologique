@@ -30,9 +30,11 @@
 		<p><span>Description:</span> {{description}}</p>
 		<p><span>A débuté le:</span> {{date_s}}</p>
 		<p><span>Se termine le:</span> {{date_e}}</p>
+		<div class="action">
 				<a href="/Service?action=updateService&serviceId={{id}}"><button type="button">Modifier</button></a>
 				<a href="/Service?action=deleteService&serviceId={{id}}"><button type="button">Supprimer</button></a>
 				<a href="/Service?action=displayUsers&serviceId={{id}}"><button type="button">Users inscrit</button></a>
+		</div>
 			{{/service}}
 		{{/admin}}	
 

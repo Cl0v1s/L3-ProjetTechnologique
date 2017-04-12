@@ -316,6 +316,13 @@ div.Service button {
   width: 100px;
   margin: auto; }
 
+div.Service div.action {
+  text-align: center; }
+  div.Service div.action button {
+    display: inline-block;
+    margin: 5px;
+    width: auto; }
+
 div.Services {
   height: auto; }
   div.Services h2 {
@@ -364,6 +371,22 @@ div.Register input[type=submit] {
   width: 100px;
   margin: auto;
   margin-top: 10px; }
+
+div.DisplayUser h1 {
+  color: #16A6B6;
+  margin-bottom: 15px; }
+  div.DisplayUser h1 a {
+    color: #208BC9;
+    text-decoration: none;
+    display: inline-block;
+    width: 100%;
+    text-align: center; }
+
+div.DisplayUser table {
+  table-layout: fixed; }
+  div.DisplayUser table tr td {
+    width: 4%;
+    text-align: center; }
 
 * {
   margin: 0;
