@@ -112,6 +112,18 @@ class RegisterController extends Controller
             $storage->persist($user);
             $storage->flush();
             $_SESSION["User"] = $user->Id();
+            $status = null;
+            $storage->findAll("Status", $status);
+            foreach ($status as $statut)
+            {
+                if(isset($_POST["Statut_".$statut->Id()]))
+                {
+                    $link = new UserStatus($storage);
+                    $link->setUserId($user->Id());
+                    $link->setStatusId($statut->Id());
+                    $storage->persist($link);
+                }
+            }
             header('Location: /Default');
         }else{
             header('Location: /Register?info=ErrorPassword');
