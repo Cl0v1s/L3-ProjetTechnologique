@@ -1,0 +1,30 @@
+div.DisplayUser
+{
+  h1
+  {
+    color: nth($colors-secondary, 4);
+    margin-bottom: 15px;
+    a{
+      color: nth($colors-secondary, 2);
+      text-decoration: none;
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+    }
+  }
+
+  table
+  {
+    table-layout: fixed;
+
+    tr
+    {
+      td
+      {
+        width: 4%;
+        text-align: center;
+      }
+    }
+  }
+
+}

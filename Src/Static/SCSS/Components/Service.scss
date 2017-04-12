@@ -46,4 +46,15 @@ div.Service
     width: 100px;
     margin: auto;
   }
+
+  div.action
+  {
+    text-align: center;
+    button
+    {
+      display: inline-block;
+      margin: 5px;
+      width: auto;
+    }
+  }
 }
