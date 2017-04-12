@@ -126,6 +126,13 @@ class ServiceController extends Controller
 
         array_push($data["service"],$service);
 
+        // ajout du fait que l'user qui a créé le service a les droits d'administration dessus
+        if($obj->UserId() == $_SESSION["User"])
+        {
+            $data["admin"] = true;
+            $data["user"] = false;
+        }
+
 
         $view = new View("service", $data);
         $view->setTitle("service");
@@ -287,6 +294,7 @@ class ServiceController extends Controller
         $service->setCategoryId($category);
         $service->setDateStart($date_start);
         $service->setDateEnd($date_end);
+        $service->setUserId($_SESSION["User"]);
         $storage->persist($service);
         $storage->flush();
 
@@ -334,4 +342,4 @@ class ServiceController extends Controller
 
    }   
 
-}        $st = array();        $st = array();        $st = array();
+}
