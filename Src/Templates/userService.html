@@ -1,0 +1,16 @@
+{{=admin}}
+	{{@headerAdmin}}
+{{/admin}}
+{{=user}}
+	{{@headerUser}}
+{{/user}}
+<br/>
+
+<h1 class='titre'>Liste des utilisateurs inscrit au service: <a href="/Service?action=displayService&serviceId={{id}}">{{name}}</a> </h1>
+    
+  {{#users}}
+    <p>Mr {{firstname}} {{lastname}} </p>
+    <br>
+  {{/users}}
+  
+{{@footer}}
