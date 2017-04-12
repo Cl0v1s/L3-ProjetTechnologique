@@ -5,7 +5,7 @@
 	{{@headerUser}}
 {{/user}}
 <br/>
-
+<span>{{info}}</span>
 <h1 class='titre'>Créer votre compte</h1>
 
 <form action="/Register?action=newRegister" method="POST">
@@ -19,7 +19,6 @@
   <input type="password" name="password_confirm"><br>
   <input type="submit" value="Créer"><br>
 </form>
-
 <a href="/Default"><button type="button">Retour</button></a>
 
 {{@footer}}

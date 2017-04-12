@@ -37,6 +37,9 @@ class ServiceController extends Controller
                 case 'updateService':      
                     $this->updateService();
                     return;
+                case 'updateInfoService':
+                    $this->updateInfoService();
+                    return;    
                 case 'deleteService':
                     $this->deleteService();
                     return; 
@@ -45,7 +48,10 @@ class ServiceController extends Controller
                     return;
                 case 'addService':
                     $this->addService();
-                    return;              
+                    return; 
+                case 'displayUsers':
+                    $this->displayUsers();
+                    return;                 
             }
         }
     }
@@ -83,12 +89,6 @@ class ServiceController extends Controller
 
             }
 
-            if(isset($_SESSION["Admin"])){
-                $data["admin"] = true;
-            }else{
-                 $data["admin"] = false;
-            }
-
             $view = new View("services", $data);
             $view->setTitle("services");
             $view->show();
@@ -120,22 +120,16 @@ class ServiceController extends Controller
         }       
 
         $date_s = $obj->DateStart();
-        $date_s = $date_s->format('d-m-Y à H:i');
+        $date_s = date('d-m-Y',$date_s);
 
         $date_e = $obj->DateEnd();
-        $date_e = $date_e->format('d-m-Y à H:i');
+        $date_e = date('d-m-Y',$date_e);
 
         $service["date_s"]=$date_s;
         $service["date_e"]=$date_e;
 
         array_push($data["service"],$service);
 
-        
-        if(isset($_SESSION["Admin"])){
-            $data["admin"] = true;
-        }else{
-             $data["admin"] = false;
-        }
 
         $view = new View("service", $data);
         $view->setTitle("service");
@@ -157,12 +151,6 @@ class ServiceController extends Controller
         $storage->flush();
 
 
-        if(isset($_SESSION["Admin"])){
-            $data["admin"] = true;
-        }else{
-             $data["admin"] = false;
-        }
-
         header('Location: /Service?action=displayService&serviceId='.$service_id);
     }
 
@@ -175,16 +163,11 @@ class ServiceController extends Controller
         $user_service = new UserService($storage);
         $user_service->setUserId($service_id);
         $user_service->setServiceId($user_id);
-        
+        $storage->remove($service);
         $storage->persist($user_service);
         $storage->flush();
 
 
-        if(isset($_SESSION["Admin"])){
-            $data["admin"] = true;
-        }else{
-             $data["admin"] = false;
-        }
 
         header('Location: /Service?action=displayService&serviceId='.$service_id);
     }    
@@ -207,13 +190,6 @@ class ServiceController extends Controller
             }  
         }
 
-
-        if(isset($_SESSION["Admin"])){
-            $data["admin"] = true;
-        }else{
-             $data["admin"] = false;
-        }
-
         $view = new View("services", $data);
         $view->setTitle("services");
         $view->show();
@@ -233,9 +209,33 @@ class ServiceController extends Controller
    }
    public function updateService(){
 
+        $service_id = $_GET['serviceId'];
+        $storage = Engine::Instance()->Persistence("DatabaseStorage");
+        $service = new Service($storage, $service_id);
+        $data=array();
+        $data = Utils::SessionVariables();
+        $data["service"]=array();
+        array_push($data["service"],get_object_vars($service));
+        $view = new View("updateService",$data);
+        $view->setTitle("updateService");
+        $view->show();
+   }
+
+   public function updateInfoService(){
+        if(isset($_GET['serviceId'])){
+            $service_id = $_GET['serviceId'];
+            $storage = Engine::Instance()->Persistence("DatabaseStorage");
+            $service = new Service($storage, $service_id);
+            $storage->remove($service);
+            $storage->flush();
+            header('Location: /Service?action=displayService&serviceId='.$service_id);
+        }else{
+            header('Location: /Service?action=displayService&serviceId='.$service_id);
+        } 
    }
 
    public function newService(){
+    
         $categorys = NULL;
         $statuss = NULL;
         $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Category",$categorys);
@@ -286,6 +286,33 @@ class ServiceController extends Controller
         $storage->persist($service);
         $storage->flush();
         header('Location: /Default');
-   }     
+   }  
+
+   public function displayUsers(){
+
+        $service_id = $_GET['serviceId'];
+        $users_id = NULL;
+        $service=NULL;
+        $storage = Engine::Instance()->Persistence("DatabaseStorage");
+        $condition = "service_id = ".$service_id;
+        $storage->findAll("UserService",$users_id,$condition);
+        $service = new Service($storage,$service_id);
+        $storage->find($service);
+        $name=$service->Name();
+        $data=array();
+        $data = Utils::SessionVariables();
+        $data["id"] = $service_id;
+        $data["name"] = $name;
+        $data["users"] = array();
+        foreach ($users_id as $user_id) {
+            $user=NULL;
+            $user=$user_id->User();
+            array_push($data["users"],get_object_vars($user));     
+        }
+        $view = new View("userService",$data);
+        $view->setTitle("userService");
+        $view->show();
+
+   }   
 
 }

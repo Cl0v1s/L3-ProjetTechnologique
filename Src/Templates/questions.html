@@ -4,7 +4,7 @@
 {{=user}}
 	{{@headerUser}}
 {{/user}}
-
+		  	<span>{{info}}</span>
 <div class="Content">
 
 	<div class="Questions">
@@ -15,13 +15,13 @@
 			</p>
 		</div>
 		<div class="ask">
-			<a href="/Question?action=displayCreateQuestion"><button>Poser une question</button></a>
+			<a href="/Question?action=displayCreateQuestion&info=NULL"><button>Poser une question</button></a>
 		</div>
 
 		<nav>
 			<center>
 				{{#subjects}}
-					<a href="/Question?action=displayQuestions&subjectId={{id}}&questionId=NULL">{{name}}</a>
+					<a href="/Question?action=displayQuestions&subjectId={{id}}&questionId=NULL&info=NULL">{{name}}</a>
 				{{/subjects}}
 			</center>
 		</nav>
@@ -38,7 +38,7 @@
 				{{#questions}}
 					<tr>
 						<td>
-							<a href="/Question?action=displayQuestionContent&subjectId={{subject_id}}&questionId={{id}}">{{title}}</a>
+							<a href="/Question?action=displayQuestionContent&subjectId={{subject_id}}&questionId={{id}}&info=NULL">{{title}}</a>
 						</td>
 					</tr>
 				{{/questions}}

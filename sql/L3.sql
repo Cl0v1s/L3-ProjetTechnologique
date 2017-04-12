@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Lun 20 Février 2017 à 15:05
--- Version du serveur: 5.5.53-0ubuntu0.14.04.1
--- Version de PHP: 5.5.9-1ubuntu4.20
+-- Généré le: Mer 12 Avril 2017 à 14:27
+-- Version du serveur: 5.5.54-0ubuntu0.14.04.1
+-- Version de PHP: 5.5.9-1ubuntu4.21
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -30,7 +30,14 @@ CREATE TABLE IF NOT EXISTS `Category` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Contenu de la table `Category`
+--
+
+INSERT INTO `Category` (`id`, `name`) VALUES
+(1, 'test');
 
 -- --------------------------------------------------------
 
@@ -50,7 +57,30 @@ CREATE TABLE IF NOT EXISTS `Question` (
   PRIMARY KEY (`id`),
   KEY `subject_id` (`subject_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
+
+--
+-- Contenu de la table `Question`
+--
+
+INSERT INTO `Question` (`id`, `title`, `content`, `points`, `date`, `reported`, `subject_id`, `user_id`) VALUES
+(2, 'Ma question 1', 'azaefdzedfv', 0, 1490798650, 1, 6, 51),
+(5, 'azeeaz', 'azeaz''', 0, 1490968960, 0, 6, 51),
+(6, 'reztttrez', 'aerhjgrerzreryfjtdrerzrthrerzeze????''', 0, 1490968993, 1, 6, 51),
+(7, 'Emploi à bordeaux', 'du travail encore du travail', 0, 1492001665, 0, 6, 51),
+(8, 'azerghjg', 'erzretghjvgfrez', 0, 1492002307, 0, 2, 51),
+(9, 'azerghjg', 'erzretghjvgfrez', 0, 1492002652, 0, 2, 51),
+(10, 'azerghjg', 'erzretghjvgfrez', 0, 1492002761, 0, 2, 51),
+(11, 'eazrtyh', 'eztyjghyer', 0, 1492002765, 0, 2, 51),
+(12, 'eazrtyh', 'eztyjghyer', 0, 1492002863, 0, 2, 51),
+(13, 'aezrejfhhdrtezaezrjh', 'erzaezrtyjfjtrye', 0, 1492005597, 0, 2, 51),
+(14, 'aaaaaaaa', 'bbbbbbbbb', 0, 1492005880, 0, 2, 51),
+(15, 'azetrsjr', 'zrertyjretrzethgjerzghe', 0, 1492005934, 0, 2, 51),
+(16, 'éeze', 'azezaeaz', 0, 1492005971, 0, 2, 51),
+(17, 'ezrtrsgt', 'zeqehjgf', 0, 1492006012, 0, 2, 51),
+(18, 'revbnterhjretfherezdffsd', '', 0, 1492006186, 0, 2, 51),
+(19, 'aezrerytre', 'azertetrzere', 0, 1492006755, 0, 6, 51),
+(20, 'eazertjhrez', 'zerthrtezae', 0, 1492006918, 0, 2, 51);
 
 -- --------------------------------------------------------
 
@@ -65,10 +95,22 @@ CREATE TABLE IF NOT EXISTS `Response` (
   `date` int(10) NOT NULL,
   `user_id` int(10) NOT NULL,
   `question_id` int(10) NOT NULL,
+  `reported` int(10) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `Reponse_ibfk_1` (`question_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+
+--
+-- Contenu de la table `Response`
+--
+
+INSERT INTO `Response` (`id`, `content`, `points`, `date`, `user_id`, `question_id`, `reported`) VALUES
+(5, '!!''Ã©"t"''"!"(Ã©"''"Ã©', 0, 1490969017, 51, 6, 0),
+(6, '"', 0, 1490969091, 51, 6, 0),
+(7, '''', 0, 1490969096, 51, 6, 0),
+(9, 'Bonjour voila', 0, 1491137374, 51, 2, 1),
+(10, 'oui ca va', 0, 1491137380, 51, 2, 0);
 
 -- --------------------------------------------------------
 
@@ -86,7 +128,15 @@ CREATE TABLE IF NOT EXISTS `Service` (
   `category_id` int(10) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `category_id` (`category_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Contenu de la table `Service`
+--
+
+INSERT INTO `Service` (`id`, `name`, `description`, `date_start`, `date_end`, `reported`, `category_id`) VALUES
+(1, 'aide de domicile', 'hahahahahha', '2017-03-08 00:00:00', '2017-03-23 00:00:00', 0, 1),
+(2, 'test', 'gggggg', '2017-04-02 00:00:00', '2017-04-03 00:00:00', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -101,7 +151,15 @@ CREATE TABLE IF NOT EXISTS `ServiceStatus` (
   PRIMARY KEY (`id`),
   KEY `service_id` (`service_id`),
   KEY `status_id` (`status_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Contenu de la table `ServiceStatus`
+--
+
+INSERT INTO `ServiceStatus` (`id`, `service_id`, `status_id`) VALUES
+(1, 1, 1),
+(2, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -132,14 +190,21 @@ CREATE TABLE IF NOT EXISTS `Subject` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
 -- Contenu de la table `Subject`
 --
 
 INSERT INTO `Subject` (`id`, `name`) VALUES
-(1, 'Test');
+(2, 'Santé'),
+(3, 'Aide à domicile'),
+(6, 'Emploi'),
+(7, 'azerfgr'),
+(9, ''),
+(10, ''),
+(11, 'sujet 2'),
+(12, 'sfdgbgfd');
 
 -- --------------------------------------------------------
 
@@ -151,16 +216,26 @@ CREATE TABLE IF NOT EXISTS `User` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `lastname` varchar(30) CHARACTER SET utf8 NOT NULL,
   `firstname` varchar(30) CHARACTER SET utf8 NOT NULL,
-  `password` varchar(16) CHARACTER SET utf8 NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `username` varchar(64) NOT NULL,
+  `isadmin` int(1) NOT NULL DEFAULT '0',
+  `isbanned` int(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=38 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=78 ;
 
 --
 -- Contenu de la table `User`
 --
 
-INSERT INTO `User` (`id`, `lastname`, `firstname`, `password`) VALUES
-(37, 'Teneur', 'Clovis', 'Test');
+INSERT INTO `User` (`id`, `lastname`, `firstname`, `password`, `username`, `isadmin`, `isbanned`) VALUES
+(37, 'Teneur', 'Clovis', 'Test', '', 0, 0),
+(50, 'riou', 'max', '$2y$10$.rkB02E2QY9YbLNBQqXPuuaFAPQUEu5TMLN4ik5ou8bTM7b4DO9Iu', 'max.riou', 0, 1),
+(51, 'root', 'root', '$2y$10$A1f8EHKqGnWhhhhYRG8x9.bH07WzBSAX5ccq3A0GOYTz5L1HQ.fWC', 'root.root', 1, 0),
+(52, 'name', 'user3', '$2y$10$lKbCp4R31.nQzOdSUgRycuQdWuvpk2e6ALLK4LLdoFXcwVVo90zMm', 'user3.name', 0, 1),
+(53, 'name', 'user4', '$2y$10$.nIehQiEi5CQE5bc3j0e..oq0IWKzrDvLEkEQ1/6ae2bpmg5v3kR2', 'user4.name', 0, 1),
+(54, 'name', 'user5', '$2y$10$lyUSiuS1gTGCzuHX3Wc3R.LOdNf4RIkb7JVFpMN72pW61TmL73bQi', 'user5.name', 0, 1),
+(56, 'riit', 'riit', '$2y$10$hp6sr6syK9zdVvjpdFsi3eB4JNvqqkY6xmWC6Warz.ue1onGS8.EO', 'riit.riit', 0, 0),
+(77, 'maxence', 'riou', '$2y$10$A1f8EHKqGnWhhhhYRG8x9.bH07WzBSAX5ccq3A0GOYTz5L1HQ.fWC', 'riou.maxence', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -190,14 +265,15 @@ CREATE TABLE IF NOT EXISTS `UserStatus` (
   PRIMARY KEY (`id`),
   KEY `statut_id` (`status_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Contenu de la table `UserStatus`
 --
 
 INSERT INTO `UserStatus` (`id`, `user_id`, `status_id`) VALUES
-(1, 37, 1);
+(1, 37, 1),
+(2, 56, 1);
 
 --
 -- Contraintes pour les tables exportées
