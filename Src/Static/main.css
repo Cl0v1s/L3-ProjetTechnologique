@@ -288,6 +288,57 @@ div.Login {
   div.Login form {
     margin-top: 15px; }
 
+div.Service h2 {
+  color: #16A6B6;
+  margin-bottom: 15px; }
+
+div.Service p {
+  white-space: normal;
+  word-break: break-all; }
+
+div.Service span:nth-of-type(2n) {
+  color: #843A53; }
+
+div.Service span:nth-of-type(2n+1) {
+  color: #208BC9; }
+
+div.Service span:nth-of-type(2n+2) {
+  color: #6D9D60; }
+
+div.Service span:nth-of-type(2n+3) {
+  color: #16A6B6; }
+
+div.Service span:nth-of-type(2n+4) {
+  color: #EF7009; }
+
+div.Service button {
+  display: block;
+  width: 100px;
+  margin: auto; }
+
+div.Services {
+  height: auto; }
+  div.Services h2 {
+    color: #EF7009;
+    margin-bottom: 15px; }
+  div.Services button {
+    display: block;
+    width: 100px;
+    margin: auto;
+    margin-top: 15px;
+    margin-bottom: 15px; }
+  div.Services div {
+    background-color: #16A6B6;
+    color: #F6F7F0;
+    border-radius: 2px;
+    margin: 5px;
+    padding: 15px; }
+    div.Services div a {
+      color: #F6F7F0;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: bold; }
+
 * {
   margin: 0;
   padding: 0;

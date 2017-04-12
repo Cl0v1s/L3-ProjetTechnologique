@@ -6,14 +6,14 @@
 {{/user}}
 <br/>
 
-<h1 class='titre'>CrÃ©er un service</h1>
+<h1 class='titre'>Créer un service</h1>
 
 <form action="/Service?action=addService" method="POST">
   Nom :<br>
   <input type="text" name="name"><br>
   Description :<br>
   <input type="text" name="description"><br>
-  <span>CatÃ©gorie:</span><br>
+  <span>Catégorie:</span><br>
         <select name="category">
             {{#categorys}}
             <option value="{{id}}">{{name}}</option>
@@ -22,14 +22,14 @@
   <br>
   <span> Status :</span> <br>
       {{#statuss}}
-        <input type="checkbox" name="{{name}}" value="{{id}}"> {{name}}
+            <input type="checkbox" name="Statut_{{id}}" value="{{id}}"> {{name}}
       {{/statuss}}  
   <br>             
-  Date dÃ©but :<br>
+  Date début :<br>
   <input type="date" name="date_start"><br>
   Date fin :<br>
   <input type="date" name="date_end"><br>
-  <input type="submit" value="CrÃ©er"><br>
+  <input type="submit" value="Créer"><br>
 </form>
 
 <a href="/Default"><button type="button">Retour</button></a>

@@ -1,0 +1,49 @@
+div.Service
+{
+  h2
+  {
+    color: nth($colors-secondary, 4);
+    margin-bottom: 15px;
+  }
+
+  p
+  {
+    white-space: normal;
+    word-break: break-all;
+  }
+
+  span
+  {
+    &:nth-of-type(2n)
+    {
+      color: nth($colors-secondary, 1);
+    }
+
+    &:nth-of-type(2n+1)
+    {
+      color: nth($colors-secondary, 2);
+    }
+
+    &:nth-of-type(2n+2)
+    {
+      color: nth($colors-secondary, 3);
+    }
+
+    &:nth-of-type(2n+3)
+    {
+      color: nth($colors-secondary, 4);
+    }
+
+    &:nth-of-type(2n+4)
+    {
+      color: nth($colors-secondary, 5);
+    }
+  }
+
+  button
+  {
+    display: block;
+    width: 100px;
+    margin: auto;
+  }
+}

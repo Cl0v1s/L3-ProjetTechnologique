@@ -257,8 +257,6 @@ class ServiceController extends Controller
             $date_start_string = $_POST["date_start"];
         if(isset($_POST["date_end"]))
             $date_end_string = $_POST["date_end"];
-        if(isset($_POST["handicape"]))
-            $handicape_id = $_POST["handicape"];
 
         echo  $date_start_string;
         $date_start = new DateTime();
@@ -276,6 +274,21 @@ class ServiceController extends Controller
         $service->setDateEnd($date_end);
         $storage->persist($service);
         $storage->flush();
+
+        $status = null;
+        $storage->findAll("Status", $status);
+        foreach ($status as $statut)
+        {
+            if(isset($_POST["Statut_".$statut->Id()]))
+            {
+                $link = new ServiceStatus($storage);
+                $link->setServiceId($service->Id());
+                $link->setStatusId($statut->Id());
+                $storage->persist($link);
+            }
+        }
+        $storage->flush();
+
         header('Location: /Default');
    }  
 

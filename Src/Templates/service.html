@@ -7,13 +7,13 @@
 
 <div class="Content">
 
-	<div class="Services">
+	<div class="Service">
 		{{=user}}
 			{{#service}}
-				<p>Nom: {{name}}</p>
-				<p>Description: {{description}}</p>
-				<p>A débuté le: {{date_s}}</p>
-				<p>Se termine le: {{date_e}}</p>
+		<h2>Service: {{name}}</h2>
+		<p><span>Description:</span> {{description}}</p>
+		<p><span>A débuté le:</span> {{date_s}}</p>
+		<p><span>Se termine le:</span> {{date_e}}</p>
 				{{=is_registred}}
 					<a href="/Service?action=registerService&serviceId={{id}}"><button type="button">Inscrire</button></a>
 				{{/is_registred}}
@@ -26,10 +26,10 @@
 		
 		{{=admin}}
 			{{#service}}
-				<p>Nom: {{name}}</p>
-				<p>Description: {{description}}</p>
-				<p>A débuté le: {{date_s}}</p>
-				<p>Se termine le: {{date_e}}</p>
+		<h2>Service: {{name}}</h2>
+		<p><span>Description:</span> {{description}}</p>
+		<p><span>A débuté le:</span> {{date_s}}</p>
+		<p><span>Se termine le:</span> {{date_e}}</p>
 				<a href="/Service?action=updateService&serviceId={{id}}"><button type="button">Modifier</button></a>
 				<a href="/Service?action=deleteService&serviceId={{id}}"><button type="button">Supprimer</button></a>
 				<a href="/Service?action=displayUsers&serviceId={{id}}"><button type="button">Users inscrit</button></a>
