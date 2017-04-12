@@ -19,6 +19,9 @@
 				</div>
 				<p>{{content}}</p>
 				<p><a class="report" href="/Question?action=reportQuestion&subjectId={{subject_id}}&questionId={{question_id}}">Reporter</a></p>
+				{{=admin}}
+				<p><a class="report" href="/Admin?action=validateQuestion&subjectId={{subject_id}}&questionId={{question_id}}">Valider</a></p>
+				{{/admin}}
 			{{/questions}}
 		</div>
 
@@ -30,6 +33,9 @@
 					<span>{{datee}}</span>
 					<p>{{content}}</p>
 						<p><a class="report" href="/Question?action=reportResponse&subjectId={{subject_id}}&questionId={{question_id}}&responseId={{id}}">Reporter</a></p>
+					{{=admin}}
+					<p><a class="report" href="/Admin?action=validateResponse&subjectId={{subject_id}}&questionId={{question_id}}&responseId={{response_id}}">Valider</a></p>
+					{{/admin}}
 				</div>
 			{{/responses}}
 			<form action="/Question?action=createResponse&questionId={{question_id}}" method="POST">

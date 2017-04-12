@@ -38,6 +38,10 @@ class AdminController extends Controller
                     return $this->displayBanUser();
                 case 'banUser':
                     return $this->banUser();
+                case 'validateQuestion':
+                    return $this->validateQuestion();
+                case 'validateResponse':
+                    return $this->validateResponse();
             }
         }
     }
@@ -261,11 +265,38 @@ class AdminController extends Controller
         header('Location : /Admin&info=UserBanned');
     }
 
-        public function validateQuestion(){
-            
+    public function validateQuestion(){
+        $data = Utils::SessionVariables();
+        if(isset($_GET['questionId']) && isset($_GET['subjectId'])){
+            $subject_id =  $_GET['subjectId'];
+            $question_id = $_GET['questionId'];
+            $storage = Engine::Instance()->Persistence("DatabaseStorage");
+            $question = new Question($storage, $question_id);
+            $question = $storage->find($question);
+            $question->setReported(2);
+            $storage->persist($question, $state = StorageState::ToUpdate);
+            $storage->flush();
+            header('Location: /Question?action=displayQuestionContent&subjectId='.$subject_id.'&questionId='.$question_id.'&info=QuestionValidated');
+        }else{
+            header('Location: /Question?action=displayQuestionContent&subjectId='.$subject_id.'&questionId='.$question_id.'&info=NULL');
         }
+    }
 
-        public function validateResponse(){
-
+    public function validateResponse(){
+        $data = Utils::SessionVariables();
+        if(isset($_GET['responseId']) && isset($_GET['questionId']) && isset($_GET['subjectId'])){
+            $subject_id =  $_GET['subjectId'];
+            $question_id = $_GET['questionId'];
+            $response_id = $_GET['responseId'];
+            $storage = Engine::Instance()->Persistence("DatabaseStorage");
+            $response = new Response($storage, $response_id);
+            $response = $storage->find($response);
+            $response->setReported(2);
+            $storage->persist($response, $state = StorageState::ToUpdate);
+            $storage->flush();
+            header('Location: /Question?action=displayQuestionContent&subjectId='.$subject_id.'&questionId='.$question_id.'&info=ResponseValidated');
+        }else{
+            header('Location: /Question?action=displayQuestionContent&subjectId='.$subject_id.'&questionId='.$question_id.'&info=NULL');
         }
+    }
 }
