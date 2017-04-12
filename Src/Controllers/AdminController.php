@@ -49,7 +49,7 @@ class AdminController extends Controller
     public function displayAdmin(){
         $data = Utils::SessionVariables();
         $questions = NULL;
-        $condition = "reported = 1";
+        $condition = "reported = '1'";
         $storage = Engine::Instance()->Persistence("DatabaseStorage");
         $storage->findAll("Question",$questions,$condition);
         $data["questions"] = array();
@@ -62,22 +62,19 @@ class AdminController extends Controller
         }
 
         $responses = NULL;
-        $condition = "reported = 1";
+        $condition = "reported = '1'";
         $storage->findAll("Response",$responses,$condition);
         $data["responses"] = array();
         foreach ($responses as $response) {
-            $responsevalues = get_object_vars($response);
-            $question = new Question($storage);
-            $question = $response->Question();
-            $subject = new Subject($storage);
-            $subject = $question->Subject();
-            $responsevalues["question_id"] = $question->Id();
-            $responsevalues["subject_id"] = $subject->Id();
-            array_push($data["responses"],$responsevalues);
+            $vars = get_object_vars($response);
+            $question = new Question($storage, $response->QuestionId());
+            $question = $storage->find($question);
+            $vars["subject_id"] = $question->SubjectId();
+            array_push($data["responses"],$vars);
         }
 
         $services = Null;
-        $condition = "reported = 1";
+        $condition = "reported = '1'";
         $storage->findAll("Service",$services,$condition);
         $data["services"] = array();
         foreach($services as $service)
