@@ -9,7 +9,7 @@
 
     <h1 class='titre'>Modifier le service: {{service_name}}</h1>
 
-    <form action="/Service?action=updateInfoService" method="POST">
+    <form action="/Service?action=updateInfoService&serviceId={{service_id}}" method="POST">
       Nom :<br>
       <input type="text" name="name" value="{{service_name}}"><br>
       Description :<br>

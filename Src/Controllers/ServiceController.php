@@ -257,7 +257,28 @@ class ServiceController extends Controller
             $service_id = $_GET['serviceId'];
             $storage = Engine::Instance()->Persistence("DatabaseStorage");
             $service = new Service($storage, $service_id);
-            $storage->remove($service);
+            $service= $storage->find($service);
+            $name=$_POST['name'];
+            $description=$_POST['description'];
+            $date_end_string=$_POST['date_end'];
+            $date_end = new DateTime();
+            $date_end = date_create_from_format('Y-m-d', $date_end_string);
+            $service->setName($name);
+            $service->setDescription($description);
+            $service->setDateEnd($date_end);
+            $storage->persist($service, $state= StorageState::ToUpdate);
+            $status = null;
+            $storage->findAll("Status", $status);
+            foreach ($status as $statut)
+            {
+                if(isset($_POST["Statut_".$statut->Id()]))
+                {
+                    $link = new ServiceStatus($storage);
+                    $link->setServiceId($service->Id());
+                    $link->setStatusId($statut->Id());
+                    $storage->persist($link);
+                }
+            }
             $storage->flush();
             header('Location: /Service?action=displayService&serviceId='.$service_id);
         }else{
@@ -298,10 +319,8 @@ class ServiceController extends Controller
         if(isset($_POST["date_end"]))
             $date_end_string = $_POST["date_end"];
 
-        echo  $date_start_string;
         $date_start = new DateTime();
         $date_start = date_create_from_format('Y-m-d', $date_start_string);
-        echo  $date_end_string;
         $date_end = new DateTime();
         $date_end = date_create_from_format('Y-m-d', $date_end_string);
 
@@ -330,7 +349,7 @@ class ServiceController extends Controller
         }
         $storage->flush();
 
-        header('Location: /Default');
+        header('Location: /Service?action=displayAllServices');
    }  
 
    public function displayUsers(){
