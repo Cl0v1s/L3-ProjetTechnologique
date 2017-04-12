@@ -201,12 +201,27 @@ class ServiceController extends Controller
    public function updateService(){
 
         $service_id = $_GET['serviceId'];
+        $status_id=NULL;
         $storage = Engine::Instance()->Persistence("DatabaseStorage");
         $service = new Service($storage, $service_id);
+        $service = $storage->find($service);
+        $condition = "service_id = ".$service_id;
+        $storage->findAll("ServiceStatus",$status_id,$condition);
         $data=array();
         $data = Utils::SessionVariables();
-        $data["service"]=array();
-        array_push($data["service"],get_object_vars($service));
+        $data["statuss"] = array();
+        foreach ($status_id as $entry) {
+            $status=$entry->Status();
+            array_push($data["statuss"],get_object_vars($status));
+        }
+
+        $data["service_name"] = $service->Name();
+        $data["service_id"] = $service->Id();
+        $data["service_description"] = $service->Description();
+        $data["service_date_start"] = $service->DateStart()->format('d/m/Y');;
+        $data["service_category_id"] = $service->CategoryId();
+        $data["service_date_end"] = $service->DateEnd()->format('d/m/Y');;
+
         $view = new View("updateService",$data);
         $view->setTitle("updateService");
         $view->show();
@@ -306,4 +321,4 @@ class ServiceController extends Controller
 
    }   
 
-}
+}        $st = array();        $st = array();        $st = array();
