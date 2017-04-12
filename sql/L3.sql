@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Mer 12 Avril 2017 à 19:19
+-- Généré le: Mer 12 Avril 2017 à 19:24
 -- Version du serveur: 5.5.54-0ubuntu0.14.04.1
 -- Version de PHP: 5.5.9-1ubuntu4.21
 
@@ -129,8 +129,8 @@ CREATE TABLE IF NOT EXISTS `Service` (
   `user_id` int(10) NOT NULL,
   `name` varchar(30) CHARACTER SET utf8 NOT NULL,
   `description` text CHARACTER SET utf8 NOT NULL,
-  `date_start` datetime NOT NULL,
-  `date_end` datetime NOT NULL,
+  `date_start` int(20) NOT NULL,
+  `date_end` int(20) NOT NULL,
   `reported` int(10) NOT NULL,
   `category_id` int(10) NOT NULL,
   PRIMARY KEY (`id`),
@@ -145,8 +145,8 @@ CREATE TABLE IF NOT EXISTS `Service` (
 --
 
 INSERT INTO `Service` (`id`, `user_id`, `name`, `description`, `date_start`, `date_end`, `reported`, `category_id`) VALUES
-(1, 0, 'aide de domicile', 'hahahahahha', '2017-03-08 00:00:00', '2017-03-23 00:00:00', 0, 1),
-(2, 0, 'test', 'gggggg', '2017-04-02 00:00:00', '2017-04-03 00:00:00', 0, 1);
+(1, 0, 'aide de domicile', 'hahahahahha', 2017, 2017, 0, 1),
+(2, 0, 'test', 'gggggg', 2017, 2017, 0, 1);
 
 -- --------------------------------------------------------
 
