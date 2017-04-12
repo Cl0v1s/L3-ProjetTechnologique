@@ -61,13 +61,39 @@ class AdminController extends Controller
         $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Response",$responses,$condition);
         $data["responses"] = array();
         foreach ($responses as $response) {
-            /*$subject_id = $response->
-            $user = $storage->find($user);
             $responsevalues = get_object_vars($response);
-            $responsevalues["username"] = $user->Firstname().$user->Lastname();*/
-            array_push($data["responses"],get_object_vars($response));
+            $question = new Question($storage);
+            $question = $response->Question();
+            $subject = new Subject($storage);
+            $subject = $question->Subject();
+            $responsevalues["question_id"] = $question->Id();
+            $responsevalues["subject_id"] = $subject->Id();
+            array_push($data["responses"],$responsevalues);
+        }
+        $info = $_GET["info"];
+        if($info === "NULL"){
+            $info = "";
+        }
+        if($info === "SubjectCreated"){
+            $info = "Le sujet a bien été créé.";
+        }
+        if($info === "ErrorCreationSubject"){
+            $info = "Erreur création : nom de sujet invalide.";
+        }
+        if($info === "SubjectDeleted"){
+            $info = "Le sujet a bien été supprimé.";
+        }
+        if($info === "QuestionDeleted"){
+            $info = "La question a bien été supprimée.";
+        }
+        if($info === "ResponseDeleted"){
+            $info = "La réponse a bien été supprimée.";
+        }
+        if($info === "UserBanned"){
+            $info = "L'utilisateur a bien été banni.";
         }
 
+        $data["info"] = $info;
         $view = new View("admin",$data);
         $view->setTitle("admin");
         $view->show();
@@ -82,15 +108,19 @@ class AdminController extends Controller
 
     public function createSubject(){
         if(isset($_POST['name'])){
-            $name = $_POST['name'];
-            $storage = Engine::Instance()->Persistence("DatabaseStorage");
-            $subject = new Subject($storage);
-            $subject->SetName($name);
-            $storage->persist($subject);
-            $storage->flush();
-            header('Location: /Admin');
+                $name = $_POST['name'];
+            if($name !== ""){
+                $storage = Engine::Instance()->Persistence("DatabaseStorage");
+                $subject = new Subject($storage);
+                $subject->SetName($name);
+                $storage->persist($subject);
+                $storage->flush();
+                header('Location: /Admin&info=SubjectCreated');
+            }else{
+                header('Location: /Admin&info=ErrorCreationSubject');
+            }
         }else{
-            header('Location: /Admin');
+            header('Location: /Admin&info=ErrorCreationSubject');
         }
     }
 
@@ -115,9 +145,9 @@ class AdminController extends Controller
             $subject = $storage->find($subject);
             $storage->remove($subject);
             $storage->flush();
-            header('Location: /Admin');
+            header('Location: /Admin&info=SubjectDeleted');
         }else{
-            header('Location: /Admin');
+            header('Location: /Admin&info=NULL');
         }
     }
 
@@ -142,9 +172,9 @@ class AdminController extends Controller
             $subject = $storage->find($question);
             $storage->remove($question);
             $storage->flush();
-            header('Location: /Admin');
+            header('Location: /Admin&info=QuestionDeleted');
         }else{
-            header('Location: /Admin');
+            header('Location: /Admin&info=NULL');
         }
     }
 
@@ -153,7 +183,6 @@ class AdminController extends Controller
         $subject_id = $_GET['subjectId'];
         $question_id = $_GET['questionId'];
         $response_id = $_GET['responseId'];
-
         $subjects = NULL;
         $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Subject",$subjects);
         $data["subjects"] = array();
@@ -193,9 +222,9 @@ class AdminController extends Controller
             $question = $storage->find($response);
             $storage->remove($response);
             $storage->flush();
-            header('Location: /Admin');
+            header('Location: /Admin&info=ResponseDeleted');
         }else{
-            header('Location: /Admin');
+            header('Location: /Admin&info=NULL');
         }
     }
 
@@ -219,7 +248,7 @@ class AdminController extends Controller
         $user_id = $_GET['userId'];
         $storage = Engine::Instance()->Persistence("DatabaseStorage");
         $user = new User($storage, $user_id);
-        $user = $storage->find($user);
+        $user = $sotrage->find($user);
         $user->setIsbanned(1);
         $storage->persist($user, $state = StorageState::ToUpdate);
         $storage->flush();
@@ -229,6 +258,14 @@ class AdminController extends Controller
         foreach ($users as $user) {
             array_push($data["users"],get_object_vars($user));
         }
-        header('Location : /Admin?action=displayBanUser');
+        header('Location : /Admin&info=UserBanned');
     }
+
+        public function validateQuestion(){
+            
+        }
+
+        public function validateResponse(){
+
+        }
 }
