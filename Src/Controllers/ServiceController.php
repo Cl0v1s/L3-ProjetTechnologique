@@ -261,8 +261,7 @@ class ServiceController extends Controller
             $name=$_POST['name'];
             $description=$_POST['description'];
             $date_end_string=$_POST['date_end'];
-            $date_end = new DateTime();
-            $date_end = date_create_from_format('Y-m-d', $date_end_string);
+            $date_end = date_create_from_format('d/m/Y', $date_end_string);
             $service->setName($name);
             $service->setDescription($description);
             $service->setDateEnd($date_end);
