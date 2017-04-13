@@ -1,0 +1,35 @@
+{{=admin}}
+	{{@headerAdmin}}
+{{/admin}}
+{{=user}}
+	{{@headerUser}}
+{{/user}}
+<div class="Content">
+	<div class="Register">
+		<h1>Administrer les utilisateurs</h1>
+		<table>
+			<tbody>
+			{{#users}}
+			<tr>
+				<td>
+					{{username}}
+					<a class="delete" href="/Admin?action=banUser&userId={{id}}">Bannir</a>
+					<a class="ok" href="/Admin?action=changeRightsUser&userId={{id}}">
+						{{=is_admin}}
+						Supprimer les droits administrateur
+						{{/is_admin}}
+						{{=is_user}}
+						Ajouter les droits administrateur
+						{{/is_user}}
+					</a>
+				</td>
+			</tr>
+			{{/users}}
+			</tbody>
+		</table>
+
+	</div>
+</div>
+
+
+

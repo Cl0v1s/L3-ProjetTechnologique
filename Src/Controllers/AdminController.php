@@ -34,8 +34,8 @@ class AdminController extends Controller
                     return $this->displayDeleteResponse();
                 case 'deleteResponse':
                     return $this->deleteResponse();
-                case 'displayBanUser':
-                    return $this->displayBanUser();
+                case 'displayUsers':
+                    return $this->displayUsers();
                 case 'banUser':
                     return $this->banUser();
                 case 'validateQuestion':
@@ -50,9 +50,35 @@ class AdminController extends Controller
                     return $this->deleteStatut();
                 case 'displayDeleteStatut':
                     return $this->displayDeleteStatut();
+                case 'changeRightsUser':
+                    return $this->changeRightsUser();
 
             }
         }
+    }
+
+    public function changeRightsUser()
+    {
+
+        if(isset($_GET["userId"]) == false)
+        {
+            header("Location: /Admin?info=Null");
+            return;
+        }
+        $storage = Engine::Instance()->Persistence("DatabaseStorage");
+        $user = new User($storage, $_GET["userId"]);
+        $user = $storage->find($user);
+        echo "VAL: ".intval($user->isadmin);
+        if(intval($user->isadmin) == 1)
+        {
+            $user->setIsAdmin("0");
+        }
+        else {
+            $user->setIsAdmin("1");
+        }
+        $storage->persist($user, $state = StorageState::ToUpdate);
+        $storage->flush();
+        header("Location: /Admin?info=UserRightsChanged");
     }
 
     public function deleteStatut()
@@ -160,6 +186,9 @@ class AdminController extends Controller
         }
         if($info === "SubjectCreated"){
             $info = "Le sujet a bien été créé.";
+        }
+        if($info === "UserRightsChanged"){
+            $info = "Les droits de l'utilisateur ont bien été changés.";
         }
         if($info === "StatutCreated"){
             $info = "Le statut a bien été créé.";
@@ -325,17 +354,26 @@ class AdminController extends Controller
         }
     }
 
-    public function displayBanUser(){
+    public function displayUsers(){
         $data = Utils::SessionVariables();
         $users = NULL;
         $condition = "isbanned = 0";
-        $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("User",$users,$condition);
+        $storage = Engine::Instance()->Persistence("DatabaseStorage");
+        $storage->findAll("User",$users,$condition);
         $data["users"] = array();
         foreach ($users as $user) {
-            array_push($data["users"],get_object_vars($user));
+            $vars = get_object_vars($user);
+            $vars["is_admin"] = false;
+            $vars["is_user"] = true;
+            if($vars["isadmin"] == 1)
+            {
+                $vars["is_admin"] = true;
+                $vars["is_user"] = false;
+            }
+            array_push($data["users"], $vars);
         }
-        $view = new View("banuser",$data);
-        $view->setTitle("banuser");
+        $view = new View("manageUsers",$data);
+        $view->setTitle("Administrer les utilisateurs");
         $view->show();
 
     }
@@ -345,17 +383,11 @@ class AdminController extends Controller
         $user_id = $_GET['userId'];
         $storage = Engine::Instance()->Persistence("DatabaseStorage");
         $user = new User($storage, $user_id);
-        $user = $sotrage->find($user);
+        $user = $storage->find($user);
         $user->setIsbanned(1);
         $storage->persist($user, $state = StorageState::ToUpdate);
         $storage->flush();
-        $users = NULL;
-        $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("User",$users,NULL);
-        $data["users"] = array();
-        foreach ($users as $user) {
-            array_push($data["users"],get_object_vars($user));
-        }
-        header('Location : /Admin&info=UserBanned');
+        header('Location: /Admin&info=UserBanned');
     }
 
     public function validateQuestion(){

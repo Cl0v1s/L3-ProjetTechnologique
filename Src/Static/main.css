@@ -486,6 +486,9 @@ a.delete {
 td a.delete {
   float: right; }
 
+td a.ok {
+  float: right; }
+
 table thead td {
   color: #F6F7F0;
   font-size: 25px;

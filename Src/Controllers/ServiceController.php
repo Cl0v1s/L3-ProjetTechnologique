@@ -265,7 +265,7 @@ class ServiceController extends Controller
             $service->setName($name);
             $service->setDescription($description);
             $service->setDateEnd($date_end);
-            $storage->persist($service, $state= StorageState::ToUpdate);
+            $storage->persist($service, StorageState::ToUpdate);
             $status = null;
             $storage->findAll("Status", $status);
             foreach ($status as $statut)
@@ -281,7 +281,7 @@ class ServiceController extends Controller
             $storage->flush();
             header('Location: /Service?action=displayService&serviceId='.$service_id);
         }else{
-            header('Location: /Service?action=displayService&serviceId='.$service_id);
+            header('Location: /Default');
         } 
    }
 
