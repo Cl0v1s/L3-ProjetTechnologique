@@ -8,12 +8,13 @@
   <div class="Register">
     <h1>Modifier le service: {{service_name}}</h1>
 
+    <span class="error">{{info}}</span>
 
     <form action="/Service?action=updateInfoService&serviceId={{service_id}}" method="POST">
       <span>Nom</span>:<br>
       <input type="text" name="name" value="{{service_name}}"><br>
       <span>Description</span>:<br>
-      <textarea name="description" value="{{service_description}}" rows="10" cols="50"> </textarea><br>
+      <textarea name="description">{{service_description}}</textarea><br>
         <span>Catégorie</span>:<br>
           {{service_category_id}}<br>
         <span>Status actuels</span>:<br>

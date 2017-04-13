@@ -181,13 +181,13 @@ div.Question div.reponses {
     margin: 15px;
     padding: 5px; }
     div.Question div.reponses div.reponse a.report {
-      background: url("/Static/Images/report_black.svg");
+      background-image: url("/Static/Images/report_black.svg");
       color: #3E3939; }
     div.Question div.reponses div.reponse a.ok {
-      background: url("/Static/Images/validate_black.svg");
+      background-image: url("/Static/Images/validate_black.svg");
       color: #3E3939; }
     div.Question div.reponses div.reponse a.delete {
-      background: url("/Static/Images/delete_black.svg");
+      background-image: url("/Static/Images/delete_black.svg");
       color: #3E3939; }
     div.Question div.reponses div.reponse span {
       font-weight: 500; }
@@ -488,6 +488,11 @@ td a.delete {
 
 td a.ok {
   float: right; }
+
+textarea {
+  width: 90%;
+  min-height: 200px;
+  resize: none; }
 
 table thead td {
   color: #F6F7F0;

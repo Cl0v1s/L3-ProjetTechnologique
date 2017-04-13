@@ -67,12 +67,12 @@ class ServiceController extends Controller
             $condition = "user_id = ".$user_id; 
             $Status = NULL;
             $storage->findAll("UserStatus",$Status,$condition);
+            $data["services"] = array();
             foreach ($Status as $status) {
                 $services_id=NULL;
                 $status_id=$status->StatusId();
                 $condition = "status_id = ".$status_id;
                 $storage->findAll("ServiceStatus",$services_id,$condition);
-                $data["services"] = array();
                 foreach ($services_id as $service_id){
                     $service=$service_id->Service();
                     $date_e = $service->DateEnd();
@@ -86,7 +86,7 @@ class ServiceController extends Controller
             }
 
             $view = new View("services", $data);
-            $view->setTitle("services");
+            $view->setTitle("Services concernés");
             $view->show();
         }    
     }
@@ -126,7 +126,7 @@ class ServiceController extends Controller
 
         array_push($data["service"],$service);
 
-        // ajout du fait que l'user qui a crÃ©Ã© le service a les droits d'administration dessus
+        // ajout du fait que l'user qui a cr?? le service a les droits d'administration dessus
         if($obj->UserId() == $_SESSION["User"])
         {
             $data["admin"] = true;
@@ -135,7 +135,7 @@ class ServiceController extends Controller
 
 
         $view = new View("service", $data);
-        $view->setTitle("service");
+        $view->setTitle("Détails Service");
         $view->show();
          
     }
@@ -189,7 +189,7 @@ class ServiceController extends Controller
         }
 
         $view = new View("services", $data);
-        $view->setTitle("services");
+        $view->setTitle("Tout les services");
         $view->show();
     }
 
@@ -207,6 +207,9 @@ class ServiceController extends Controller
    }
    public function updateService(){
 
+       $info = "";
+       if(isset($_GET["info"]))
+           $info = $_GET["info"];
         $service_id = $_GET['serviceId'];
         $servicestatus=NULL;
         $storage = Engine::Instance()->Persistence("DatabaseStorage");
@@ -247,13 +250,29 @@ class ServiceController extends Controller
         $data["service_category_id"] = $category->Name();
 
         $data["service_date_end"] = $service->DateEnd()->format('d/m/Y');;
+        $data["info"] = $info;
         $view = new View("updateService",$data);
-        $view->setTitle("updateService");
+        $view->setTitle("Modifier un service");
         $view->show();
    }
 
    public function updateInfoService(){
         if(isset($_GET['serviceId'])){
+            if(isset($_POST["name"]) == false || isset($_POST["description"]) == false  || isset($_POST["date_end"]) == false)
+            {
+                $str = urlencode("Au moins un des champs est vide.");
+                header("Location: /Service?action=updateService&serviceId=".$_GET['serviceId']."&info=".$str);
+                return;
+            }
+
+            $ddend = explode("/", $_POST['date_end']);
+            if(count($ddend) != 3 || strlen($ddend[0]) != 2 || strlen($ddend[1]) != 2 || strlen($ddend[2]) != 4)
+            {
+                $str = urlencode("Le format de la date de fin est incorrect.");
+                header("Location: /Service?action=updateService&serviceId=".$_GET['serviceId']."&info=".$str);
+                return;
+            }
+
             $service_id = $_GET['serviceId'];
             $storage = Engine::Instance()->Persistence("DatabaseStorage");
             $service = new Service($storage, $service_id);
@@ -286,7 +305,10 @@ class ServiceController extends Controller
    }
 
    public function newService(){
-    
+        $info = "";
+        if(isset($_GET["info"]))
+            $info = $_GET["info"];
+
         $categorys = NULL;
         $statuss = NULL;
         $storage = Engine::Instance()->Persistence("DatabaseStorage")->findAll("Category",$categorys);
@@ -301,32 +323,65 @@ class ServiceController extends Controller
         foreach ($statuss as $entry) {
             array_push($data["statuss"],get_object_vars($entry));
         }
+        $data["info"] = $info;
         $view = new View("newService",$data);
-        $view->setTitle("newService");
+        $view->setTitle("Créer un serveur");
         $view->show();
     }
 
    public function addService(){
-        if(isset($_POST["name"]))
+       if(isset($_POST["name"]) == false || isset($_POST["description"]) == false || isset($_POST["category"]) == false || isset($_POST["date_start"]) == false || isset($_POST["date_end"]) == false)
+       {
+           $str = urlencode("Au moins un des champs est vide.");
+           header("Location: /Service?action=newService&info=".$str);
+           return;
+       }
             $name = $_POST["name"];
-        if(isset($_POST["description"]))
             $description = $_POST["description"];
-        if(isset($_POST["category"]))
             $category = $_POST["category"];
-        if(isset($_POST["date_start"]))
             $date_start_string = $_POST["date_start"];
-        if(isset($_POST["date_end"]))
             $date_end_string = $_POST["date_end"];
 
-        $date_start = new DateTime();
-        $date_start = date_create_from_format('Y-m-d', $date_start_string);
-        $date_end = new DateTime();
-        $date_end = date_create_from_format('Y-m-d', $date_end_string);
+       $ddend = explode("/", $date_start_string);
+       if(count($ddend) != 3 || strlen($ddend[0]) != 2 || strlen($ddend[1]) != 2 || strlen($ddend[2]) != 4)
+       {
+           $str = urlencode("Le format de la date de début est incorrect.");
+           header("Location: /Service?action=newService&info=".$str);
+           return;
+       }
+
+        $ddend = explode("/", $date_end_string);
+        if(count($ddend) != 3 || strlen($ddend[0]) != 2 || strlen($ddend[1]) != 2 || strlen($ddend[2]) != 4)
+        {
+            $str = urlencode("Le format de la date de fin est incorrect.");
+            header("Location: /Service?action=newService&info=".$str);
+            return;
+        }
+
+
+
+        $date_start = date_create_from_format('d/m/Y', $date_start_string);
+        $today = new DateTime();
+        if($date_start->getTimestamp() < $today->getTimestamp())
+        {
+            $str = urlencode("La date de début doit au moins être aujourd'hui.");
+            header("Location: /Service?action=newService&info=".$str);
+            return;
+        }
+
+        $date_end = date_create_from_format('d/m/Y', $date_end_string);
+
+       if($date_end->getTimestamp() < $today->getTimestamp() || $date_end->getTimestamp() < $date_start->getTimestamp())
+       {
+           $str = urlencode("La date de fin doit au moins être aujourd'hui et être supérieure à la date de début.");
+           header("Location: /Service?action=newService&info=".$str);
+           return;
+       }
 
         $storage = Engine::Instance()->Persistence("DatabaseStorage");
         $service = new Service($storage);
-        $service->setName($name);
-        $service->setDescription($description);
+        $service->setName(Utils::MakeTextSafe($name));
+        $service->setDescription(Utils::MakeTextSafe($description));
         $service->setCategoryId($category);
         $service->setDateStart($date_start);
         $service->setDateEnd($date_end);
@@ -347,9 +402,11 @@ class ServiceController extends Controller
             }
         }
         $storage->flush();
-
-        header('Location: /Service?action=displayAllServices');
-   }  
+        if($_SESSION["Admin"] == true)
+            header('Location: /Service?action=displayAllServices');
+        else
+            header('Location: /Service?action=displayServices');
+   }
 
    public function displayUsers(){
 

@@ -139,7 +139,7 @@ class QuestionController extends Controller
         $content = Utils::MakeTextSafe($content);
         $question = new Question($storage);
         $question->setSubjectId($subject_id);
-        $question->setTitle($title);
+        $question->setTitle(Utils::MakeTextSafe($title));
         $question->setContent($content);
         $question->setPoints($points);
         $question->setReported($reported);
@@ -194,7 +194,7 @@ class QuestionController extends Controller
             $user = new User($storage, $response->UserId());
             $user = $storage->find($user);
             $responsevalues = get_object_vars($response);
-            $responsevalues["username"] = $user->Firstname().$user->Lastname();
+            $responsevalues["username"] = $user->Username();
             $date = $response->Date();
             $date = $date->format('d/m/Y à H:i');
             $responsevalues["datee"] = $date;
