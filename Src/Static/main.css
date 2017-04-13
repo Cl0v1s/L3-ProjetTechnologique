@@ -135,17 +135,6 @@ div.Questions table {
   div.Questions table tbody td + td {
     background-color: #EF7009; }
 
-div.Question a.report {
-  background: url("/Static/Images/report.svg");
-  background-size: contain;
-  background-repeat: no-repeat;
-  display: inline-block;
-  height: 32px;
-  line-height: 32px;
-  vertical-align: middle;
-  padding-left: 32px;
-  color: white; }
-
 div.Question div.question {
   border-radius: 2px;
   background-color: #16A6B6;
@@ -193,13 +182,12 @@ div.Question div.reponses {
     padding: 5px; }
     div.Question div.reponses div.reponse a.report {
       background: url("/Static/Images/report_black.svg");
-      background-size: contain;
-      background-repeat: no-repeat;
-      display: inline-block;
-      height: 32px;
-      line-height: 32px;
-      vertical-align: middle;
-      padding-left: 32px;
+      color: #3E3939; }
+    div.Question div.reponses div.reponse a.ok {
+      background: url("/Static/Images/validate_black.svg");
+      color: #3E3939; }
+    div.Question div.reponses div.reponse a.delete {
+      background: url("/Static/Images/delete_black.svg");
       color: #3E3939; }
     div.Question div.reponses div.reponse span {
       font-weight: 500; }
@@ -351,10 +339,9 @@ div.Register h1 {
   margin-bottom: 15px; }
 
 div.Register span.error {
-  display: inline-block;
+  display: block;
   width: 100%;
-  text-align: center;
-  color: red !important; }
+  color: #F6F7F0 !important; }
 
 div.Register span {
   display: inline-block;
@@ -381,6 +368,7 @@ div.Register table tbody td {
   padding: 5px;
   line-height: 30px;
   box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.1);
+  color: #F6F7F0;
   background-color: #16A6B6;
   border-radius: 2px; }
 
@@ -446,6 +434,57 @@ button, input[type=button], input[type=submit] {
   background-color: #F6F7F0;
   border-radius: 2px;
   padding: 5px; }
+
+span.error {
+  display: block;
+  background-color: #EF7009;
+  padding: 5px;
+  width: 90%;
+  margin: auto;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
+  border-radius: 2px;
+  padding: 0px;
+  text-align: center;
+  color: #F6F7F0;
+  font-weight: bold; }
+
+a.ok {
+  background: url("/Static/Images/validate.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 32px;
+  line-height: 32px;
+  vertical-align: middle;
+  padding-left: 36px;
+  color: white; }
+
+a.report {
+  background: url("/Static/Images/report.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 32px;
+  line-height: 32px;
+  vertical-align: middle;
+  padding-left: 32px;
+  color: white; }
+
+a.delete {
+  background: url("/Static/Images/delete.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 32px;
+  line-height: 32px;
+  vertical-align: middle;
+  padding-left: 32px;
+  color: #F6F7F0; }
+
+td a.delete {
+  float: right; }
 
 table thead td {
   color: #F6F7F0;

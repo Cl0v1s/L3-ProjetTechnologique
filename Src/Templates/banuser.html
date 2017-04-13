@@ -4,20 +4,23 @@
 {{=user}}
 	{{@headerUser}}
 {{/user}}
-<br/>
-
-<h2> BANNIR UN UTILISATEUR </h2>
-
-<table>
-	<tr>
-		<td>
+<div class="Content">
+	<div class="Register">
+		<h1>Bannir un utilisateur</h1>
+		<table>
+			<tbody>
 			{{#users}}
-				<a href="/Admin?action=banUser&userId={{id}}">{{username}}</a>
-				<br/>
+			<tr>
+				<td>
+					{{username}} <a class="delete" href="/Admin?action=banUser&userId={{id}}">Bannir</a>
+				</td>
+			</tr>
 			{{/users}}
-		</td>
-	</tr>
-</table>
+			</tbody>
+		</table>
+
+	</div>
+</div>
 
 
-<a href="/Admin&info=NULL"><button type="button">Retour</button></a>
+

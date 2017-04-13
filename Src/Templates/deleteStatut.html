@@ -1,0 +1,25 @@
+{{=admin}}
+	{{@headerAdmin}}
+{{/admin}}
+{{=user}}
+	{{@headerUser}}
+{{/user}}
+<div class="Content">
+	<div class="Register">
+		<h1>Suppression de status</h1>
+		<table>
+			<tbody>
+				{{#status}}
+				<tr>
+					<td>
+						{{name}}<a class="delete" href="/Admin?action=deleteStatut&statutId={{id}}">supprimer</a>
+					</td>
+				</tr>
+				{{/status}}
+			</tbody>
+		</table>
+
+	</div>
+</div>
+
+

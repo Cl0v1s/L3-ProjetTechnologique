@@ -254,6 +254,10 @@ class QuestionController extends Controller
         if($info === "ResponseValidated"){
             $info = "La réponse a bien été validée.";
         }
+        if($info==="ResponseDeleted")
+        {
+            $info = "La réponse a bien été supprimée.";
+        }
         if($info === "NULL"){
             $info = "";
         }

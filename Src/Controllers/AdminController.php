@@ -42,8 +42,80 @@ class AdminController extends Controller
                     return $this->validateQuestion();
                 case 'validateResponse':
                     return $this->validateResponse();
+                case 'createStatut':
+                    return $this->createStatut();
+                case 'displayCreateStatut':
+                    return $this->displayCreateStatut();
+                case 'deleteStatut':
+                    return $this->deleteStatut();
+                case 'displayDeleteStatut':
+                    return $this->displayDeleteStatut();
+
             }
         }
+    }
+
+    public function deleteStatut()
+    {
+        if(isset($_GET["statutId"]) == false)
+        {
+            header("Location: /Admin?info=Null");
+            return;
+        }
+        $storage = Engine::Instance()->Persistence("DatabaseStorage");
+        $statut = new Status($storage, $_GET["statutId"]);
+        $storage->remove($statut);
+        $storage->flush();
+        header("Location: /Admin?info=StatutDeleted");
+    }
+
+
+    public function displayDeleteStatut()
+    {
+        $data = Utils::SessionVariables();
+        $storage = Engine::Instance()->Persistence("DatabaseStorage");
+        $status = Null;
+        $storage->findAll("Status", $status);
+        $data["status"] = array();
+        foreach ($status as $statut)
+        {
+            array_push($data["status"], get_object_vars($statut));
+        }
+        $view = new View("deleteStatut", $data);
+        $view->setTitle("Supprimer un statut");
+        $view->show();
+    }
+
+    public function createStatut()
+    {
+        if(isset($_POST["name"]) == false || strlen($_POST["name"]) <= 0)
+        {
+            header("Location: /Admin?action=displayCreateStatut&info=NameError");
+            return;
+        }
+        $storage = Engine::Instance()->Persistence("DatabaseStorage");
+        $statut = new Status($storage);
+        $statut->setName(Utils::MakeTextSafe($_POST["name"]));
+        $storage->persist($statut);
+        $storage->flush();
+        header('Location: /Admin?info=StatutCreated');
+    }
+
+    public function displayCreateStatut()
+    {
+        $info = "";
+        if(isset($_GET["info"]))
+        {
+            if($_GET["info"] === "NameError")
+            {
+                $info = "Nom invalide.";
+            }
+        }
+        $data = Utils::SessionVariables();
+        $data["info"] = $info;
+        $view = new View("createStatut", $data);
+        $view->setTitle("Créer un statut");
+        $view->show();
     }
     
     public function displayAdmin(){
@@ -89,11 +161,17 @@ class AdminController extends Controller
         if($info === "SubjectCreated"){
             $info = "Le sujet a bien été créé.";
         }
+        if($info === "StatutCreated"){
+            $info = "Le statut a bien été créé.";
+        }
         if($info === "ErrorCreationSubject"){
             $info = "Erreur création : nom de sujet invalide.";
         }
         if($info === "SubjectDeleted"){
             $info = "Le sujet a bien été supprimé.";
+        }
+        if($info === "StatutDeleted"){
+            $info = "Le statut a bien été supprimé.";
         }
         if($info === "QuestionDeleted"){
             $info = "La question a bien été supprimée.";
@@ -228,13 +306,20 @@ class AdminController extends Controller
 
     public function deleteResponse(){
         if(isset($_GET['responseId'])){
+            $id_question = Null;
+            $id_subject = Null;
+            $question = Null;
+
             $response_id = $_GET['responseId'];
             $storage = Engine::Instance()->Persistence("DatabaseStorage");
             $response = new Response($storage, $response_id);
-            $question = $storage->find($response);
+            $response = $storage->find($response);
+            $id_question = $response->QuestionId();
+            $question = new Question($storage, $response->QuestionId());
+            $id_subject = $question->SubjectId();
             $storage->remove($response);
             $storage->flush();
-            header('Location: /Admin&info=ResponseDeleted');
+            header('Location: /Question?action=displayQuestionContent&subjectId='.$id_subject.'&questionId='.$id_question.'&info=ResponseDeleted');
         }else{
             header('Location: /Admin&info=NULL');
         }

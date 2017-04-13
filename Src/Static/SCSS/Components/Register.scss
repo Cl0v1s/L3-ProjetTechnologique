@@ -7,10 +7,9 @@ div.Register
 
   span.error
   {
-    display: inline-block;
+    display: block;
     width: 100%;
-    text-align: center;
-    color: red !important;
+    color: $color-back !important;
   }
 
   span
@@ -50,10 +49,11 @@ div.Register
     padding: 5px;
     line-height: 30px;
     box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.1);
+    color: $color-back;
     background-color: #16A6B6;
     border-radius: 2px; }
   table tbody td a {
-    color: #F6F7F0;
+    color: $color-back;
     text-decoration: none; }
 
 }

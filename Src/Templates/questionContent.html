@@ -5,9 +5,10 @@
 	{{@headerUser}}
 {{/user}}
 
-<span>{{info}}</span>
 
 <div class="Content">
+	<span class="error">{{info}}</span>
+
 	<div class="Question">
 		<div class="question">
 				<div>
@@ -22,7 +23,7 @@
 				<p>
 					<a class="delete" href="/Admin?action=deleteQuestion&questionId={{question_id}}">Supprimer</a>
 				</p>
-				<p><a class="ok" href="/Admin?action=validateQuestion&subjectId={{subject_id}}&questionId={{question_id}}">Valider</a></p>
+				<p><a class="ok" href="/Admin?action=validateQuestion&subjectId={{subject_id}}&questionId={{question_id}}"> Valider</a></p>
 				{{/admin}}
 		</div>
 
@@ -35,6 +36,7 @@
 					<p>{{content}}</p>
 						<p><a class="report" href="/Question?action=reportResponse&subjectId={{subject_id}}&questionId={{question_id}}&responseId={{id}}">Reporter</a></p>
 					{{=admin}}
+					<p><a class="delete" href="/Admin?action=deleteResponse&responseId={{id}}">Supprimer</a></p>
 					<p><a class="report" href="/Admin?action=validateResponse&subjectId={{subject_id}}&questionId={{question_id}}&responseId={{response_id}}">Valider</a></p>
 					{{/admin}}
 				</div>
