@@ -11,14 +11,14 @@
 		{{=user}}
 			{{#service}}
 		<h2>Service: {{name}}</h2>
-		<p><span>Description:</span> {{description}}</p>
-		<p><span>A débuté le:</span> {{date_s}}</p>
-		<p><span>Se termine le:</span> {{date_e}}</p>
+		<p><span>Description</span>: {{description}}</p>
+		<p><span>A débuté le</span>: {{date_s}}</p>
+		<p><span>Se termine le</span>: {{date_e}}</p>
 				{{=is_registred}}
-					<a href="/Service?action=registerService&serviceId={{id}}"><button type="button">Inscrire</button></a>
+					<a href="/Service?action=registerService&serviceId={{id}}"><button type="button">S'inscrire</button></a>
 				{{/is_registred}}
 				{{=not_registred}}
-					<a href="/Service?action=deleteUserService&serviceId={{id}}"><button type="button">Désinscrire</button></a>
+					<a href="/Service?action=deleteUserService&serviceId={{id}}"><button type="button">Se désinscrire</button></a>
 				{{/not_registred}}
 
 			{{/service}}
@@ -27,14 +27,13 @@
 		{{=admin}}
 			{{#service}}
 		<h2>Service: {{name}}</h2>
-		<p><span>Description:</span> {{description}}</p>
-		<p><span>A débuté le:</span> {{date_s}}</p>
-		<p><span>Se termine le:</span> {{date_e}}</p>
+		<p><span>Description</span>: {{description}}</p>
+		<p><span>A débuté le</span>: {{date_s}}</p>
+		<p><span>Se termine le</span>: {{date_e}}</p>
 		<div class="action">
 				<a href="/Service?action=updateService&serviceId={{id}}"><button type="button">Modifier</button></a>
 				<a href="/Service?action=deleteService&serviceId={{id}}"><button type="button">Supprimer</button></a>
-				<a href="/Service?action=displayUsers&serviceId={{id}}"><button type="button">Users inscrit</button></a>
-				<a href="/Service?action=displayAllServices"><button type="button">Retour</button></a>
+				<a href="/Service?action=displayUsers&serviceId={{id}}"><button type="button">Utilisateurs inscrits</button></a>
 		</div>
 			{{/service}}
 		{{/admin}}	

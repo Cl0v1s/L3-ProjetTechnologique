@@ -9,15 +9,15 @@
     <header>
         <h1>Solidarité</h1>
         <nav>
-        {{=disconnected}}
-            <a href="/Login">Se connecter</a>
-            <a href="/Register?info=NULL">S'enregistrer</a>
-        {{/disconnected}}
-        {{=connected}}
-           <a href="/Login?action=logout">Logout</a>
-        {{/connected}}
             <a href="/Default">Accueil</a>
             <a href="/Question?action=displayQuestions&subjectId=NULL&questionId=NULL&info=NULL">Questions</a>
             <a href="/Service?action=displayServices">Services</a>
+            {{=disconnected}}
+            <a href="/Login">Se connecter</a>
+            <a href="/Register?info=NULL">S'enregistrer</a>
+            {{/disconnected}}
+            {{=connected}}
+            <a href="/Login?action=logout">Se déconnecter</a>
+            {{/connected}}
         </nav>
     </header>

@@ -214,7 +214,7 @@ class AdminController extends Controller
 
         $data["info"] = $info;
         $view = new View("admin",$data);
-        $view->setTitle("admin");
+        $view->setTitle("Administration");
         $view->show();
     }
 
@@ -252,7 +252,7 @@ class AdminController extends Controller
             array_push($data["subjects"],get_object_vars($subject));
         }
         $view = new View("deleteSubject",$data);
-        $view->setTitle("deleteSubject");
+        $view->setTitle("Suppression de sujet");
         $view->show();
     }
 
@@ -279,7 +279,7 @@ class AdminController extends Controller
             array_push($data["questions"],get_object_vars($question));
         }
         $view = new View("deleteQuestion",$data);
-        $view->setTitle("deleteQuestion");
+        $view->setTitle("Suppression de Question");
         $view->show();
     }
 
@@ -329,7 +329,7 @@ class AdminController extends Controller
         $data["question_id"] = $question_id;
         $data["response_id"] = $response_id;
         $view = new View("deleteResponse",$data);
-        $view->setTitle("deleteResponse");
+        $view->setTitle("Suppression de réponse");
         $view->show();
     }
 
@@ -403,7 +403,7 @@ class AdminController extends Controller
             $storage->flush();
             header('Location: /Question?action=displayQuestionContent&subjectId='.$subject_id.'&questionId='.$question_id.'&info=QuestionValidated');
         }else{
-            header('Location: /Question?action=displayQuestionContent&subjectId='.$subject_id.'&questionId='.$question_id.'&info=NULL');
+            header('Location: /Default');
         }
     }
 
@@ -421,7 +421,7 @@ class AdminController extends Controller
             $storage->flush();
             header('Location: /Question?action=displayQuestionContent&subjectId='.$subject_id.'&questionId='.$question_id.'&info=ResponseValidated');
         }else{
-            header('Location: /Question?action=displayQuestionContent&subjectId='.$subject_id.'&questionId='.$question_id.'&info=NULL');
+            header('Location: /Default');
         }
     }
 }

@@ -11,9 +11,9 @@
       <span class="error">{{info}}</span>
 
       <form action="/Register?action=newRegister" method="POST">
-        <span>Prénom</span>* :<br>
+        <span>Prénom</span>*:<br>
       <input type="text" name="firstname"><br>
-        <span>Nom</span>* :<br>
+        <span>Nom</span>*:<br>
       <input type="text" name="lastname"><br>
         <span>E-mail</span>:<br>
        <input type="text" name="email"><br>
@@ -28,9 +28,9 @@
           <input type="checkbox" name="Statut_{{id}}" value="{{id}}"> {{name}}
           {{/status}}
           <br><br>
-          <span>Créez un mot de passe</span>* :<br>
+          <span>Créez un mot de passe</span>*:<br>
       <input type="password" name="password"><br>
-        <span>Confirmez votre mot de passe</span>* :<br>
+        <span>Confirmez votre mot de passe</span>*:<br>
       <input type="password" name="password_confirm"><br>
       Les champs marqués d'une * sont obligatoires.<br>
       <input type="submit" value="Créer"><br>

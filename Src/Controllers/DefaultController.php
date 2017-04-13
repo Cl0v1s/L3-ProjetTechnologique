@@ -14,23 +14,13 @@ class DefaultController extends Controller
     }
     public function run($ctx)
     {
-        if(!isset($_GET["action"])){
-            $this->display();
-        }else{
-            $action = $_GET["action"];
-            switch($action){
-                case 'faireUnTruc':
-                    return;
-            }
-        }
+        $this->display();
     }
     
     public function display(){
         $data = Utils::SessionVariables();
         $view = new View("index", $data);
-        $view->setTitle("index");
-        $view->setData('test', "ZBLEH");
-        $view->setData('test1', "ZBLAH");
+        $view->setTitle("Accueil");
         $view->show();
     }
 }

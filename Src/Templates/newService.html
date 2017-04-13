@@ -9,25 +9,25 @@
 <h1 class='titre'>Créer un service</h1>
 
 <form action="/Service?action=addService" method="POST">
-    <span>Nom</span> :<br>
+    <span>Nom</span>:<br>
   <input type="text" name="name"><br>
-      <span>Description</span> :<br>
+      <span>Description</span>:<br>
   <textarea name="description" rows="10" cols="50"> </textarea><br>
-  <span>Catégorie:</span><br>
+  <span>Catégorie</span>:<br>
         <select name="category">
             {{#categorys}}
             <option value="{{id}}">{{name}}</option>
             {{/categorys}}
         </select>
   <br>
-  <span> Status :</span> <br>
+  <span>Status</span>:<br>
       {{#statuss}}
             <input type="checkbox" name="Statut_{{id}}" value="{{id}}"> {{name}}
       {{/statuss}}  
   <br>             
-      <span>Date début</span> :<br>
+      <span>Date de début</span>:<br>
   <input type="date" name="date_start"><br>
-      <span>Date fin</span> :<br>
+      <span>Date de fin</span>:<br>
   <input type="date" name="date_end"><br>
   <input type="submit" value="Créer"><br>
 </form>
