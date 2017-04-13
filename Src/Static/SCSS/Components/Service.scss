@@ -40,13 +40,22 @@ div.Service
     }
   }
 
-  button
+  span.error
   {
-    display: block;
-    width: 100px;
-    margin: auto;
+    color: $color-back;
   }
 
+  a.ok
+  {
+    background-image: url("/Static/Images/validate_black.svg");
+    color: #3E3939;
+  }
+
+  a.report
+  {
+    background-image: url("/Static/Images/report_black.svg");
+    color: #3E3939;
+  }
   div.action
   {
     text-align: center;

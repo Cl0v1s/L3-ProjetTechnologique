@@ -51,8 +51,51 @@ class ServiceController extends Controller
                     return; 
                 case 'displayUsers':
                     $this->displayUsers();
-                    return;                 
+                    return;
+                case 'reportService':
+                    $this->reportService();
+                    return;
+                case 'validateService':
+                    $this->validateService();
+                    return;
             }
+        }
+    }
+
+
+    public function validateService(){
+        $data = Utils::SessionVariables();
+        if(isset($_GET['serviceId']) || $_SESSION["Admin"] != true){
+            $id = $_GET["serviceId"];
+            $storage = Engine::Instance()->Persistence("DatabaseStorage");
+            $service = new Service($storage, $id);
+            $service = $storage->find($service);
+            $service->setReported(2);
+            $storage->persist($service, StorageState::ToUpdate);
+            $storage->flush();
+            $str = urlencode("Le service a bien été validé.");
+            header('Location: /Service?action=displayService&info='.$str.'&serviceId='.$id);
+        }else{
+            header('Location: /Default');
+        }
+    }
+
+    public function reportService(){
+        $data = Utils::SessionVariables();
+        if(isset($_GET['serviceId'])){
+            $id = $_GET["serviceId"];
+            $storage = Engine::Instance()->Persistence("DatabaseStorage");
+            $service = new Service($storage, $id);
+            $service = $storage->find($service);
+            if($service->Reported()==0){
+                $service->setReported(1);
+                $storage->persist($service, StorageState::ToUpdate);
+                $storage->flush();
+            }
+            $str = urlencode("Le service a bien été signalé.");
+            header('Location: /Service?action=displayService&info='.$str.'&serviceId='.$id);
+        }else{
+            header('Location: /Default');
         }
     }
 
@@ -93,6 +136,9 @@ class ServiceController extends Controller
 
     public function displayService(){
 
+        $info = "";
+        if(isset($_GET["info"]))
+            $info = $_GET["info"];
         $data = Utils::SessionVariables();
         $service_id = $_GET['serviceId'];
         $storage = Engine::Instance()->Persistence("DatabaseStorage");
@@ -124,6 +170,10 @@ class ServiceController extends Controller
         $service["date_s"]=$date_s;
         $service["date_e"]=$date_e;
 
+        $category = new Category($storage, $obj->CategoryId());
+        $category = $storage->find($category);
+        $service["category"] = $category->Name();
+
         array_push($data["service"],$service);
 
         // ajout du fait que l'user qui a cr?? le service a les droits d'administration dessus
@@ -133,7 +183,7 @@ class ServiceController extends Controller
             $data["user"] = false;
         }
 
-
+        $data["info"] = $info;
         $view = new View("service", $data);
         $view->setTitle("Détails Service");
         $view->show();

@@ -301,7 +301,7 @@ class QuestionController extends Controller
             $response = $storage->find($response);
             if($response->Reported()==0){
                 $response->setReported(1);
-                $storage->persist($response, $state = StorageState::ToUpdate);
+                $storage->persist($response, StorageState::ToUpdate);
                 $storage->flush();
             }
             header('Location: /Question?action=displayQuestionContent&subjectId='.$subject_id.'&questionId='.$question_id.'&info=ResponseReported');

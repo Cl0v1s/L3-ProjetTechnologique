@@ -52,9 +52,79 @@ class AdminController extends Controller
                     return $this->displayDeleteStatut();
                 case 'changeRightsUser':
                     return $this->changeRightsUser();
+                case 'createCategory':
+                    return $this->createCategory();
+                case 'displayCreateCategory':
+                    return $this->displayCreateCategory();
+                case 'deleteCategory':
+                    return $this->deleteCategory();
+                case 'displayDeleteCategory':
+                    return $this->displayDeleteCategory();
 
             }
         }
+    }
+
+    public function createCategory()
+    {
+        if(isset($_POST["name"]) == false || strlen($_POST["name"]) <= 0)
+        {
+            header("Location: /Admin?action=displayCreateCategory&info=NameError");
+            return;
+        }
+        $storage = Engine::Instance()->Persistence("DatabaseStorage");
+        $cat = new Category($storage);
+        $cat->setName(Utils::MakeTextSafe($_POST["name"]));
+        $storage->persist($cat);
+        $storage->flush();
+        header('Location: /Admin?info=CategoryCreated');
+    }
+
+    public function displayCreateCategory()
+    {
+        $info = "";
+        if(isset($_GET["info"]))
+        {
+            if($_GET["info"] === "NameError")
+            {
+                $info = "Nom invalide.";
+            }
+        }
+        $data = Utils::SessionVariables();
+        $data["info"] = $info;
+        $view = new View("createCategory", $data);
+        $view->setTitle("Créer une catégorie");
+        $view->show();
+    }
+
+    public function deleteCategory()
+    {
+        if(isset($_GET["categoryId"]) == false)
+        {
+            header("Location: /Admin?info=Null");
+            return;
+        }
+        $storage = Engine::Instance()->Persistence("DatabaseStorage");
+        $cat = new Category($storage, $_GET["categoryId"]);
+        $storage->remove($cat);
+        $storage->flush();
+        header("Location: /Admin?info=CategoryDeleted");
+    }
+
+    public function displayDeleteCategory()
+    {
+        $data = Utils::SessionVariables();
+        $storage = Engine::Instance()->Persistence("DatabaseStorage");
+        $cats = Null;
+        $storage->findAll("Category", $cats);
+        $data["categories"] = array();
+        foreach ($cats as $cat)
+        {
+            array_push($data["categories"], get_object_vars($cat));
+        }
+        $view = new View("deleteCategory", $data);
+        $view->setTitle("Supprimer une catégorie");
+        $view->show();
     }
 
     public function changeRightsUser()
@@ -184,6 +254,9 @@ class AdminController extends Controller
         if($info === "NULL"){
             $info = "";
         }
+        if($info === "CategoryCreated"){
+            $info = "La catégorie a bien été créé.";
+        }
         if($info === "SubjectCreated"){
             $info = "Le sujet a bien été créé.";
         }
@@ -207,6 +280,9 @@ class AdminController extends Controller
         }
         if($info === "ResponseDeleted"){
             $info = "La réponse a bien été supprimée.";
+        }
+        if($info === "CategoryDeleted"){
+            $info = "La catégorie a bien été supprimée.";
         }
         if($info === "UserBanned"){
             $info = "L'utilisateur a bien été banni.";

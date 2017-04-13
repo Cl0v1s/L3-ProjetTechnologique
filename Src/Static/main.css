@@ -299,10 +299,16 @@ div.Service span:nth-of-type(2n+3) {
 div.Service span:nth-of-type(2n+4) {
   color: #EF7009; }
 
-div.Service button {
-  display: block;
-  width: 100px;
-  margin: auto; }
+div.Service span.error {
+  color: #F6F7F0; }
+
+div.Service a.ok {
+  background-image: url("/Static/Images/validate_black.svg");
+  color: #3E3939; }
+
+div.Service a.report {
+  background-image: url("/Static/Images/report_black.svg");
+  color: #3E3939; }
 
 div.Service div.action {
   text-align: center; }

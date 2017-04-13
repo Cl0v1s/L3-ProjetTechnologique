@@ -1,0 +1,25 @@
+{{=admin}}
+	{{@headerAdmin}}
+{{/admin}}
+{{=user}}
+	{{@headerUser}}
+{{/user}}
+<div class="Content">
+	<div class="Register">
+		<h1>Suppression de catégories</h1>
+		<table>
+			<tbody>
+				{{#categories}}
+				<tr>
+					<td>
+						{{name}}<a class="delete" href="/Admin?action=deleteCategory&categoryId={{id}}">supprimer</a>
+					</td>
+				</tr>
+				{{/categories}}
+			</tbody>
+		</table>
+
+	</div>
+</div>
+
+

@@ -11,29 +11,38 @@
 		{{=user}}
 			{{#service}}
 		<h2>Service: {{name}}</h2>
+		<span class="error">{{info}}</span>
 		<p><span>Description</span>: {{description}}</p>
+		<p><span>Catégorie</span>: {{category}}</p>
 		<p><span>A débuté le</span>: {{date_s}}</p>
 		<p><span>Se termine le</span>: {{date_e}}</p>
+		<div class="action">
 				{{=is_registred}}
 					<a href="/Service?action=registerService&serviceId={{id}}"><button type="button">S'inscrire</button></a>
 				{{/is_registred}}
 				{{=not_registred}}
 					<a href="/Service?action=deleteUserService&serviceId={{id}}"><button type="button">Se désinscrire</button></a>
 				{{/not_registred}}
+				<a class="report" href="/Service?action=reportService&serviceId={{id}}">Reporter</a>
 
-			{{/service}}
+		</div>
+		{{/service}}
 		{{/user}}
 		
 		{{=admin}}
 			{{#service}}
 		<h2>Service: {{name}}</h2>
+		<span class="error">{{info}}</span>
 		<p><span>Description</span>: {{description}}</p>
+		<p><span>Catégorie</span>: {{category}}</p>
 		<p><span>A débuté le</span>: {{date_s}}</p>
 		<p><span>Se termine le</span>: {{date_e}}</p>
 		<div class="action">
 				<a href="/Service?action=updateService&serviceId={{id}}"><button type="button">Modifier</button></a>
 				<a href="/Service?action=deleteService&serviceId={{id}}"><button type="button">Supprimer</button></a>
 				<a href="/Service?action=displayUsers&serviceId={{id}}"><button type="button">Utilisateurs inscrits</button></a>
+				<a class="ok" href="/Service?action=validateService&serviceId={{id}}">Valider</a>
+
 		</div>
 			{{/service}}
 		{{/admin}}	

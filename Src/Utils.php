@@ -29,8 +29,8 @@ class Utils
 
     public static function MakeTextSafe($text)
     {
-        $text = str_replace("'", "\\'", $text);
-        $text = str_replace("\"", "\\\"", $text);
+        $text = str_replace("'", "&#39;", $text);
+        $text = str_replace("\"", "&#34;", $text);
         $text = str_replace("<", "&lt;", $text);
         $text = str_replace(">", "&gt;", $text);
         return $text;

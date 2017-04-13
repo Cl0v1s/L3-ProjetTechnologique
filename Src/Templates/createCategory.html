@@ -1,0 +1,20 @@
+{{=admin}}
+  {{@headerAdmin}}
+{{/admin}}
+{{=user}}
+  {{@headerUser}}
+{{/user}}
+
+<div class="Content">
+    <div class="Register">
+        <h1>Créer une catégorie</h1>
+        <span class="error">{{info}}</span>
+        <form action="/Admin?action=createCategory" method="POST">
+            <br>
+            <span>Nom:</span>
+            <input type="text" name="name"><br>
+            <input type="submit" value="Envoyer"><br>
+        </form>
+    </div>
+</div>
+
