@@ -19,7 +19,7 @@ class ErrorController extends Controller
 
     public function run($ctx)
     {
-        $data = array();
+        $data = Utils::SessionVariables();
         $data["code"] = $this->code;
 
         $view = new View("Error/base", $data);
