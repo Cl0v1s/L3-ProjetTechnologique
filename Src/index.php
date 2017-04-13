@@ -12,7 +12,7 @@ include_once 'Utils.php';
  * Time: 16:12
  */
 
-Engine::Instance()->setPersistence(new DatabaseStorage("localhost", "L3", "root", "root"));
+Engine::Instance()->setPersistence(new DatabaseStorage("localhost", "Disabled", "root", "root"));
 Engine::Instance()->run();
 
 
