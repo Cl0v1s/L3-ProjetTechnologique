@@ -3,18 +3,12 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Ven 14 Avril 2017 à 13:49
+-- Généré le: Ven 14 Avril 2017 à 16:09
 -- Version du serveur: 5.5.53-0ubuntu0.14.04.1
 -- Version de PHP: 5.5.9-1ubuntu4.20
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
 
 --
 -- Base de données: `Disabled`
@@ -32,7 +26,14 @@ CREATE TABLE IF NOT EXISTS `Category` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Contenu de la table `Category`
+--
+
+INSERT INTO `Category` (`id`, `name`) VALUES
+(4, 'Aide à domicile');
 
 -- --------------------------------------------------------
 
@@ -120,7 +121,14 @@ CREATE TABLE IF NOT EXISTS `Status` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
+--
+-- Contenu de la table `Status`
+--
+
+INSERT INTO `Status` (`id`, `name`) VALUES
+(7, 'Handicapé moteur');
 
 -- --------------------------------------------------------
 
@@ -132,7 +140,14 @@ CREATE TABLE IF NOT EXISTS `Subject` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
+
+--
+-- Contenu de la table `Subject`
+--
+
+INSERT INTO `Subject` (`id`, `name`) VALUES
+(19, 'Santé');
 
 -- --------------------------------------------------------
 
@@ -235,6 +250,3 @@ ALTER TABLE `UserStatus`
   ADD CONSTRAINT `UserStatus_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `UserStatus_ibfk_2` FOREIGN KEY (`status_id`) REFERENCES `Status` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
