@@ -2,34 +2,42 @@
 -- version 4.0.10deb1
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Apr 13, 2017 at 08:37 PM
--- Server version: 5.5.53-0ubuntu0.14.04.1
--- PHP Version: 5.5.9-1ubuntu4.20
+-- Client: localhost
+-- Généré le: Ven 14 Avril 2017 à 13:49
+-- Version du serveur: 5.5.53-0ubuntu0.14.04.1
+-- Version de PHP: 5.5.9-1ubuntu4.20
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
 --
--- Database: `L3`
+-- Base de données: `Disabled`
 --
+CREATE DATABASE IF NOT EXISTS `Disabled` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `Disabled`;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Category`
+-- Structure de la table `Category`
 --
 
 CREATE TABLE IF NOT EXISTS `Category` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Question`
+-- Structure de la table `Question`
 --
 
 CREATE TABLE IF NOT EXISTS `Question` (
@@ -44,12 +52,12 @@ CREATE TABLE IF NOT EXISTS `Question` (
   PRIMARY KEY (`id`),
   KEY `subject_id` (`subject_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Response`
+-- Structure de la table `Response`
 --
 
 CREATE TABLE IF NOT EXISTS `Response` (
@@ -63,12 +71,12 @@ CREATE TABLE IF NOT EXISTS `Response` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `Reponse_ibfk_1` (`question_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Service`
+-- Structure de la table `Service`
 --
 
 CREATE TABLE IF NOT EXISTS `Service` (
@@ -85,12 +93,12 @@ CREATE TABLE IF NOT EXISTS `Service` (
   KEY `category_id_2` (`category_id`),
   KEY `user_id` (`user_id`),
   KEY `user_id_2` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ServiceStatus`
+-- Structure de la table `ServiceStatus`
 --
 
 CREATE TABLE IF NOT EXISTS `ServiceStatus` (
@@ -105,31 +113,31 @@ CREATE TABLE IF NOT EXISTS `ServiceStatus` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Status`
+-- Structure de la table `Status`
 --
 
 CREATE TABLE IF NOT EXISTS `Status` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Subject`
+-- Structure de la table `Subject`
 --
 
 CREATE TABLE IF NOT EXISTS `Subject` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `User`
+-- Structure de la table `User`
 --
 
 CREATE TABLE IF NOT EXISTS `User` (
@@ -140,15 +148,22 @@ CREATE TABLE IF NOT EXISTS `User` (
   `username` varchar(64) CHARACTER SET utf8 NOT NULL,
   `isadmin` int(10) NOT NULL DEFAULT '0',
   `isbanned` int(10) DEFAULT '0',
-  `phone` int(10) DEFAULT NULL,
+  `phone` varchar(11) DEFAULT NULL,
   `email` varchar(64) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=79 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=84 ;
+
+--
+-- Contenu de la table `User`
+--
+
+INSERT INTO `User` (`id`, `lastname`, `firstname`, `password`, `username`, `isadmin`, `isbanned`, `phone`, `email`) VALUES
+(79, 'root', 'root', '$2y$10$vh8TrmUG2syDPKRmygjwY.dh0sLQT4IO1RPWtMFieRuOXms0Fr9bm', 'root.root', 1, 0, '761898895', 'root@root.com');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `UserService`
+-- Structure de la table `UserService`
 --
 
 CREATE TABLE IF NOT EXISTS `UserService` (
@@ -158,12 +173,12 @@ CREATE TABLE IF NOT EXISTS `UserService` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `service_id` (`service_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `UserStatus`
+-- Structure de la table `UserStatus`
 --
 
 CREATE TABLE IF NOT EXISTS `UserStatus` (
@@ -173,50 +188,53 @@ CREATE TABLE IF NOT EXISTS `UserStatus` (
   PRIMARY KEY (`id`),
   KEY `statut_id` (`status_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
--- Constraints for dumped tables
+-- Contraintes pour les tables exportées
 --
 
 --
--- Constraints for table `Question`
+-- Contraintes pour la table `Question`
 --
 ALTER TABLE `Question`
   ADD CONSTRAINT `Question_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `Question_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `Subject` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `Response`
+-- Contraintes pour la table `Response`
 --
 ALTER TABLE `Response`
   ADD CONSTRAINT `Reponse_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `Question` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `Response_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `Service`
+-- Contraintes pour la table `Service`
 --
 ALTER TABLE `Service`
   ADD CONSTRAINT `Service_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `Category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `ServiceStatus`
+-- Contraintes pour la table `ServiceStatus`
 --
 ALTER TABLE `ServiceStatus`
   ADD CONSTRAINT `ServiceStatus_ibfk_1` FOREIGN KEY (`service_id`) REFERENCES `Service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `ServiceStatus_ibfk_2` FOREIGN KEY (`status_id`) REFERENCES `Status` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `UserService`
+-- Contraintes pour la table `UserService`
 --
 ALTER TABLE `UserService`
   ADD CONSTRAINT `UserService_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `UserService_ibfk_2` FOREIGN KEY (`service_id`) REFERENCES `Service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `UserStatus`
+-- Contraintes pour la table `UserStatus`
 --
 ALTER TABLE `UserStatus`
   ADD CONSTRAINT `UserStatus_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `UserStatus_ibfk_2` FOREIGN KEY (`status_id`) REFERENCES `Status` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

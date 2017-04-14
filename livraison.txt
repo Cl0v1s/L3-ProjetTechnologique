@@ -1,4 +1,0 @@
-A rendre :
-- un PDF
-- le tout dans un TAR.GZ
-- README
